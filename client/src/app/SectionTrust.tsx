@@ -8,36 +8,36 @@ function SectionTrust() {
       </div>
       <div className="grid grid-cols-4 gap-4 mt-10 mb-10">
         <TrustCard
-          title="Expert Specialists"
-          description="Reach out to over 3500+ experienced doctors specializing in mental health."
+          title="Expert Financial Advisors"
+          description="Connect with over 3500+ experienced financial experts to guide your investments."
         />
         <TrustCard
-          title="Personalized Plans"
-          description="Receive a 30-day mental exercise plan tailored to your specific needs."
+          title="Personalized Strategies"
+          description="Receive tailored plans for expense management, savings, and investments."
         />
         <TrustCard
           title="Comprehensive Assessments"
-          description="Start with a well-crafted test to determine the level of help you need."
+          description="Start with a detailed financial health check to identify your needs."
         />
         <TrustCard
           title="Top-Rated Experts"
-          description="Consult with top experts who provide assured guidance and support."
+          description="Get guidance from highly-rated mentors and financial advisors."
+        />
+        <TrustCard
+          title="Financial Insights"
+          description="Access visual charts and data insights to track your financial goals."
+        />
+        <TrustCard
+          title="Beginner-Friendly"
+          description="Simplified UI/UX designed to help everyone, from beginners to experts."
+        />
+        <TrustCard
+          title="Secure & Confidential"
+          description="Your financial data is secure, and your privacy is always a priority."
         />
         <TrustCard
           title="Community Support"
-          description="Engage in our discuss section to share experiences and get support from peers."
-        />
-        <TrustCard
-          title="Trusted Mentors"
-          description="Access a network of mentors and experts dedicated to mental health."
-        />
-        <TrustCard
-          title="NGO Partnerships"
-          description="Collaborate with various NGOs registered on our platform for additional support."
-        />
-        <TrustCard
-          title="Confidential & Secure"
-          description="Your privacy is our priority. We ensure all consultations are confidential."
+          description="Engage with our community to share experiences and get support from peers."
         />
       </div>
     </div>
@@ -53,9 +53,9 @@ interface TrustCardProps {
 
 const TrustCard: React.FC<TrustCardProps> = ({ title, description }) => {
   return (
-    <div className="bg-slate-100 p-5 rounded-lg shadow-md">
+    <div className="bg-slate-100 p-5 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200">
       <div className="font-bold text-xl mb-2">{title}</div>
-      <div>{description}</div>
+      <div className="text-gray-700">{description}</div>
     </div>
   );
 };

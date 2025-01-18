@@ -5,6 +5,7 @@ import Navbar from "./Navbar";
 import { Typewriter } from "react-simple-typewriter";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
+import img1 from "../../public/img1.jpg";
 import {
   ArrowRightSquare,
   ChefHat,
@@ -54,18 +55,18 @@ function SectionHero() {
   return (
     <>
       <Navbar />
-      <div className="grid grid-cols-2 gap-4 p-10 bg-gradient-to-r from-blue-200 via-blue-300 to-blue-400 min-h-screen items-center">
+      <div className="grid grid-cols-2 gap-4 p-10 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 min-h-screen items-center">
         <div className="flex ml-20 flex-col justify-center text-center sm:text-left w-full sm:w-[80%]">
-          <h1 className="text-5xl font-semibold mb-4 animate-fade-in">
-            Your One-Stop Solution for Mental Well-being
+          <h1 className="text-5xl font-semibold mb-4 animate-fade-in text-white">
+            Empower Your Financial Journey
           </h1>
-          <div className="text-2xl mt-10 animate-fade-in-delay">
+          <div className="text-2xl mt-10 animate-fade-in-delay text-white">
             <Typewriter
               words={[
-                "Take the First Step to Wellness",
-                "Consult Top Mental Health Experts",
-                "Personalized 30-Day Mental Exercise Plan",
-                "Join Supportive Communities",
+                "Track Your Expenses Effortlessly",
+                "Achieve Your Financial Goals",
+                "Personalized Investment Insights",
+                "Consult Financial Experts Anytime",
               ]}
               loop={5}
               cursor
@@ -76,8 +77,8 @@ function SectionHero() {
             />
           </div>
           <Link href="/test">
-            <Button className="bg-blue-600 text-xl w-[200px] mt-4 mx-auto sm:mx-0 animate-fade-in-delay">
-              Take a Test
+            <Button className="bg-blue-700 text-xl w-[200px] mt-4 mx-auto sm:mx-0 animate-fade-in-delay rounded-full">
+              Get Started
             </Button>
           </Link>
         </div>
@@ -85,9 +86,8 @@ function SectionHero() {
           <Image
             className="rounded-3xl shadow-lg"
             alt="Mental wellness"
-            height={500}
-            width={700}
-            src="https://www.collegetransitions.com/wp-content/uploads/2023/06/blog-HowLongDoesTakeDoctor-1460x822-1.webp"
+            height={400}
+            src={img1}
           />
         </div>
       </div>

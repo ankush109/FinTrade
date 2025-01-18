@@ -3,57 +3,57 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
 model User {
-  id        String    @id @default(cuid())
-  email     String    @unique
+  id        String     @id @default(auto()) @map("_id") @db.ObjectId
+  email     String     @unique
   name      String
   password  String
-  role      String    @default("user")
+  role      String     @default("user")
   majorExp  String?
   minorExp  String?
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
   questions Question[]
   answers   Answer[]
-  hosted    Meeting[] @relation("host")
-  guest     Meeting[] @relation("guest")
+  hosted    Meeting[]  @relation("host")
+  guest     Meeting[]  @relation("guest")
 }
 
 model Question {
-  id        String    @id @default(cuid())
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
   text      String
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   answers   Answer[]
-  user      User?     @relation(fields: [userId], references: [id])
-  userId    String?
+  user      User?    @relation(fields: [userId], references: [id])
+  userId    String?  @db.ObjectId
 }
 
 model Answer {
-  id         String    @id @default(cuid())
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
   text       String
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
   owner      User      @relation(fields: [userId], references: [id])
   question   Question? @relation(fields: [questionId], references: [id])
-  questionId String?
-  userId     String
+  questionId String?   @db.ObjectId
+  userId     String    @db.ObjectId
 }
 
 model Meeting {
-  id       String    @id @default(cuid())
-  host     User      @relation("host", fields: [hostId], references: [id], onDelete: Cascade)
-  guest    User      @relation("guest", fields: [guestId], references: [id], onDelete: Cascade)
-  hostId   String
-  guestId  String
+  id       String     @id @default(auto()) @map("_id") @db.ObjectId
+  host     User       @relation("host", fields: [hostId], references: [id])
+  guest    User       @relation("guest", fields: [guestId], references: [id])
+  hostId   String     @db.ObjectId
+  guestId  String     @db.ObjectId
   status   String
   notes    String?
   duration Int?
   type     String?
   location String?
-  dates    DateTime[] // Changed from Date[] to DateTime[]
+  dates    DateTime[] // MongoDB supports array of DateTime
 }

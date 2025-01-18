@@ -20,10 +20,10 @@ function SectionProcess() {
 
   return (
     <div className="lg:p-20 pb-10 pt-5 mt-20 bg-[#F8F9FD]">
-      <div className="text-center flex mt-10  flex-col gap-5">
+      <div className="text-center flex mt-10 flex-col gap-5">
         <div className="font-bold text-4xl text-[#00173C]">Our Process</div>
         <div className="text-[#576A8A]">
-          Streamlined Process for Mental Health Improvement
+          A Simplified Approach to Financial Freedom
         </div>
       </div>
       {isDesktop ? <DesktopProcess /> : <MobileProcess />}
@@ -159,7 +159,7 @@ const MobileProcess = () => {
   }, []);
 
   return (
-    <div className="w-[90%] mx-auto ">
+    <div className="w-[90%] mx-auto">
       {processData.map((process, index) => {
         return (
           <div

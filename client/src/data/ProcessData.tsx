@@ -1,10 +1,10 @@
 // processData.tsx
 import { StaticImageData } from "next/image";
-import m1 from "@/assets/mental1.jpeg";
-import m2 from "@/assets/mental2.jpeg";
-import m3 from "@/assets/mental3.jpeg";
-import m4 from "@/assets/mental4.jpeg";
-import m5 from "@/assets/mental5.jpeg";
+import m1 from "../../public/m1.jpg";
+import m2 from "../../public/m2.jpg";
+import m3 from "../../public/m3.jpg";
+import m4 from "../../public/m4.jpg";
+import m5 from "../../public/m5.jpg";
 
 interface ProcessData {
   imageUrl: StaticImageData;
@@ -15,33 +15,33 @@ interface ProcessData {
 const processData: ProcessData[] = [
   {
     imageUrl: m1,
-    title: "Initial Assessment",
+    title: "Expense Tracking",
     description:
-      "Begin with a well-crafted mental health assessment to understand your current state and determine the level of support required.",
+      "Easily track your daily, weekly, and monthly expenses to gain a clear understanding of your financial habits and make informed decisions.",
   },
   {
     imageUrl: m2,
-    title: "Personalized Plan",
+    title: "Savings & Investments",
     description:
-      "Receive a customized 30-day mental exercise plan tailored to your specific needs and goals, created by our expert team.",
+      "Set savings goals and explore investment opportunities to grow your wealth over time, with personalized recommendations and guidance.",
   },
   {
-    imageUrl: m1,
+    imageUrl: m3,
+    title: "Loans & EMIs Management",
+    description:
+      "Manage your loans and EMIs effectively, ensuring timely payments and reducing financial stress with structured repayment plans.",
+  },
+  {
+    imageUrl: m4,
+    title: "Financial Goal Prediction",
+    description:
+      "Use our predictive algorithms to forecast your financial goals and track progress, helping you stay on course for long-term financial success.",
+  },
+  {
+    imageUrl: m5,
     title: "Expert Consultation",
     description:
-      "Book one-on-one sessions with top mental health professionals to receive personalized guidance and support.",
-  },
-  {
-    imageUrl: m1,
-    title: "Community Support",
-    description:
-      "Join our discussion forums to connect with a supportive community, share experiences, and find peer support.",
-  },
-  {
-    imageUrl: m1,
-    title: "Ongoing Monitoring",
-    description:
-      "Regularly track your progress and adjust your plan as needed with continuous support from our experts.",
+      "Consult with financial experts who provide personalized advice and mentorship to help you make smarter financial decisions.",
   },
 ];
 
