@@ -1,0 +1,11 @@
+FROM node:18.16.0-alpine3.17
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npx prisma generate
+CMD ["npm", "run", "dev"]
+
+# docker run commands
+# docker build -t cheerup-backend .
+# docker run -it -p 3000:3000 cheerup-backend
