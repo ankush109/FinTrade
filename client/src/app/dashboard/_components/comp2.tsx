@@ -28,7 +28,7 @@ const Comp2: React.FC = () => {
  
  }
   return (
-    <div className="w-1/2">
+    <div className="w-1/2 ">
     
       <div className="bg-white dark:bg-[#1F214A] dark:border-[#1F214A] dark:text-white border-2 border-gray-200 p-4 rounded-lg ">
        
