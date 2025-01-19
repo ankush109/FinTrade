@@ -105,12 +105,7 @@ function Page() {
             exit={{ opacity: 0, scale: 0.8 }}
             transition={{ duration: 1 }}
           >
-            <Lottie
-              loop
-              animationData={lo2}
-              play
-              style={{ width: 350, height: 350 }}
-            />
+           
             Generating Dashboard...
           </motion.div>
         ) : (

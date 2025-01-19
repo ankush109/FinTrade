@@ -9,8 +9,8 @@ function Navbar() {
     <div className="max-w-7xl mx-auto z-10  p-4 mt-5 bg-[white] rounded-full absolute top-0 left-0 right-0 shadow-2xl	  flex justify-between  items-center shadow-[#3D6ABB1C]">
       <div className="text-2xl font-bold flex gap-10 justify-center items-center">
         <Link href="/">
-          <span style={{ color: "blue" }}>Cheer</span>
-          <span style={{ color: "black" }}>Up</span>
+          <span style={{ color: "blue" }}>Fin</span>
+          <span style={{ color: "black" }}>Trade</span>
         </Link>
         <div className="text-xl font-medium">
           <div className="flex gap-5">
@@ -25,9 +25,9 @@ function Navbar() {
               <></>
             )}
             <Link href="/dashboard/faq">Discussion Forum</Link>
-            <Link href="/dashboard/meeting">Consultation</Link>
-            <Link href="/test">Test</Link>
-            <div>Articles</div>
+            <Link href="/dashboard/meet">Meetings</Link>
+          
+          
           </div>
         </div>
       </div>

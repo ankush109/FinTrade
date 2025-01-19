@@ -2,7 +2,7 @@
 "use client";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-
+import ReactQueryProvider from ".././_middlewares/ReactQueryProvider";
 import { SidebarProvider } from "../../context/SidebarContext"
 import { ThemeProvider } from "../../context/ThemeContext"
 const inter = Inter({ subsets: ["latin"] });
@@ -17,6 +17,7 @@ export default function RootLayout({
         <html lang="en">
             <title>FinTrade</title>
             <body className={inter.className}>
+            <ReactQueryProvider>
                 <ThemeProvider>
                     <SidebarProvider>
 
@@ -25,6 +26,7 @@ export default function RootLayout({
 
                     </SidebarProvider>
                 </ThemeProvider>
+              </ReactQueryProvider>
             </body>
         </html>
     );

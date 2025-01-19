@@ -14,20 +14,26 @@ import ThemeToggleButton from "./ThemeToggleButton";
 import { useSidebar } from "../../../context/SidebarContext";
 import Link from "next/link";
 
-const SidebarItem = ({ href = "#", icon, label, isSidebarExpanded }) => (
-  <Link href={href}>
-    <li className="flex items-center justify-center w-full px-3">
-      <div
-        className={`hover:bg-[#696FFB3D] hover:cursor-pointer hover:text-[#696FFB] px-3 py-1 rounded-md flex flex-row space-x-2 ${
-          isSidebarExpanded ? "justify-start w-full" : "justify-center"
-        }`}
-      >
-        <span className="text-2xl">{icon}</span>
-        {isSidebarExpanded && <span className="font-bold">{label}</span>}
-      </div>
-    </li>
-  </Link>
-);
+const SidebarItem = ({ href = "#", icon, label, isSidebarExpanded }) => {
+  // Check if label is 'Stock Forecasting'
+  const updatedHref = label === "Stock Forecasting" ? "http://localhost:8501" : href;
+
+  return (
+    <Link href={updatedHref}>
+      <li className="flex items-center justify-center w-full px-3">
+        <div
+          className={`hover:bg-[#696FFB3D] hover:cursor-pointer hover:text-[#696FFB] px-3 py-1 rounded-md flex flex-row space-x-2 ${
+            isSidebarExpanded ? "justify-start w-full" : "justify-center"
+          }`}
+        >
+          <span className="text-2xl">{icon}</span>
+          {isSidebarExpanded && <span className="font-bold">{label}</span>}
+        </div>
+      </li>
+    </Link>
+  );
+};
+
 
 const Sidebar = () => {
   const { isSidebarExpanded, toggleSidebar } = useSidebar();
@@ -36,13 +42,13 @@ const Sidebar = () => {
     { icon: <RiDashboardLine />, label: "Dashboard", link: "/dashboard" },
     { icon: <MdOutlinePayment />, label: "Stock", link: "/dashboard/stock" },
     { icon: <GoPeople />, label: "meet", link: "/dashboard/meet" },
-    { icon: <TbMessageShare />, label: "Messages", link: "/messages" },
+    { icon: <TbMessageShare />, label: "Discuss", link: "/dashboard/faq" },
   ];
 
   const secondSectionItems = [
-    { icon: <RiShoppingBasketLine />, label: "Products", link: "/products" },
+    { icon: <RiShoppingBasketLine />, label: "Mutual Funds", link: "/dashboard/mutualfund" },
     { icon: <LiaFileInvoiceDollarSolid />, label: "Invoice", link: "/invoice" },
-    { icon: <BsGraphUpArrow />, label: "Analytics", link: "/analytics" },
+    { icon: <BsGraphUpArrow />, label: "Stock Forecasting", link: "http://localhost:8501" },
   ];
 
   const thirdSectionItems = [
@@ -54,17 +60,17 @@ const Sidebar = () => {
   return (
     <aside
       className={`fixed top-0 left-0 h-full border-r border-[#00000029] dark:border-[#1F214A] bg-white dark:bg-[#1F214A] transition-all duration-300 ${
-        isSidebarExpanded ? "w-44" : "w-16"
+        isSidebarExpanded ? "w-52" : "w-16"
       }`}
     >
-      <div className="flex flex-col items-center py-4 space-y-4">
+      <div className="flex flex-col py-4 space-y-4">
         <button
           onClick={toggleSidebar}
-          className="text-black dark:text-white w-full flex items-center justify-center"
+          className="text-black dark:text-white w-full flex  justify-center"
         >
           {isSidebarExpanded ? (
             <div className="text-2xl">
-              <span className="text-blue-400 font-semibold">Prime</span>Dash
+              <span className="text-blue-400 font-semibold">Fin</span>Trade
             </div>
           ) : (
             <div className="flex flex-row space-x-1 items-end">
@@ -76,7 +82,7 @@ const Sidebar = () => {
 
         <div className="w-full mt-8 flex flex-col">
           {/* First Section */}
-          <ul className="flex flex-col items-center space-y-2 text-gray-600 dark:text-white border-b border-[#00000029] dark:border-[#FFFFFF29] pb-2">
+          <ul className="flex flex-col  space-y-2 text-gray-600 dark:text-white border-b border-[#00000029] dark:border-[#FFFFFF29] pb-2">
             {firstSectionItems.map((item, index) => (
               <SidebarItem
                 href={item.link || "#"}
@@ -89,7 +95,7 @@ const Sidebar = () => {
           </ul>
 
           {/* Second Section */}
-          <ul className="flex flex-col items-center space-y-2 text-gray-600 dark:text-white border-b border-[#00000029] dark:border-[#FFFFFF29] pb-2 pt-2">
+          <ul className="flex flex-col  space-y-2 text-gray-600 dark:text-white border-b border-[#00000029] dark:border-[#FFFFFF29] pb-2 pt-2">
             {secondSectionItems.map((item, index) => (
               <SidebarItem
                 href={item.link || "#"}
@@ -102,7 +108,7 @@ const Sidebar = () => {
           </ul>
 
           {/* Third Section */}
-          <ul className="flex flex-col items-center space-y-2 text-gray-600 dark:text-white border-b border-[#00000029] dark:border-[#FFFFFF29] pb-2 pt-2">
+          <ul className="flex flex-col  space-y-2 text-gray-600 dark:text-white border-b border-[#00000029] dark:border-[#FFFFFF29] pb-2 pt-2">
             {thirdSectionItems.map((item, index) => (
               <SidebarItem
                 href={item.link || "#"}
@@ -114,16 +120,7 @@ const Sidebar = () => {
             ))}
           </ul>
 
-          {/* Logout Section */}
-          <ul className="flex flex-col items-center space-y-2 text-gray-600 dark:text-white pb-2 pt-2">
-            <SidebarItem
-              icon={<TbLogout2 />}
-              label="Log Out"
-              isSidebarExpanded={isSidebarExpanded}
-            />
-          </ul>
-
-          {/* Theme Toggle */}
+  
           {!isSidebarExpanded ? (
             <div className="flex justify-center items-center fixed bottom-0 py-1 px-3">
               <ThemeToggleButton />

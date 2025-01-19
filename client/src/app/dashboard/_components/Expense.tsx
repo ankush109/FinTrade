@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { createExpense, getmyexpense } from "../../../api/goals/index";
+import {getMyfinance } from "../../../api/finance/index";
 import Lottie from "react-lottie-player";
 import lo2 from "../../../assets/./1.json";
 import  lottieJson from "../../../assets/./2.json";
@@ -16,6 +17,7 @@ const Expense: React.FC = () => {
   const [creating, setCreating] = useState(false); // Loader for create expense
   const [dialogOpen, setDialogOpen] = useState(false); // Manage dialog open state
   const res = getmyexpense();
+   const { data } = getMyfinance()
 
   const submitForm = async (e) => {
     e.preventDefault();
@@ -30,9 +32,14 @@ const Expense: React.FC = () => {
 
     try {
 
-        toast.success("Expense created successfully!");
-       
+       const result = await createExpense(assetData)
+       if (result.success){
+        toast.success('expense created!')
+         res.refetch()
         setDialogOpen(false); // Close the dialog
+       }
+        
+       
  
     } catch (error) {
       console.error("Error creating expense:", error);
@@ -130,7 +137,8 @@ const Expense: React.FC = () => {
       </div>
 
       {/* StatCard */}
-      <div className="flex-grow">
+     <div className="flex flex-col gap-5">
+     <div className="flex-grow">
         <StatCard
           title="January Expenses"
           value={expenses?.toString()}
@@ -139,6 +147,16 @@ const Expense: React.FC = () => {
           comparisonText="Compared to last month"
         />
       </div>
+      <div className="flex-grow">
+        <StatCard
+          title="Savings this month"
+          value={data?.message?.monthlyIncome.toString()-expenses?.toString()}
+          change="13%"
+          isPositive={true}
+          comparisonText="Compared to last month"
+        />
+      </div>
+     </div>
 
       {/* Table */}
       <div className="flex-grow bg-white dark:bg-[#1F214A] rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
