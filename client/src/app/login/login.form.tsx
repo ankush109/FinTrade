@@ -46,7 +46,7 @@ function LoginForm() {
       const { data } = response;
       if (response.status === 200) {
         localStorage.setItem("token", data.message.accessToken);
-        router.push("/");
+        router.push("/expense");
       }
       form.reset();
     } catch (err) {

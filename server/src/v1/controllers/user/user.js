@@ -255,27 +255,124 @@ const userController = {
       
     }
   },
-  async getFinance(req,res,next){
-try{
-const userId = req.user.id
-const financeData = await prisma.finance.findFirst({
-  where:{
-    userId:userId
+  async getFinance(req, res, next) {
+    try {
+      const userId = req.user.id;
+      const financeData = await prisma.finance.findFirst({
+        where: {
+          userId: userId,
+        },
+      });
+  
+      if (!financeData) {
+        return res.status(400).json({
+          error: "Data not found",
+        });
+      }
+  
+      // Send the 200 response only if the data is found
+      res.status(200).json({
+        success: true,
+        message: financeData,
+      });
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ error: err.message });
+    }
+  },
+  
+  async createAssets(req,res,next){
+    try{
+      const {type,ammount,duration} =req.body
+      const assets = await prisma.assets.create({
+        data:{
+          userId:req.user.id,
+          duration:duration,
+          ammount:ammount,
+          type:type
+        }
+      })
+      console.log(assets,"assets")
+      res.status(201).json({
+        success:true,
+        message:assets
+      })
+    }catch(err){
+      res.status(400).json({
+        error:"data not found"
+         })
+       
+    }
+  },
+  async createLiability(req,res,next){
+    try{
+      const {type,ammount,duration} =req.body
+      const liability = await prisma.liability.create({
+        data:{
+          userId:req.user.id,
+          duration:duration,
+          ammount:ammount,
+          type:type
+        }
+      })
+      console.log(liability,"liability")
+      res.status(201).json({
+        success:true,
+        message:liability
+      })
+    }catch(err){
+      res.status(400).json({
+        error:"data not found"
+         })
+       
+    }
+  },
+  async createGoal(req,res,next){
+    try{
+      const {name,money,type,investment} =req.body
+      const goal = await prisma.goal.create({
+        data:{
+          userId:req.user.id,
+          name:name,
+          money:String(money),
+          type:type,
+          invest:investment
+        }
+      })
+      console.log(goal,"liability")
+      res.status(201).json({
+        success:true,
+        message:goal
+      })
+    }catch(err){
+      console.log(err,"err in creating goals")
+      res.status(400).json({
+        error:"data not found"
+         })
+       
+    }
+  },
+  async getGoals(req,res,next){
+    try{
+      
+      const goal = await prisma.goal.findMany({
+        where:{
+          userId:req.user.id
+        }
+      })
+      console.log(goal,"liability")
+      res.status(201).json({
+        success:true,
+        message:goal
+      })
+    }catch(err){
+      console.log(err,"err")
+      res.status(400).json({
+        error:"data not found"
+         })
+       
+    }
   }
-})
-if(!financeData){
-  res.status(400).json({
- error:"data not found"
-  })
-}
-res.status(200).json({
-  success:true,
-  message:financeData
-})
-}catch(err){
-  console.log(err)
-  res.status(500).json({ error: err });
-}
-  }
+   
 };
 export default userController;

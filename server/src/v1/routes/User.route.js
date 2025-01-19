@@ -21,6 +21,10 @@ router.delete(
 );
 router.post("/finance/create",authMiddleware,userController.createFinance)
 router.get("/getFinance",authMiddleware,userController.getFinance)
+router.get("/getgoals",authMiddleware,userController.getGoals)
+router.get("/createassets",authMiddleware,userController.createAssets)
+router.get("/createliability",authMiddleware,userController.createLiability)
+router.post("/creategoals",authMiddleware,userController.createGoal)
 
 
 
