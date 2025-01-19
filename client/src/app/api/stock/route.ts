@@ -26,6 +26,7 @@ export async function GET(req: Request) {
           changePercent: data.regularMarketChangePercent,
         };
       } catch (err) {
+        console.log(err)
         return { symbol, error: "Failed to fetch data." };
       }
     };

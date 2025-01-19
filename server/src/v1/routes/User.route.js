@@ -19,31 +19,9 @@ router.delete(
   authMiddleware,
   userController.deleteQuestion
 );
-router.post("/create-test", authMiddleware, userController.createTest);
-router.get("/get-mytest", authMiddleware, userController.getMyTests);
-router.get("/get-alltest", userController.getAllTests);
-router.delete("/delete-test/:id", authMiddleware, userController.deleteTest);
-router.post("/create-taskset", authMiddleware, userController.createTaskSet);
-router.get(
-  "/get-taskset/:taskSetId",
-  authMiddleware,
-  userController.getTaskSet
-);
+router.post("/finance/create",authMiddleware,userController.createFinance)
+router.get("/getFinance",authMiddleware,userController.getFinance)
 
-router.post(
-  "/start-taskset/:taskSetId",
-  authMiddleware,
-  userController.startTaskSet
-);
-router.post(
-  "/complete-task/:taskId",
-  authMiddleware,
-  userController.completeTask
-);
-router.post(
-  "/track-taskset-progress/:taskSetId",
-  authMiddleware,
-  userController.getUserTaskSetProgress
-);
+
 
 export default router;

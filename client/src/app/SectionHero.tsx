@@ -5,7 +5,7 @@ import Navbar from "./Navbar";
 import { Typewriter } from "react-simple-typewriter";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
-import img1 from "../../public/img1.jpg";
+import img1 from "../../images/finance.png"
 import {
   ArrowRightSquare,
   ChefHat,

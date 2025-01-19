@@ -216,348 +216,66 @@ const userController = {
       res.status(500).json({ error: err });
     }
   },
-  async createTest(req, res, next) {
-    try {
-      const userId = req.user.id;
-      const user = await prisma.user.findUnique({
-        where: { id: userId },
-      });
-
-      if (user.role !== "Mentor") {
-        return res.status(403).json({ error: "Only mentors can create tests" });
-      }
-
-      const { title, questions } = req.body;
-
-      const test = await prisma.test.create({
-        data: {
-          title,
-          userId,
-          questions: {
-            create: questions.map((question) => ({
-              text: question.text,
-              options: {
-                create: question.options.map((option) => ({
-                  text: option.text,
-                  score: option.score,
-                })),
-              },
-            })),
-          },
+  async createFinance(req,res,next){
+    try{
+     
+      const {age,name,majorexp,minorexp,loanammount,profession,salary,loans,emi} = req.body
+      console.log(req.user)
+      await prisma.user.update({
+        where:{
+          id:req.user.id
         },
-      });
-
-      res.status(201).json(test);
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ error: err.message });
-    }
-  },
-  async getAllTests(req, res, next) {
-    try {
-      const tests = await prisma.test.findMany({
-        include: {
-          questions: {
-            include: {
-              options: true,
-            },
-          },
-          mentor: true,
-        },
-      });
-
-      res.status(200).json(tests);
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ error: err.message });
-    }
-  },
-
-  async getMyTests(req, res, next) {
-    try {
-      const userId = req.user.id;
-      console.log(userId, "userid");
-      const tests = await prisma.test.findMany({
-        where: { userId },
-        include: {
-          questions: {
-            include: {
-              options: true,
-            },
-          },
-        },
-      });
-
-      res.status(200).json(tests);
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ error: err.message });
-    }
-  },
-
-  async deleteTest(req, res, next) {
-    try {
-      const userId = req.user.id;
-
-      if (!userId) {
-        res.json({
-          message: "User ID is missing or undefined in req.user",
-        });
-        return;
-      }
-
-      const user = await prisma.user.findFirst({
-        where: {
-          id: userId,
-        },
-      });
-
-      if (!user) {
-        res.json({
-          message: "User does not exist",
-        });
-        return;
-      }
-
-      const test = await prisma.test.findFirst({
-        where: {
-          id: req.params.id,
-        },
-      });
-
-      if (!test) {
-        res.json({
-          message: "Test does not exist",
-        });
-        return;
-      }
-
-      if (test.userId !== userId) {
-        res.json({
-          message: "Not the owner of this test",
-        });
-        return;
-      }
-
-      await prisma.test.delete({
-        where: {
-          id: req.params.id,
-        },
-      });
-
-      res.json({
+        data:{
+          age:age,
+          name:name
+        }
+      })
+      const finance = await prisma.finance.create({
+        
+        data:{
+          userId:req.user.id,
+          majorExp:majorexp,
+          minorExp:minorexp,
+          monthlyExp:majorexp+minorexp,
+          profession:profession,
+          monthlyIncome:salary,
+          numberofloans:loans,
+          loanAmmount:loanammount,
+          emiAmmount:emi
+        }
+      })
+      res.status(201).json({
         success: true,
-        message: "Test deleted successfully",
+        finance,
       });
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ error: err.message });
+      
+      } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: err });
+      
     }
   },
-  async createTaskSet(req, res, next) {
-    const { name, tasks } = req.body;
-    const userId = req.user.id;
-
-    try {
-      const user = await prisma.user.findUnique({
-        where: { id: userId },
-      });
-
-      if (user.role !== "Mentor") {
-        return res
-          .status(403)
-          .json({ error: "Only mentors can create task sets" });
-      }
-
-      const taskSet = await prisma.taskSet.create({
-        data: {
-          name,
-          tasks: {
-            create: tasks.map((task, index) => ({
-              title: task.title,
-              description: task.description,
-              day: index + 1,
-              status:"incomplete"
-            })),
-          },
-        },
-      });
-
-      res.json(taskSet);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-  },
-  async startTaskSet(req, res, next) {
-    const { taskSetId } = req.params;
-    const userId = req.user.id;
-
-    try {
-      const taskSet = await prisma.taskSet.findUnique({
-        where: { id: taskSetId },
-      });
-
-      if (!taskSet) {
-        return res.status(404).json({ error: "TaskSet not found" });
-      }
-
-      const existingUserTaskSet = await prisma.userTaskSet.findFirst({
-        where: { userId, taskSetId },
-      });
-
-      if (existingUserTaskSet) {
-        return res
-          .status(400)
-          .json({ error: "User has already started this TaskSet" });
-      }
-
-      const userTaskSet = await prisma.userTaskSet.create({
-        data: {
-          userId,
-          taskSetId,
-          startDate: new Date(),
-        },
-      });
-
-      res.json(userTaskSet);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-  },
-  async getTaskSet(req, res, next) {
-    const { taskSetId } = req.params;
-    const userId = req.user.id;
-
-    try {
-      const taskSet = await prisma.taskSet.findUnique({
-        where: { id: taskSetId },
-        include: {
-          tasks: true,
-        },
-      });
-
-      if (!taskSet) {
-        return res.status(404).json({ error: "TaskSet not found" });
-      }
-
-      const UserTaskSet = await prisma.userTaskSet.findFirst({
-        where: { userId, taskSetId },
-        include: {
-          taskSet: {
-            include: {
-              tasks: true,
-            },
-          },
-        },
-      });
-
-      res.json(UserTaskSet);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-  },
-  async completeTask(req, res, next) {
-    const { taskId } = req.params;
-    const userId = req.user.id;
-
-    try {
-      const task = await prisma.task.findUnique({
-        where: { id: taskId },
-      });
-
-      if (!task) {
-        return res.status(404).json({ error: "Task not found" });
-      }
-
-      const userTaskSet = await prisma.userTaskSet.findFirst({
-        where: {
-          userId,
-          taskSetId: task.taskSetId,
-        },
-      });
-
-      // console.log("ttttttt",userTaskSet);
-
-      if (!userTaskSet) {
-        return res
-          .status(400)
-          .json({ error: "User has not started this TaskSet" });
-      }
-
-      const today = new Date();
-      const taskDate = new Date(userTaskSet.startDate);
-      taskDate.setDate(taskDate.getDate() + task.day - 1);
-
-      if (today.toDateString() !== taskDate.toDateString()) {
-        return res.status(400).json({
-          error: "This task can only be completed on the assigned day",
-        });
-      }
-
-      // const existingCompletion = await prisma.taskCompletion.findFirst({
-      //   where: { userTaskSetId: userTaskSet.id, taskId },
-      // });
-
-      // if (existingCompletion) {
-      //   return res.status(400).json({ error: "Task is already completed" });
-      // }
-
-      // const taskCompletion = await prisma.taskCompletion.create({
-      //   data: {
-      //     userTaskSetId: userTaskSet.id,
-      //     taskId,
-      //     completedAt: new Date(),
-      //   },
-      // });
- await prisma.task.update({
-        where: { id: taskId },
-        data: { status: "completed" },
-      });
-      res.json(task);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-  },
-  async getUserTaskSetProgress(req, res, next) {
-    const { taskSetId } = req.params;
-    const userId = req.user.id;
-
-    try {
-      const userTaskSet = await prisma.userTaskSet.findFirst({
-        where: {
-          userId,
-          taskSetId,
-        },
-        include: {
-          taskSet: {
-            include: {
-              tasks: true,
-            },
-          },
-          completedTasks: true,
-        },
-      });
-
-      if (!userTaskSet) {
-        return res.status(404).json({ error: "TaskSet not found for user" });
-      }
-
-      const completedTasks = userTaskSet.completedTasks.map(
-        (task) => task.taskId
-      );
-      const progress = userTaskSet.taskSet.tasks.map((task) => ({
-        ...task,
-        completed: completedTasks.includes(task.id),
-      }));
-
-      res.json({
-        taskSet: userTaskSet.taskSet.name,
-        startDate: userTaskSet.startDate,
-        progress,
-      });
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-  },
+  async getFinance(req,res,next){
+try{
+const userId = req.user.id
+const financeData = await prisma.finance.findFirst({
+  where:{
+    userId:userId
+  }
+})
+if(!financeData){
+  res.status(400).json({
+ error:"data not found"
+  })
+}
+res.status(200).json({
+  success:true,
+  message:financeData
+})
+}catch(err){
+  console.log(err)
+  res.status(500).json({ error: err });
+}
+  }
 };
 export default userController;

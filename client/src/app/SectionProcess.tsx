@@ -1,6 +1,8 @@
 "use client";
+
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import processData from "../data/ProcessData";
 
 function SectionProcess() {
@@ -21,10 +23,22 @@ function SectionProcess() {
   return (
     <div className="lg:p-20 pb-10 pt-5 mt-20 bg-[#F8F9FD]">
       <div className="text-center flex mt-10 flex-col gap-5">
-        <div className="font-bold text-4xl text-[#00173C]">Our Process</div>
-        <div className="text-[#576A8A]">
+        <motion.div
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="font-bold text-4xl text-[#00173C]"
+        >
+          Our Process
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="text-[#576A8A]"
+        >
           A Simplified Approach to Financial Freedom
-        </div>
+        </motion.div>
       </div>
       {isDesktop ? <DesktopProcess /> : <MobileProcess />}
     </div>
@@ -58,24 +72,28 @@ const DesktopProcess = () => {
       {processData.map((process, index) => {
         const isEven = index % 2 === 0;
         return (
-          <div
+          <motion.div
             key={index}
             className={`section grid grid-cols-3 max-w-7xl mx-auto mt-20 ${
               activeSection === index + 1 ? "text-[#00173C]" : "text-[#AFB8C9]"
             }`}
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: index * 0.3 }}
           >
             {isEven ? (
               <>
-                <div className="">
+                <motion.div>
                   <Image
                     src={process.imageUrl}
                     className="rounded-3xl"
                     alt=""
                     width={300}
                   />
-                </div>
+                </motion.div>
                 <div className="flex flex-col items-center gap-4">
-                  <div
+                  <motion.div
                     className={`text-6xl ${
                       activeSection === index + 1
                         ? "text-[#00173C]"
@@ -83,28 +101,36 @@ const DesktopProcess = () => {
                     }`}
                   >
                     {String(index + 1).padStart(2, "0")}
-                  </div>
-                  <span
+                  </motion.div>
+                  <motion.span
                     className={`w-[4px] h-full ${
                       activeSection === index + 1
                         ? "bg-blue-400"
                         : "bg-[#AFB8C9]"
                     }`}
-                  ></span>
+                  ></motion.span>
                 </div>
                 <div className="flex flex-col gap-5">
-                  <div className="font-bold text-3xl">{process.title}</div>
-                  <div className="text-[#576A8A]">{process.description}</div>
+                  <motion.div className="font-bold text-3xl">
+                    {process.title}
+                  </motion.div>
+                  <motion.div className="text-[#576A8A]">
+                    {process.description}
+                  </motion.div>
                 </div>
               </>
             ) : (
               <>
                 <div className="flex flex-col gap-5">
-                  <div className="font-bold text-3xl">{process.title}</div>
-                  <div className="text-[#576A8A]">{process.description}</div>
+                  <motion.div className="font-bold text-3xl">
+                    {process.title}
+                  </motion.div>
+                  <motion.div className="text-[#576A8A]">
+                    {process.description}
+                  </motion.div>
                 </div>
                 <div className="flex flex-col items-center gap-4">
-                  <div
+                  <motion.div
                     className={`text-6xl ${
                       activeSection === index + 1
                         ? "text-[#00173C]"
@@ -112,26 +138,26 @@ const DesktopProcess = () => {
                     }`}
                   >
                     {String(index + 1).padStart(2, "0")}
-                  </div>
-                  <span
+                  </motion.div>
+                  <motion.span
                     className={`w-[4px] h-full ${
                       activeSection === index + 1
                         ? "bg-blue-400"
                         : "bg-[#AFB8C9]"
                     }`}
-                  ></span>
+                  ></motion.span>
                 </div>
-                <div className="">
+                <motion.div>
                   <Image
                     src={process.imageUrl}
                     className="rounded-3xl"
                     alt=""
                     width={300}
                   />
-                </div>
+                </motion.div>
               </>
             )}
-          </div>
+          </motion.div>
         );
       })}
     </>
@@ -162,14 +188,18 @@ const MobileProcess = () => {
     <div className="w-[90%] mx-auto">
       {processData.map((process, index) => {
         return (
-          <div
+          <motion.div
             key={index}
             className={`section flex mt-20 gap-5 ${
               activeSection === index + 1 ? "text-[#00173C]" : "text-[#AFB8C9]"
             }`}
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: index * 0.3 }}
           >
             <div className="flex flex-col items-center gap-4">
-              <div
+              <motion.div
                 className={`text-6xl ${
                   activeSection === index + 1
                     ? "text-[#00173C]"
@@ -177,23 +207,27 @@ const MobileProcess = () => {
                 }`}
               >
                 {String(index + 1).padStart(2, "0")}
-              </div>
-              <span
+              </motion.div>
+              <motion.span
                 className={`w-[4px] h-full ${
                   activeSection === index + 1 ? "bg-blue-400" : "bg-[#AFB8C9]"
                 }`}
-              ></span>
+              ></motion.span>
             </div>
             <div className="w-full flex flex-col gap-5">
-              <div className="flex flex-col gap-5">
-                <div className="font-bold text-3xl">{process.title}</div>
-                <div className="text-[#576A8A]">{process.description}</div>
-              </div>
-              <div className="">
+              <motion.div className="flex flex-col gap-5">
+                <motion.div className="font-bold text-3xl">
+                  {process.title}
+                </motion.div>
+                <motion.div className="text-[#576A8A]">
+                  {process.description}
+                </motion.div>
+              </motion.div>
+              <motion.div>
                 <Image src={process.imageUrl} className="rounded-3xl" alt="" />
-              </div>
+              </motion.div>
             </div>
-          </div>
+          </motion.div>
         );
       })}
     </div>

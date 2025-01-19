@@ -1,22 +1,31 @@
-import React, { FC } from "react";
-import Sidebar from "./_components/sidebar";
-import { Suspense } from "react";
-import Loading from "./_components/Loader";
-interface PageProps {
-  children: React.ReactNode;
+
+"use client";
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+
+import { SidebarProvider } from "../../context/SidebarContext"
+import { ThemeProvider } from "../../context/ThemeContext"
+const inter = Inter({ subsets: ["latin"] });
+const MAX_TOAST_LIMIT = 1;
+export default function RootLayout({
+    children,
+}: Readonly<{
+    children: React.ReactNode;
+}>) {
+
+    return (
+        <html lang="en">
+            <title>FinTrade</title>
+            <body className={inter.className}>
+                <ThemeProvider>
+                    <SidebarProvider>
+
+                        {children}
+
+
+                    </SidebarProvider>
+                </ThemeProvider>
+            </body>
+        </html>
+    );
 }
-
-const Layout: FC<PageProps> = ({ children }) => {
-  return (
-    <div className="flex h-screen">
-      <div className="flex-none hidden lg:block">
-        {/* <Suspense fallback={<Loading />}>
-          <Sidebar />
-        </Suspense> */}
-      </div>
-      <div className="flex-grow overflow-auto p-1">{children}</div>
-    </div>
-  );
-};
-
-export default Layout;

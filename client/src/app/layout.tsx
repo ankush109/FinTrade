@@ -9,7 +9,8 @@ import ReactQueryProvider from "./_middlewares/ReactQueryProvider";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { useEffect } from "react";
 import toast, { Toaster, useToasterStore } from "react-hot-toast";
-
+import {SidebarProvider} from "../context/SidebarContext"
+import {ThemeProvider} from "../context/ThemeContext"
 const inter = Inter({ subsets: ["latin"] });
 const MAX_TOAST_LIMIT = 1;
 export default function RootLayout({
@@ -29,6 +30,8 @@ export default function RootLayout({
     <html lang="en">
       <title>FinTrade</title>
       <body className={inter.className}>
+      <ThemeProvider>
+      <SidebarProvider>
         <ReactQueryProvider>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <Toaster
@@ -40,6 +43,8 @@ export default function RootLayout({
           </LocalizationProvider>
           <ReactQueryDevtools initialIsOpen={false} position="bottom" />
         </ReactQueryProvider>
+        </SidebarProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

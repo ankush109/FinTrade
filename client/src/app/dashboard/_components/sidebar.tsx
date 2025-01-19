@@ -1,154 +1,146 @@
 "use client";
-import { fetchMyEvents, fetchevents } from "@/api/ngo";
-import { GetUserQuery } from "@/api/user";
-import { Tooltip } from "@mui/material";
-import {
-  Calendar,
-  Home,
-  LayoutDashboard,
-  Settings,
-  SquareMenu,
-  BookOpenCheck,
-  FilePlus,
-  ReceiptText,
-  MessageCircleIcon,
-} from "lucide-react";
+import React from "react";
+import { RiDashboardLine, RiShoppingBasketLine } from "react-icons/ri";
+import { FaArrowRight } from "react-icons/fa";
+import { FaTruckArrowRight } from "react-icons/fa6";
+import { MdOutlinePayment, MdOutlineSecurity } from "react-icons/md";
+import { GoPeople } from "react-icons/go";
+import { TbMessageShare, TbLogout2 } from "react-icons/tb";
+import { LiaFileInvoiceDollarSolid } from "react-icons/lia";
+import { BsGraphUpArrow } from "react-icons/bs";
+import { IoSettingsOutline } from "react-icons/io5";
+import { IoIosHelpCircleOutline } from "react-icons/io";
+import ThemeToggleButton from "./ThemeToggleButton";
+import { useSidebar } from "../../../context/SidebarContext";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
-import Loading from "./Loader";
-import Event from "../NGO/allEvents/components/Event";
 
-function Sidebar() {
-  const getUserDetails = GetUserQuery();
-  const [events, setEvents] = useState([]);
-
-  const [myevents, setMyEvents] = useState([]);
-  const {
-    isLoading: EventLoading,
-    data: eventdata,
-    isError: EventError,
-  } = fetchevents();
-
-  const {
-    isLoading: MyEventLoading,
-    data: myeventdata,
-    isError: MyEventError,
-  } = fetchMyEvents();
-
-  useEffect(() => {
-    if (!EventLoading) {
-      setEvents(eventdata.message);
-    }
-    if (!MyEventLoading) {
-      setMyEvents(myeventdata.message);
-    }
-  }, [EventLoading, MyEventLoading]);
-  if (EventError || MyEventError) {
-    return (
-      <div>
-        <div>Error Loading ...</div>
+const SidebarItem = ({ href = "#", icon, label, isSidebarExpanded }) => (
+  <Link href={href}>
+    <li className="flex items-center justify-center w-full px-3">
+      <div
+        className={`hover:bg-[#696FFB3D] hover:cursor-pointer hover:text-[#696FFB] px-3 py-1 rounded-md flex flex-row space-x-2 ${
+          isSidebarExpanded ? "justify-start w-full" : "justify-center"
+        }`}
+      >
+        <span className="text-2xl">{icon}</span>
+        {isSidebarExpanded && <span className="font-bold">{label}</span>}
       </div>
-    );
-  }
-  if (EventLoading || MyEventLoading) {
-    return <Loading />;
-  }
-  // const checkExistence = (id) => {
-  //   return myevents.some((ev) => ev.id === id);
-  // };
-  // const getUserDetails = GetUserQuery();
+    </li>
+  </Link>
+);
+
+const Sidebar = () => {
+  const { isSidebarExpanded, toggleSidebar } = useSidebar();
+
+  const firstSectionItems = [
+    { icon: <RiDashboardLine />, label: "Dashboard", link: "/dashboard" },
+    { icon: <MdOutlinePayment />, label: "Stock", link: "/dashboard/stock" },
+    { icon: <GoPeople />, label: "Customers", link: "/customers" },
+    { icon: <TbMessageShare />, label: "Messages", link: "/messages" },
+  ];
+
+  const secondSectionItems = [
+    { icon: <RiShoppingBasketLine />, label: "Products", link: "/products" },
+    { icon: <LiaFileInvoiceDollarSolid />, label: "Invoice", link: "/invoice" },
+    { icon: <BsGraphUpArrow />, label: "Analytics", link: "/analytics" },
+  ];
+
+  const thirdSectionItems = [
+    { icon: <IoSettingsOutline />, label: "Settings", link: "/settings" },
+    { icon: <MdOutlineSecurity />, label: "Security", link: "/security" },
+    { icon: <IoIosHelpCircleOutline />, label: "Help", link: "/help" },
+  ];
+
   return (
-    <div className="flex">
-      <div className="flex flex-col gap-10 p-5 h-screen bg-stone-900">
-        <Tooltip title="Dashboard">
-          {getUserDetails?.data?.role !== "Mentor" ? (
-            <>
-              <Link href="/dashboard">
-                <LayoutDashboard className="text-white" />
-              </Link>
-            </>
+    <aside
+      className={`fixed top-0 left-0 h-full border-r border-[#00000029] dark:border-[#1F214A] bg-white dark:bg-[#1F214A] transition-all duration-300 ${
+        isSidebarExpanded ? "w-44" : "w-16"
+      }`}
+    >
+      <div className="flex flex-col items-center py-4 space-y-4">
+        <button
+          onClick={toggleSidebar}
+          className="text-black dark:text-white w-full flex items-center justify-center"
+        >
+          {isSidebarExpanded ? (
+            <div className="text-2xl">
+              <span className="text-blue-400 font-semibold">Prime</span>Dash
+            </div>
           ) : (
-            <Link href="/dashboard/mentor-meetings">
-              <LayoutDashboard className="text-white" />
-            </Link>
+            <div className="flex flex-row space-x-1 items-end">
+              <FaTruckArrowRight className="text-3xl" />
+              <FaArrowRight className="text-xs pb-1" />
+            </div>
           )}
-        </Tooltip>
-        <Tooltip title="Home">
-          <Link href="/">
-            <Home className="text-white" />
-          </Link>
-        </Tooltip>
-        <Tooltip title="Calender">
-          <Link href="/dashboard/faq">
-            <MessageCircleIcon className="text-white" />
-          </Link>
-        </Tooltip>
-        <Tooltip title="Meetings">
-          {getUserDetails?.data?.role === "Mentor" ? (
-            <Link href="/dashboard/mentor-meetings">
-              {" "}
-              <SquareMenu className="text-white" />
-            </Link>
-          ) : (
-            <Link href="/dashboard/meeting">
-              {" "}
-              <SquareMenu className="text-white" />
-            </Link>
-          )}
-        </Tooltip>
-        {getUserDetails?.data?.role === "User" ? (
-          <>
-            <Tooltip title="My Tasks">
-              <Link href="/dashboard/dailytask" className="text-white">
-                <BookOpenCheck className="text-white" />
-              </Link>
-            </Tooltip>
-            <Tooltip title="create NGO evets">
-              <Link href="/dashboard/NGO/createEvent" className="text-white">
-                <FilePlus className="text-white" />
-              </Link>
-            </Tooltip>
-          </>
-        ) : (
-          <></>
-        )}
-        <Tooltip title="all NGO evets">
-          <Link href="/dashboard/NGO/allEvents" className="text-white">
-            <ReceiptText className="text-white" />
-          </Link>
-        </Tooltip>
-        <Tooltip title="Settings">
-          <Settings className="text-white" />
-        </Tooltip>
-      </div>
-      <div className=" min-w-[400px] h-screen overflow-hidden mx-auto flex flex-col  items-center bg-slate-200">
-        <div className="primary-container mt-4 ">
-          <div className="text-center font-serif text-4xl">All Ngo Events</div>
+        </button>
 
-          <div className="grid grid-cols-1 p-4 items-center justify-center gap-10">
-            {events?.length > 0 ? (
-              events.slice(-2).map((ev: any) => (
-                <Event
-                  key={ev.id}
-                  id={ev.id}
-                  name={ev.name!}
-                  description={ev?.description!}
-                  funding={ev.funding!}
-                  location={ev.location!}
-                  startDate={
-                    ev.date && ev.date[0] && ev.date[0].date.substr(0, 10)!
-                  }
-                  // d_option={checkExistence(ev.id)}
-                />
-              ))
-            ) : (
-              <div>No events to display</div>
-            )}
-          </div>
+        <div className="w-full mt-8 flex flex-col">
+          {/* First Section */}
+          <ul className="flex flex-col items-center space-y-2 text-gray-600 dark:text-white border-b border-[#00000029] dark:border-[#FFFFFF29] pb-2">
+            {firstSectionItems.map((item, index) => (
+              <SidebarItem
+                href={item.link || "#"}
+                key={index}
+                icon={item.icon}
+                label={item.label}
+                isSidebarExpanded={isSidebarExpanded}
+              />
+            ))}
+          </ul>
+
+          {/* Second Section */}
+          <ul className="flex flex-col items-center space-y-2 text-gray-600 dark:text-white border-b border-[#00000029] dark:border-[#FFFFFF29] pb-2 pt-2">
+            {secondSectionItems.map((item, index) => (
+              <SidebarItem
+                href={item.link || "#"}
+                key={index}
+                icon={item.icon}
+                label={item.label}
+                isSidebarExpanded={isSidebarExpanded}
+              />
+            ))}
+          </ul>
+
+          {/* Third Section */}
+          <ul className="flex flex-col items-center space-y-2 text-gray-600 dark:text-white border-b border-[#00000029] dark:border-[#FFFFFF29] pb-2 pt-2">
+            {thirdSectionItems.map((item, index) => (
+              <SidebarItem
+                href={item.link || "#"}
+                key={index}
+                icon={item.icon}
+                label={item.label}
+                isSidebarExpanded={isSidebarExpanded}
+              />
+            ))}
+          </ul>
+
+          {/* Logout Section */}
+          <ul className="flex flex-col items-center space-y-2 text-gray-600 dark:text-white pb-2 pt-2">
+            <SidebarItem
+              icon={<TbLogout2 />}
+              label="Log Out"
+              isSidebarExpanded={isSidebarExpanded}
+            />
+          </ul>
+
+          {/* Theme Toggle */}
+          {!isSidebarExpanded ? (
+            <div className="flex justify-center items-center fixed bottom-0 py-1 px-3">
+              <ThemeToggleButton />
+            </div>
+          ) : (
+            <div className="flex justify-center items-center fixed bottom-0 py-1 px-3">
+              <div className="flex justify-between items-center text-sm text-gray-600 dark:text-white">
+                <span className="m-2">Light</span>
+                <ThemeToggleButton />
+                <span className="m-2">Dark</span>
+              </div>
+            </div>
+          )}
         </div>
       </div>
-    </div>
+    </aside>
   );
-}
+};
 
 export default Sidebar;
