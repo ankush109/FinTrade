@@ -77,7 +77,9 @@ function LoginForm() {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="font-semibold text-gray-700">Email</FormLabel>
+                <FormLabel className="font-semibold text-gray-700">
+                  Email
+                </FormLabel>
                 <FormControl>
                   <Input
                     placeholder="Enter your email"
@@ -96,7 +98,9 @@ function LoginForm() {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="font-semibold text-gray-700">Password</FormLabel>
+                <FormLabel className="font-semibold text-gray-700">
+                  Password
+                </FormLabel>
                 <FormControl>
                   <Input
                     placeholder="Enter your password"
