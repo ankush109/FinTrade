@@ -22,10 +22,12 @@ router.delete(
 router.post("/finance/create",authMiddleware,userController.createFinance)
 router.get("/getFinance",authMiddleware,userController.getFinance)
 router.get("/getgoals",authMiddleware,userController.getGoals)
-router.get("/createassets",authMiddleware,userController.createAssets)
+router.post("/createassets",authMiddleware,userController.createAssets)
 router.get("/createliability",authMiddleware,userController.createLiability)
 router.post("/creategoals",authMiddleware,userController.createGoal)
-
+router.get("/getassets",authMiddleware,userController.getassets)
+router.post("/createexpense",authMiddleware,userController.createUpdateExpense)
+router.get("/getexpense",authMiddleware,userController.getExpenses)
 
 
 export default router;

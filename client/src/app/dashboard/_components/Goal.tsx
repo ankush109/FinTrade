@@ -23,16 +23,19 @@ const GoalCard = ({ goal }) => {
         
         <div className="bg-white dark:bg-[#1F214A] dark:border-[#1F214A] dark:text-white border-2 border-gray-200 p-4 rounded-lg ">
     
+            <div className='flex justify-between'>
             <h3 className="text-xl font-bold mb-4">{goal.name}</h3>
-            <p className="text-sm text-gray-600 mb-4">
-                Goal Type:{" "}
-                <span className="font-medium">
+            <span className="font-medium text-blue-400">
                     {goal.type === "LONG_TERM" ? "Long Term" : "Short Term"}
                 </span>
-            </p>
+            </div>
             <p className="text-sm text-gray-600 mb-4">
-                Target Amount:{" "}
-                <span className="font-medium text-blue-600">{goal.money}</span>
+            
+             
+            </p>
+            <p className="text-lg text-gray-600 mb-4">
+          
+                <span className="font-medium text-blue-600">₹{goal.money}</span>
             </p>
            
             <div className='flex justify-end'>

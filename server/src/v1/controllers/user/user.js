@@ -219,7 +219,7 @@ const userController = {
   async createFinance(req,res,next){
     try{
      
-      const {age,name,majorexp,minorexp,loanammount,profession,salary,loans,emi} = req.body
+      const {age,name,majorexp,minorexp,loanammount,profession,salary,loans,emi,savings} = req.body
       console.log(req.user)
       await prisma.user.update({
         where:{
@@ -237,6 +237,7 @@ const userController = {
           majorExp:majorexp,
           minorExp:minorexp,
           monthlyExp:majorexp+minorexp,
+          totalSaving:savings,
           profession:profession,
           monthlyIncome:salary,
           numberofloans:loans,
@@ -283,10 +284,12 @@ const userController = {
   
   async createAssets(req,res,next){
     try{
-      const {type,ammount,duration} =req.body
+      const {type,name,ammount,duration} =req.body
       const assets = await prisma.assets.create({
         data:{
           userId:req.user.id,
+          name:name,
+
           duration:duration,
           ammount:ammount,
           type:type
@@ -298,6 +301,7 @@ const userController = {
         message:assets
       })
     }catch(err){
+      console.log(err,"err in assets")
       res.status(400).json({
         error:"data not found"
          })
@@ -372,7 +376,90 @@ const userController = {
          })
        
     }
+  },
+  async getassets(req,res,next){
+    try{
+      
+      const assets = await prisma.assets.findMany({
+        where:{
+          userId:req.user.id
+        }
+      })
+      console.log(assets,"liability")
+      res.status(201).json({
+        success:true,
+        message:assets
+      })
+    }catch(err){
+      console.log(err,"err")
+      res.status(400).json({
+        error:"data not found"
+         })
+       
+    }
+  },
+  async createUpdateExpense(req, res, next) {
+    try {
+      const { name, date, price } = req.body; // Extract data from request body
+      const userId = req.user.id; // Assume user ID is available in `req.user`
+  
+      // Extract the month from the provided date
+      const month = new Date(date).toLocaleString('default', { month: 'long' });
+  
+      // Check if an expense for the given month already exists
+    
+  
+      let result;
+  
+
+        // Create a new expense if the month does not exist
+        result = await prisma.expense.create({
+          data: {
+            name,
+            month,
+            date: new Date(date), // Ensure date is a valid Date object
+            price,
+            userId,
+          },
+        });
+      
+  
+      res.status(201).json({
+        success: true,
+        message: result,
+      });
+    } catch (err) {
+      console.log(err, 'Error');
+      res.status(400).json({
+        success: false,
+        error: 'Unable to process the expense',
+      });
+    }
+  },
+  async getExpenses(req, res, next) {
+    try {
+      const expenses = await prisma.expense.findMany({
+        where: {
+          userId: req.user.id, // Filter by user ID
+        },
+        orderBy: {
+          date: 'desc', // Sort expenses by date in descending order (most recent first)
+        },
+      });
+  
+      res.status(200).json({
+        success: true,
+        message: expenses,
+      });
+    } catch (err) {
+      console.error(err, 'Error');
+      res.status(400).json({
+        success: false,
+        error: 'Unable to retrieve expenses',
+      });
+    }
   }
+    
    
 };
 export default userController;

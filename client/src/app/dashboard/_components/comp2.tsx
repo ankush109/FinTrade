@@ -28,13 +28,13 @@ const Comp2: React.FC = () => {
  
  }
   return (
-    <div className="w-1/2 ">
+    <div className=" ">
     
       <div className="bg-white dark:bg-[#1F214A] dark:border-[#1F214A] dark:text-white border-2 border-gray-200 p-4 rounded-lg ">
        
         <Dialog>
-        <div className="flex items-end">
-        <DialogTrigger className="bg-blue-400 rounded-md text-white p-2 m-2 justify-end flex">Add new Goal</DialogTrigger>
+        <div className="flex ">
+        <DialogTrigger className="bg-blue-600  rounded-md text-white p-2 m-2 justify-end flex">Add new Goal</DialogTrigger>
         </div>
           <DialogContent>
             <DialogHeader>
@@ -131,16 +131,7 @@ const Comp2: React.FC = () => {
 
           </DialogContent>
         </Dialog>
-
-        <LinearProgressBar
- text="Goals"
- percentage={20}
- textStyle={{
-   color: 'black',
-   fontSize: '1rem',
-   fontStyle: 'italic'
- }}
-/>
+   
       </div>
     </div>
   );

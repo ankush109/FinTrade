@@ -36,7 +36,25 @@ export const createGoal = async(formdata)=>{
     const {data} = await api.post("/user/creategoals",formdata);
     return data
 }
-  
+export const getassets = async()=>{
+  const {data} = await api.get("/user/getassets");
+  return data
+}
+export const createAsset = async(formdata)=>{
+    
+    const {data} = await api.post("/user/createassets",formdata);
+    return data
+}
+export const getexpense = async()=>{
+    
+  const {data} = await api.get("/user/getexpense");
+  return data
+}
+export const createExpense = async(formdata)=>{
+    
+  const {data} = await api.post("/user/createexpense",formdata);
+  return data
+}
 export const getmygoals = () =>
   useQuery({
     queryKey: ["get-my-goal"],
@@ -46,3 +64,22 @@ export const getmygoals = () =>
       return res;
     },
   });
+  export const getmyassets = () =>
+    useQuery({
+      queryKey: ["get-my-assets"],
+      queryFn: () => getassets(),
+      select: (data) => {
+        const res = data;
+        return res;
+      },
+    });
+    export const getmyexpense = () =>
+      useQuery({
+        queryKey: ["get-my-expense"],
+        queryFn: () => getexpense(),
+        select: (data) => {
+          const res = data;
+          return res;
+        },
+      });
+    

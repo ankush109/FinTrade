@@ -16,11 +16,18 @@ const Comp1: React.FC = () => {
         isPositive={true}
         comparisonText="Compared to last month"
       />
+       <StatCard
+        title="Total Savings"
+        value={data?.message?.totalSaving}
+        change="12.27%"
+        isPositive={true}
+        comparisonText="Compared to last month"
+      />
       <StatCard
         title="Yearly Income"
         value={
           data?.message?.monthlyIncome
-            ? (parseFloat(data.message.monthlyIncome) * 12).toFixed(2)
+            ? (parseFloat(data?.message?.monthlyIncome) * 12).toFixed(2)
             : "N/A"
         }
         change="2.63%"
@@ -28,15 +35,10 @@ const Comp1: React.FC = () => {
         comparisonText="Compared to last month"
       />
 
-      <StatCard
-        title="Total Monthly Expense"
-        value={data?.message?.majorExp}
-        change="1.46%"
-        isPositive={true}
-        comparisonText="Compared to last month"
-      />
+      
       <StatCard
         title="Number of Loans's"
+        not={true}
         value={data?.message?.numberofloans}
         change="8.75%"
         isPositive={true}

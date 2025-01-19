@@ -5,6 +5,8 @@ import Comp1 from "./_components/comp1";
 import Comp2 from "./_components/comp2";
 import Comp3 from "./_components/comp3";
 import Goal from "./_components/Goal";
+import Assets from "./_components/AssetsManage";
+import Expense from "./_components/Expense";
 
 const App: React.FC = () => {
   const isSidebarExpanded = true
@@ -20,10 +22,11 @@ const App: React.FC = () => {
         }`}
       >
         {/* <Navbar /> */}
-        <div className="flex-1 bg-[#696FFB0A] dark:bg-[#545469] p-4">
+        <div className="flex-1 max-w-7xl mx-auto bg-[#696FFB0A] dark:bg-[#545469] p-4">
          
           <Comp1 />
-         
+         <Assets/>
+         <Expense/>
           <Comp2 />
           <Goal/>
           <Comp3 />

@@ -27,12 +27,24 @@ model User {
   Liability Liability[]
 
   Goal Goal[]
+
+  Expense Expense[]
 }
 
+model Expense {
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  month String
+  date    DateTime
+  price Float
+  user     User?   @relation(fields: [userId], references: [id])
+  userId   String? @db.ObjectId
+}
 model Assets {
   id       String  @id @default(auto()) @map("_id") @db.ObjectId
   type     String
   ammount  String
+  name String
   duration String ?
   user     User?   @relation(fields: [userId], references: [id])
   userId   String? @db.ObjectId
@@ -67,6 +79,7 @@ model Finance {
   loanAmmount   String
   profession    String
   monthlyIncome String
+  totalSaving String
   numberofloans String
   emiAmmount    String
   user          User?   @relation(fields: [userId], references: [id])
