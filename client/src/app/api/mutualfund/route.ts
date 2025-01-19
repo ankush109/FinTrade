@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 
 const KUVERA_API_URL = "https://api.kuvera.in/mf/api/v4/fund_schemes/list.json";
-const MAX_CATEGORIES = 1; // Limit to 3 categories
+const MAX_CATEGORIES = 3; // Limit to 3 categories
 const MAX_FUNDS_PER_CATEGORY = 3; // Limit to 3 funds per category
-const MAX_EQUITY_SUB_CATEGORIES = 4; // Limit to 4 sub-categories under Equity
+const MAX_EQUITY_SUB_CATEGORIES = 3; // Limit to 4 sub-categories under Equity
 
 // Define the type for each mutual fund
 type Fund = {
