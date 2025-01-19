@@ -1,39 +1,55 @@
 "use client";
-import React from "react";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { LinearProgressBar } from "react-percentage-bar";
-import { createAsset } from "../../../api/goals/index";
-import Lottie from 'react-lottie-player'
-
-
-import lottieJson from "../../../assets/finance.json"
+import React, { useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { createAsset, getmyassets } from "../../../api/goals/index";
+import Lottie from "react-lottie-player";
+import lottieJson from "../../../assets/finance.json";
 import toast from "react-hot-toast";
 import AssetData from "./assets";
+
 const Assets: React.FC = () => {
-  const submitForm = async(e) => {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const { refetch } = getmyassets();
+
+  const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = new FormData(e.target);
-    const assetdata = {
+    const formData = new FormData(e.currentTarget);
+    const assetData = {
       name: formData.get("name"),
       ammount: formData.get("investment"),
       type: formData.get("type"),
     };
-    console.log(assetdata);
-    const res = await createAsset(assetdata)
-    if(res.status==200){
-        toast.success("assets create successfuly!")
+
+    try {
+      const res = await createAsset(assetData);
+      if (res.success) {
+        toast.success("Asset created successfully!");
+        refetch();
+        setIsDialogOpen(false); // Close the dialog on success
+      } else {
+        throw new Error("Failed to create asset");
+        setIsDialogOpen(false);
+      }
+    } catch (error) {
+      console.error("Error creating asset:", error);
+      toast.error("Failed to create asset. Please try again.");
     }
   };
 
   return (
     <div className="">
       <div className="bg-white dark:bg-[#1F214A] dark:border-[#1F214A] dark:text-white border-2 border-gray-200 p-6 rounded-lg shadow-md">
-        <Dialog>
-        
-            <DialogTrigger  className="bg-blue-600  rounded-md text-white p-2 m-2 justify-end flex">
+        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+          <DialogTrigger className="bg-blue-600 rounded-md text-white p-2 m-2 justify-end flex">
             Create a new asset
-            </DialogTrigger>
-     
+          </DialogTrigger>
           <DialogContent>
             <DialogHeader>
               <DialogTitle className="text-2xl font-bold text-gray-700 dark:text-white">
@@ -117,25 +133,21 @@ const Assets: React.FC = () => {
           </DialogContent>
         </Dialog>
 
-        
-<div className="flex">
-<div>
-      <Lottie
-   
-   loop
-   animationData={lottieJson}
-   play
-   style={{ width: 300, height: 300 }} // Reduced the width and height
- />
-      </div>
-   <div>
-            <AssetData/>
+        <div className="flex">
+          <div>
+            <Lottie
+              loop
+              animationData={lottieJson}
+              play
+              style={{ width: 300, height: 300 }}
+            />
+          </div>
+          <div>
+            <AssetData />
+          </div>
         </div>
-</div>
-        </div>
-        
       </div>
- 
+    </div>
   );
 };
 

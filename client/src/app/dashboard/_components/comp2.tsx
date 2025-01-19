@@ -1,51 +1,62 @@
-"use client"
-import React from "react";
-
-import { useTheme } from "../../../context/ThemeContext";
+"use client";
+import React, { useState } from "react";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { LinearProgressBar } from "react-percentage-bar";
-import  { createGoal} from "../../../api/goals/index"
-import Comp3 from "./comp3";
+} from "@/components/ui/dialog";
+import { createGoal, getmygoals } from "../../../api/goals/index";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; // Import toast styles
+
 const Comp2: React.FC = () => {
- const submitForm = (e) => {
-  e.preventDefault();
-  const formData = new FormData(e.target);
-  const goalData = {
-    name: formData.get("name"),
-    money: parseFloat(formData.get("money")),
-    investment:formData.get("investment"),
-    type: formData.get("type"),
+  const { refetch } = getmygoals(); // React Query hook
+  const [isDialogOpen, setIsDialogOpen] = useState(false); // State to control dialog visibility
+
+  const submitForm = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.target as HTMLFormElement);
+    const goalData = {
+      name: formData.get("name"),
+      money: parseFloat(formData.get("money") as string),
+      investment: formData.get("investment"),
+      type: formData.get("type"),
+    };
+
+    try {
+      await createGoal(goalData); // Call API to create goal
+      toast.success("Goal created successfully!");
+      refetch(); // Refresh goals
+      setIsDialogOpen(false); // Close dialog
+    } catch (error) {
+      console.error("Error creating goal:", error);
+      toast.error("Failed to create goal. Please try again.");
+      setIsDialogOpen(false); // Close dialog even on failure
+    }
   };
-  console.log(goalData)
-   createGoal(goalData)
- 
- }
+
   return (
     <div className=" ">
-    
       <div className="bg-white dark:bg-[#1F214A] dark:border-[#1F214A] dark:text-white border-2 border-gray-200 p-4 rounded-lg ">
-       
-        <Dialog>
-        <div className="flex ">
-        <DialogTrigger className="bg-blue-600  rounded-md text-white p-2 m-2 justify-end flex">Add new Goal</DialogTrigger>
-        </div>
+        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+          <div className="flex ">
+            <DialogTrigger
+              className="bg-blue-600 rounded-md text-white p-2 m-2 justify-end flex"
+              onClick={() => setIsDialogOpen(true)}
+            >
+              Add new Goal
+            </DialogTrigger>
+          </div>
           <DialogContent>
             <DialogHeader>
               <DialogTitle>Create a new Goal</DialogTitle>
-
             </DialogHeader>
             <div>
-
               <form
                 onSubmit={(e) => {
-                  submitForm(e)
+                  submitForm(e);
                 }}
               >
                 <div className="mb-5">
@@ -83,19 +94,18 @@ const Comp2: React.FC = () => {
                 </div>
                 <div className="mb-5">
                   <label
-                    htmlFor="money"
+                    htmlFor="investment"
                     className="block text-sm font-medium text-gray-700 mb-2"
                   >
-                    How much ammount you want to invest monthly for this goal
+                    Monthly Investment Amount
                   </label>
                   <input
                     type="string"
                     id="investment"
                     name="investment"
-                    step="0.01"
                     required
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="Enter the target amount"
+                    placeholder="Enter the monthly investment amount"
                   />
                 </div>
                 <div className="mb-5">
@@ -128,10 +138,8 @@ const Comp2: React.FC = () => {
                 </div>
               </form>
             </div>
-
           </DialogContent>
         </Dialog>
-   
       </div>
     </div>
   );

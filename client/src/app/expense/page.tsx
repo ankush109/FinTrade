@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { createFinance } from "../../api/finance/index";
 import toast from "react-hot-toast";
 import { GetUserQuery } from "../../api/user/index";
+import { getMyfinance } from "../../api/finance/index";
 import Lottie from "react-lottie-player";
 import { useRouter } from "next/navigation";
 import lo2 from "../../assets/./1.json";
@@ -15,6 +16,8 @@ function Page() {
   const [isSubmitting, setIsSubmitting] = useState(false); // Add a state for submission
 
   const user = GetUserQuery();
+  const { refetch } = getMyfinance();
+
   const questions = [
     "What is your age?",
     "What is your profession?",
@@ -72,6 +75,7 @@ function Page() {
           router.push("/dashboard"); // Navigate to the dashboard after 5 seconds
         }, 5000);
       }
+      refetch();
       toast.success("Finance data submitted successfully!");
     } catch (error) {
       console.error("Error submitting finance data:", error);
@@ -90,9 +94,7 @@ function Page() {
     <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500">
       {/* Background Elements */}
       <BackgroundAnimation />
-      {showGreeting && (
-        <Greeting user={user} />
-      )}
+      {showGreeting && <Greeting user={user} />}
       <AnimatePresence mode="wait">
         {isSubmitting ? (
           <motion.div
@@ -111,14 +113,16 @@ function Page() {
             />
             Generating Dashboard...
           </motion.div>
-        ) : showQuestions && (
-          <QuestionsSection
-            currentQuestion={currentQuestion}
-            questions={questions}
-            answers={answers}
-            handleInputChange={handleInputChange}
-            handleNext={handleNext}
-          />
+        ) : (
+          showQuestions && (
+            <QuestionsSection
+              currentQuestion={currentQuestion}
+              questions={questions}
+              answers={answers}
+              handleInputChange={handleInputChange}
+              handleNext={handleNext}
+            />
+          )
         )}
       </AnimatePresence>
     </div>
@@ -133,7 +137,8 @@ const BackgroundAnimation = () => (
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       style={{
-        background: "radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 80%)",
+        background:
+          "radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 80%)",
       }}
       transition={{ duration: 1 }}
     />
@@ -206,9 +211,13 @@ const QuestionsSection = ({
     >
       <motion.div
         className="h-full bg-indigo-600"
-        style={{ width: `${((currentQuestion + 1) / questions.length) * 100}%` }}
+        style={{
+          width: `${((currentQuestion + 1) / questions.length) * 100}%`,
+        }}
         initial={{ width: 0 }}
-        animate={{ width: `${((currentQuestion + 1) / questions.length) * 100}%` }}
+        animate={{
+          width: `${((currentQuestion + 1) / questions.length) * 100}%`,
+        }}
         transition={{ duration: 0.5 }}
       ></motion.div>
     </motion.div>
@@ -227,10 +236,11 @@ const NextButton = ({ handleNext, currentQuestion, questions }) => {
     <motion.button
       onClick={handleNext}
       disabled={isDisabled}
-      className={`mt-10 px-10 py-4 text-lg font-semibold text-white rounded-full shadow-lg flex items-center gap-2 ${!isDisabled
+      className={`mt-10 px-10 py-4 text-lg font-semibold text-white rounded-full shadow-lg flex items-center gap-2 ${
+        !isDisabled
           ? "bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-300"
           : "bg-gray-400 cursor-not-allowed"
-        }`}
+      }`}
       whileHover={!isDisabled ? { scale: 1.1 } : ""}
       whileTap={!isDisabled ? { scale: 0.95 } : ""}
     >
