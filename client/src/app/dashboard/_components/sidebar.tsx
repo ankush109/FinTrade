@@ -35,7 +35,7 @@ const Sidebar = () => {
   const firstSectionItems = [
     { icon: <RiDashboardLine />, label: "Dashboard", link: "/dashboard" },
     { icon: <MdOutlinePayment />, label: "Stock", link: "/dashboard/stock" },
-    { icon: <GoPeople />, label: "Customers", link: "/customers" },
+    { icon: <GoPeople />, label: "meet", link: "/dashboard/meet" },
     { icon: <TbMessageShare />, label: "Messages", link: "/messages" },
   ];
 
