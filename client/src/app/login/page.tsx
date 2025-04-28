@@ -1,20 +1,19 @@
 import React from "react";
 import LoginForm from "./login.form";
 import Image from "next/image";
-import img1 from "../../../public/img3.jpg";
 
 function Page() {
   return (
-    <div className="flex flex-col md:grid md:grid-cols-2 min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 p-10 text-gray-900">
-      <div className="flex flex-col justify-center px-6 md:px-16">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 h-screen">
+      <div className="">
         <LoginForm />
       </div>
-      <div className="hidden md:flex items-center justify-center">
+      <div className="hidden md:flex p-10 bg-gray-200 items-center justify-center">
         <Image
-          src={img1}
+          src="https://image.mux.com/017Yw7T7QleOQFbHCvL4FHJgZXxbgi003MOxEvUJcqj00I/thumbnail.webp"
           alt="Login Illustration"
-          width={500}
-          height={500}
+          width={800}
+          height={800}
           className="object-contain rounded-lg shadow-lg"
         />
       </div>

@@ -23,6 +23,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { registerUser } from "../../api";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -64,99 +65,99 @@ function RegisterForm() {
   };
 
   return (
-    <div className="w-full max-w-md bg-white p-6 rounded-lg shadow-md">
-      <h1 className="text-2xl font-bold text-center text-gray-800 mb-6">
-        Create Your Account
-      </h1>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Name</FormLabel>
-                <FormControl>
-                  <Input placeholder="Enter your name" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+    <Form {...form}>
+      <div className=" w-full   justify-around h-screen mx-auto p-20 flex flex-col gap-4">
+        <div className="">
+          <h1 className="text-2xl font-bold text-gray-800">Welcome Back</h1>
+          <p className="text-gray-600 text-sm">
+            New to FinTrade ?{" "}
+            <Link href="/register" className="text-indigo-600 font-semibold">
+              Sign Up
+            </Link>{" "}
+          </p>
+        </div>
+        <div>
+          <div
+            className="
+          border border-gray-300  rounded-lg p-2 flex items-center gap-2 cursor-pointer "
+          >
+            <div className="w-full flex gap-4 items-center justify-center rounded-lg">
+              <Image
+                alt="google"
+                width={20}
+                height={20}
+                className="w-5 h-5"
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/2048px-Google_%22G%22_logo.svg.png"
+              />
+              <h1> Continue with google</h1>
+            </div>
+          </div>
+        </div>
+        <div className="flex items-center justify-center gap-2">
+          <div className="h-[1px] w-full bg-gray-300"></div>
+          <p className="text-gray-500">or</p>
+          <div className="h-[1px] w-full bg-gray-300"></div>
+        </div>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex flex-col gap-4"
+        >
+          {/* Email Field */}
           <FormField
             control={form.control}
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel className="font-semibold text-gray-700">
+                  Email
+                </FormLabel>
                 <FormControl>
                   <Input
                     placeholder="Enter your email"
-                    type="email"
                     {...field}
+                    className="w-full border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
                   />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="role"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Role</FormLabel>
-                <FormControl>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select your role" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="User">User</SelectItem>
-                      <SelectItem value="Mentor">Mentor</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+
+          {/* Password Field */}
           <FormField
             control={form.control}
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Password</FormLabel>
+                <FormLabel className="font-semibold text-gray-700">
+                  Password
+                </FormLabel>
                 <FormControl>
                   <Input
                     placeholder="Enter your password"
                     type="password"
                     {...field}
+                    className="w-full border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
                   />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
+
+          {/* Submit Button */}
           <Button
             type="submit"
             disabled={buttonDisabled}
-            className="w-full bg-blue-600 text-white hover:bg-blue-700"
+            className={`w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-lg ${
+              buttonDisabled ? "opacity-50 cursor-not-allowed" : ""
+            }`}
           >
-            Register
+            {buttonDisabled ? "Loading..." : "Login"}
           </Button>
         </form>
-      </Form>
-      <p className="text-sm text-center text-gray-600 mt-4">
-        Already have an account?{" "}
-        <Link href="/login" className="text-blue-600 hover:underline">
-          Login
-        </Link>
-      </p>
-    </div>
+      </div>
+    </Form>
   );
 }
 

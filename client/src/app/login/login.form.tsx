@@ -18,6 +18,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { loginUser } from "@/api";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 const formSchema = z.object({
   email: z.string().email("Invalid email address").min(2, {
@@ -55,22 +56,43 @@ function LoginForm() {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-8 max-w-md mx-auto">
-      {/* Header */}
-      <div className="text-center mb-8">
-        <h1 className="text-3xl font-bold text-gray-800">Welcome Back</h1>
-        <p className="text-gray-600">
-          Please login to your account or{" "}
-          <Link href="/register" className="text-indigo-600 font-semibold">
-            register
-          </Link>{" "}
-          if you don't have one.
-        </p>
-      </div>
-
-      {/* Form */}
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+    <Form {...form}>
+      <div className=" w-full   justify-around h-screen mx-auto p-20 flex flex-col gap-4">
+        <div className="">
+          <h1 className="text-2xl font-bold text-gray-800">Welcome Back</h1>
+          <p className="text-gray-600 text-sm">
+            New to FinTrade ?{" "}
+            <Link href="/register" className="text-indigo-600 font-semibold">
+              Sign Up
+            </Link>{" "}
+          </p>
+        </div>
+        <div>
+          <div
+            className="
+          border border-gray-300  rounded-lg p-2 flex items-center gap-2 cursor-pointer "
+          >
+            <div className="w-full flex gap-4 items-center justify-center rounded-lg">
+              <Image
+                alt="google"
+                width={20}
+                height={20}
+                className="w-5 h-5"
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/2048px-Google_%22G%22_logo.svg.png"
+              />
+              <h1> Continue with google</h1>
+            </div>
+          </div>
+        </div>
+        <div className="flex items-center justify-center gap-2">
+          <div className="h-[1px] w-full bg-gray-300"></div>
+          <p className="text-gray-500">or</p>
+          <div className="h-[1px] w-full bg-gray-300"></div>
+        </div>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex flex-col gap-4"
+        >
           {/* Email Field */}
           <FormField
             control={form.control}
@@ -125,8 +147,8 @@ function LoginForm() {
             {buttonDisabled ? "Loading..." : "Login"}
           </Button>
         </form>
-      </Form>
-    </div>
+      </div>
+    </Form>
   );
 }
 

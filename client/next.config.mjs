@@ -25,6 +25,10 @@ const nextConfig = {
        {
         protocol:"https",
         hostname:"www.wealthmorning.com"
+       },
+       {
+protocol:"https",
+hostname:"image.mux.com"
        }
       // www.ngoregistration.org,
       // "www.ngoregistration.org",
