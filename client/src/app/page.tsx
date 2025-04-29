@@ -1,6 +1,10 @@
 // @ts-nocheck
 "use client";
 
+import Details from "./Details";
+import Details2 from "./Details2";
+import FaqSection from "./FaqSection";
+import Features from "./Features";
 import Footer from "./Footer";
 import SectionConsult from "./SectionConsult";
 import SectionHero from "./SectionHero";
@@ -20,9 +24,14 @@ export default function Home() {
   return (
     <div>
       <SectionHero />
+      <Details />
+      <Details2 />
+      <Features />
+      <FaqSection />
       {/* <SectionTrust />
       <SectionProcess />
       <Footer /> */}
+      <Footer />
     </div>
   );
 }

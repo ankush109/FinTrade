@@ -1,25 +1,31 @@
 import React from "react";
 import Link from "next/link";
-import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from "react-icons/fa";
+import {
+  FaFacebookF,
+  FaTwitter,
+  FaInstagram,
+  FaLinkedinIn,
+} from "react-icons/fa";
 
 function Footer() {
   return (
-    <footer className="font-mont bg-gray-900 text-gray-50">
-      <div className="container mx-auto px-5 py-10">
+    <div className="font-mont bg-gray-900 h-[400px] p-10 w-full flex flex-col text-gray-50">
+      <div className="">
         {/* Top Section */}
-        <div className="flex flex-wrap md:justify-between items-start">
+        <div className="flex flex-col md:flex-row justify-between items-start ">
           {/* Brand and About */}
-          <div className="w-full md:w-1/4 mb-6 md:mb-0">
+          <div className="">
             <h2 className="text-xl font-bold mb-3">FinTrade</h2>
             <p className="text-sm">
-              Your trusted partner in financial trading. Stay ahead with our premium services.
+              Your trusted partner in financial trading. Stay ahead with our
+              premium services.
             </p>
           </div>
 
           {/* Navigation Links */}
-          <div className="w-full md:w-2/4 mb-6 md:mb-0">
+          <div className="w-full ml-20">
             <h3 className="text-lg font-semibold mb-3">Quick Links</h3>
-            <div className="flex flex-wrap">
+            <div className="flex flex-col">
               <Link href="/" className="w-1/2 mb-2 hover:underline">
                 Home
               </Link>
@@ -29,20 +35,11 @@ function Footer() {
               <Link href="/discussions" className="w-1/2 mb-2 hover:underline">
                 Discussions
               </Link>
-              <Link href="/consultation" className="w-1/2 mb-2 hover:underline">
-                Consultation
-              </Link>
-              <Link href="/articles" className="w-1/2 mb-2 hover:underline">
-                Articles
-              </Link>
-              <Link href="/about" className="w-1/2 mb-2 hover:underline">
-                About Us
-              </Link>
             </div>
           </div>
 
           {/* Social Media */}
-          <div className="w-full md:w-1/4">
+          <div className="w-full md:w-1/4 ">
             <h3 className="text-lg font-semibold mb-3">Follow Us</h3>
             <div className="flex space-x-4">
               <a
@@ -82,24 +79,14 @@ function Footer() {
         </div>
 
         {/* Divider */}
-        <div className="border-t border-gray-700 my-6"></div>
 
         {/* Bottom Section */}
-        <div className="flex flex-col md:flex-row items-center justify-between">
-          <p className="text-sm">
-            © 2023 FinTrade — All Rights Reserved.
-          </p>
-          <div className="flex space-x-4 mt-4 md:mt-0">
-            <Link href="/privacy-policy" className="text-sm hover:underline">
-              Privacy Policy
-            </Link>
-            <Link href="/terms-of-service" className="text-sm hover:underline">
-              Terms of Service
-            </Link>
-          </div>
+        <div className="mt-40 text-center">
+          <div className="border-t border-gray-700 p-2 "></div>
+          <p className="text-sm">© 2023 FinTrade — All Rights Reserved.</p>
         </div>
       </div>
-    </footer>
+    </div>
   );
 }
 
