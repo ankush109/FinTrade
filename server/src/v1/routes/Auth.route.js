@@ -9,4 +9,5 @@ const router = express.Router();
 router.post("/login", loginController.login);
 router.post("/register", loginController.register);
 router.post("/logout", authMiddleware, loginController.logout);
+router.get("/create-token",loginController.createVideoSdktoken)
 export default router;

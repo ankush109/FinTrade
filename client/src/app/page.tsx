@@ -20,9 +20,9 @@ export default function Home() {
   return (
     <div>
       <SectionHero />
-      <SectionTrust />
+      {/* <SectionTrust />
       <SectionProcess />
-      <Footer />
+      <Footer /> */}
     </div>
   );
 }

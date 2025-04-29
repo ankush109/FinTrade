@@ -9,7 +9,7 @@ export function Controls() {
   const [video, setvideo] = useState(true);
 
   return (
-    <div className="bg-stone-800 rounded-3xl p-2 w-[200px] absolute bottom-2 left-[200px] right-10 flex items-center justify-evenly text-white">
+    <div className="bg-stone-800 flex items-center justify-evenly text-black">
       <button onClick={() => leave()}><FaSignOutAlt /></button>
       <button onClick={() => {
         toggleMic();
@@ -17,12 +17,12 @@ export function Controls() {
       }}>
         {mic ? <FaMicrophone className="w-10" /> : <FaMicrophoneSlash />}
       </button>
-      <button onClick={() => {
+      {/* <button onClick={() => {
         toggleWebcam();
         setvideo(!video);
       }}>
-        {video ? <FaVideo /> : <FaVideoSlash />}
-      </button>
+        {video ? <FaVideo />: "no video"}
+      </button> */}
     </div>
   );
 }

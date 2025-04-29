@@ -1,36 +1,45 @@
 "use client"
 // @ts-nocheck
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useState } from "react";
 import {
   MeetingProvider,
-  MeetingConsumer,
-  useMeeting,
-  useParticipant,
 } from "@videosdk.live/react-sdk";
-import { authToken, createMeeting } from "../config/Api";
-import ReactPlayer from "react-player";
+import { createMeeting } from "../config/Api";
+
 import { JoinScreen } from "./JoinScreen";
 import { MeetingView } from "./MeetingView";
 
 export function Meet() {
-  const [meetingId, setMeetingId] = useState(null);
+ const [meetingId, setMeetingId] = useState(null);
+  const [token, setToken] = useState(null);
 
- 
-  const getMeetingAndToken = async (id) => {
-    const meetingId =
-      id == null ? await createMeeting({ token: authToken }) : id;
-    setMeetingId(meetingId);
+  
+const getMeetingAndToken = async (id) => {
+    // 1. Fetch token from your backend
+    const fetchedToken = await fetch("http://localhost:4000/v1/auth/create-token")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data, "data");
+        return data.token;
+      });
+    setToken(fetchedToken);
+    console.log(fetchedToken, "token");
+    // 2. Create meeting with this token
+    const _meetingId = id == null ? await createMeeting({ token: fetchedToken }) : id;
+    setMeetingId(_meetingId);
+    console.log(_meetingId, "meetingId");
+
   };
 
  
   const onMeetingLeave = () => {
     setMeetingId(null);
   };
-const token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlrZXkiOiJmNTdjNjAzMy1mMTZkLTQ2NzYtODdiZS01NmJhNWEzYjYxMTQiLCJwZXJtaXNzaW9ucyI6WyJhbGxvd19qb2luIl0sImlhdCI6MTczNzMwNzI0NywiZXhwIjoxNzM3MzkzNjQ3fQ.DUW0sFEp2Pla9N-tuxenJfNjC6hs3GBzxntWJgUWG0k"
-  return authToken && meetingId ? (
+
+  return token && meetingId ? (
     <MeetingProvider
       config={{
-        meetingId: "pwxs-zije-lu4v",
+        meetingId: meetingId,
         micEnabled: true,
         webcamEnabled: true,
         name: "ANKUSH's Org",
@@ -40,7 +49,10 @@ const token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlrZXkiOiJmNTdjNjAzMy1mMT
       <MeetingView meetingId={meetingId} onMeetingLeave={onMeetingLeave} />
     </MeetingProvider>
   ) : (
-    <JoinScreen getMeetingAndToken={getMeetingAndToken} />
+    <div className="grid grid-cols-2 gap-4">
+      <div>  <JoinScreen getMeetingAndToken={getMeetingAndToken} /></div>
+      <div className="bg-gray-400">hi</div>
+    </div>
   );
 }
 

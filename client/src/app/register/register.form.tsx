@@ -65,99 +65,133 @@ function RegisterForm() {
   };
 
   return (
-    <Form {...form}>
-      <div className=" w-full   justify-around h-screen mx-auto p-20 flex flex-col gap-4">
-        <div className="">
-          <h1 className="text-2xl font-bold text-gray-800">Welcome Back</h1>
+    <div className="w-full h-screen flex flex-col justify-center items-center p-8">
+      <div className="w-full max-w-md space-y-6">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-gray-800">
+            Create an Account
+          </h1>
           <p className="text-gray-600 text-sm">
-            New to FinTrade ?{" "}
-            <Link href="/register" className="text-indigo-600 font-semibold">
-              Sign Up
-            </Link>{" "}
+            Already have an account?{" "}
+            <Link
+              href="/login"
+              className="text-indigo-600 font-semibold hover:underline"
+            >
+              Login
+            </Link>
           </p>
         </div>
-        <div>
-          <div
-            className="
-          border border-gray-300  rounded-lg p-2 flex items-center gap-2 cursor-pointer "
-          >
-            <div className="w-full flex gap-4 items-center justify-center rounded-lg">
-              <Image
-                alt="google"
-                width={20}
-                height={20}
-                className="w-5 h-5"
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/2048px-Google_%22G%22_logo.svg.png"
-              />
-              <h1> Continue with google</h1>
-            </div>
-          </div>
+
+        <div className="border border-gray-300 rounded-lg p-2 flex items-center gap-2 justify-center cursor-pointer">
+          <Image
+            alt="google"
+            width={20}
+            height={20}
+            className="w-5 h-5"
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/2048px-Google_%22G%22_logo.svg.png"
+          />
+          <span>Continue with Google</span>
         </div>
+
         <div className="flex items-center justify-center gap-2">
-          <div className="h-[1px] w-full bg-gray-300"></div>
+          <div className="h-[1px] w-full bg-gray-300" />
           <p className="text-gray-500">or</p>
-          <div className="h-[1px] w-full bg-gray-300"></div>
+          <div className="h-[1px] w-full bg-gray-300" />
         </div>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col gap-4"
-        >
-          {/* Email Field */}
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="font-semibold text-gray-700">
-                  Email
-                </FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="Enter your email"
-                    {...field}
-                    className="w-full border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
 
-          {/* Password Field */}
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="font-semibold text-gray-700">
-                  Password
-                </FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="Enter your password"
-                    type="password"
-                    {...field}
-                    className="w-full border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            {/* Name Field */}
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Name</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter your name" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-          {/* Submit Button */}
-          <Button
-            type="submit"
-            disabled={buttonDisabled}
-            className={`w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-lg ${
-              buttonDisabled ? "opacity-50 cursor-not-allowed" : ""
-            }`}
-          >
-            {buttonDisabled ? "Loading..." : "Login"}
-          </Button>
-        </form>
+            {/* Email Field */}
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Enter your email"
+                      type="email"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* Role Field */}
+            <FormField
+              control={form.control}
+              name="role"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Role</FormLabel>
+                  <FormControl>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select your role" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="User">User</SelectItem>
+                        <SelectItem value="Mentor">Mentor</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* Password Field */}
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Enter your password"
+                      type="password"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* Submit Button */}
+            <Button
+              type="submit"
+              disabled={buttonDisabled}
+              className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-lg"
+            >
+              {buttonDisabled ? "Registering..." : "Register"}
+            </Button>
+          </form>
+        </Form>
       </div>
-    </Form>
+    </div>
   );
 }
 

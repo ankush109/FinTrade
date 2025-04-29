@@ -33,7 +33,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/api/test/index.js"
-  ],
+, "src/app/dashboard/_video_components/JoinScreen.jsx"  ],
   "exclude": [
     "node_modules"
   ]

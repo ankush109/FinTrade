@@ -22,16 +22,16 @@ export function MeetingView(props) {
     const timer = setTimeout(() => {
       setJoined("JOINING"); // Update state to show the joining status
       join(); // Automatically join the meeting after 5 seconds
-    }, 5000); // 5000 ms = 5 seconds
+    }, 0); // 5000 ms = 5 seconds
 
     // Cleanup the timer on component unmount
     return () => clearTimeout(timer);
   }, []); // Empty dependency array means this effect runs only once when the component mounts
 
   return (
-    <div className=" bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 min-h-screen" >
+    <div className="  min-h-screen" >
       <div className="p-10">
-      <h3 className="text-white text-3xl font-semibold  mt-6 mb-4 shadow-lg p-2 rounded-lg bg-gradient-to-r from-blue-500 via-purple-600 to-pink-500">
+      <h3 className="text-back text-3xl font-semibold">
   Meeting Id: {props.meetingId}
 </h3>
 
