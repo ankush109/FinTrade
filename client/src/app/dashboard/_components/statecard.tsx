@@ -24,13 +24,13 @@ const StatCard: React.FC<StatCardProps> = ({
 
   return (
     <div className="bg-white dark:bg-[#1F214A] dark:text-white border-2 border-gray-200 dark:border-[#1F214A] p-4 rounded-lg col-span-12 md:col-span-6 lg:col-span-3">
-      <h2 className="text-md font-bold pb-2">{title}</h2>
-      <p className="text-3xl font-bold pb-4">
+      <h2 className="text-lg font-bold pb-2">{title}</h2>
+      <p className="text-2xl font-semibold  text-gray-400 pb-4">
         {" "}
         {!not ? "₹" : ""}
         {value}
       </p>
-      <div className="flex flex-row items-center justify-center">
+      <div className="flex flex-col  items-start gap-2 justify-start">
         <div
           className={`py-[1px] px-2 w-[85px] ${bgColor} rounded-md text-sm font-normal`}
         >

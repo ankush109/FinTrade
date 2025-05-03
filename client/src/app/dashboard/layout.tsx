@@ -5,6 +5,7 @@ import ReactQueryProvider from ".././_middlewares/ReactQueryProvider";
 import { SidebarProvider } from "../../context/SidebarContext";
 import { ThemeProvider } from "../../context/ThemeContext";
 import Sidebar from "./_components/sidebar";
+import DashboardNav from "./_components/DashboardNav";
 const inter = Inter({ subsets: ["latin"] });
 const MAX_TOAST_LIMIT = 1;
 export default function RootLayout({
@@ -23,7 +24,12 @@ export default function RootLayout({
                 <div className="w-[20%]">
                   <Sidebar />
                 </div>
-                <div className="w-full overflow-auto">{children}</div>
+                <div className="w-full   overflow-auto">
+                  <div className="bg-[#696FFB0A]">
+                    <DashboardNav />
+                  </div>
+                  <div>{children}</div>
+                </div>
               </div>
             </SidebarProvider>
           </ThemeProvider>

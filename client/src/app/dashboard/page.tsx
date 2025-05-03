@@ -14,15 +14,8 @@ const App: React.FC = () => {
       {user?.data ? (
         <div>
           <div className="flex-1 max-w-7xl mx-auto bg-[#696FFB0A] dark:bg-[#545469] p-4">
-            <div className="mb-6">
-              <h1 className="text-4xl ml-4 font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 via-pink-500 to-yellow-500 animate-fade-in scale-in-center">
-                {user?.data?.name.toUpperCase() + "'s Dashboard"}
-              </h1>
-            </div>
             <UpperDashboardSection />
             <Expense />
-            {/* <GoalDashboardSection />
-            <GoalTracker /> */}
           </div>
         </div>
       ) : (

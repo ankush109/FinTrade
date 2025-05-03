@@ -11,6 +11,8 @@ import { LiaFileInvoiceDollarSolid } from "react-icons/lia";
 import { BsGraphUpArrow } from "react-icons/bs";
 import { IoSettingsOutline } from "react-icons/io5";
 import { IoIosHelpCircleOutline } from "react-icons/io";
+import { GoGoal } from "react-icons/go";
+
 import ThemeToggleButton from "./ThemeToggleButton";
 import { useSidebar } from "../../../context/SidebarContext";
 import Link from "next/link";
@@ -54,7 +56,7 @@ const Sidebar = () => {
     },
     { icon: <LiaFileInvoiceDollarSolid />, label: "Invoice", link: "/invoice" },
     {
-      icon: <BsGraphUpArrow />,
+      icon: <GoGoal />,
       label: "Goal",
       link: "/dashboard/goal",
     },
@@ -62,8 +64,6 @@ const Sidebar = () => {
 
   const thirdSectionItems = [
     { icon: <IoSettingsOutline />, label: "Settings", link: "/settings" },
-    { icon: <MdOutlineSecurity />, label: "Security", link: "/security" },
-    { icon: <IoIosHelpCircleOutline />, label: "Help", link: "/help" },
   ];
 
   return (
@@ -73,13 +73,13 @@ const Sidebar = () => {
           // onClick={toggleSidebar}
           className="text-black dark:text-white w-full flex  justify-start"
         >
-          <div className="text-2xl pl-3 pr-3 bg-white rounded-lg">
+          <Link href="/" className="text-2xl pl-3 pr-3 bg-white rounded-lg">
             {/* <Link href="/" className="text-blue-400 font-semibold">
               Fin
             </Link>
             Trade */}
             <Image src={finTradeLogo} alt="" height={100} width={150} />
-          </div>
+          </Link>
         </button>
 
         <div className="w-full mt-8 flex flex-col ">
