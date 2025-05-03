@@ -17,9 +17,11 @@ function Navbar() {
         <Link href="/consult">
           <div>Home</div>
         </Link>
-        <Link href="/dashboard">
-          <div>How it Works</div>
-        </Link>
+        {user?.data && (
+          <Link href="/dashboard">
+            <div>Dashboard</div>
+          </Link>
+        )}
         <Link href="/about">
           <div>Services</div>
         </Link>
@@ -27,9 +29,29 @@ function Navbar() {
           <div>Contact</div>
         </Link>
       </div>
-      <button className="bg-black w-[100px] text-sm  text-white p-3 rounded-lg">
+
+      {user?.data ? (
+        <div className="flex font-semibold items-center gap-10">
+          {" Hello, " + user?.data?.name}
+          <Link href="/login">
+            <Button
+              className="bg-black"
+              onClick={() => {
+                localStorage.removeItem("token");
+              }}
+            >
+              Logout
+            </Button>
+          </Link>
+        </div>
+      ) : (
+        <Link href="/login">
+          <Button className="bg-black">Login</Button>
+        </Link>
+      )}
+      {/* <button className="bg-black w-[100px] text-sm  text-white p-3 rounded-lg">
         Sign In
-      </button>
+      </button> */}
       {/* <div className="flex gap-20 mr-10">
         {user?.data ? (
           <div className="flex font-semibold items-center gap-10">

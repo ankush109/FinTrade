@@ -19,11 +19,11 @@ export default function RootLayout({
         <ReactQueryProvider>
           <ThemeProvider>
             <SidebarProvider>
-              <div className="flex ">
+              <div className="flex max-h-screen overflow-hidden bg-gray-100 dark:bg-[#1F214A]">
                 <div className="w-[20%]">
                   <Sidebar />
                 </div>
-                <div className="w-full">{children}</div>
+                <div className="w-full overflow-auto">{children}</div>
               </div>
             </SidebarProvider>
           </ThemeProvider>

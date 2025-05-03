@@ -21,8 +21,8 @@ const App: React.FC = () => {
             </div>
             <UpperDashboardSection />
             <Expense />
-            <GoalDashboardSection />
-            <GoalTracker />
+            {/* <GoalDashboardSection />
+            <GoalTracker /> */}
           </div>
         </div>
       ) : (

@@ -3,6 +3,7 @@ import React from "react";
 import { RiDashboardLine, RiShoppingBasketLine } from "react-icons/ri";
 import { FaArrowRight } from "react-icons/fa";
 import { FaTruckArrowRight } from "react-icons/fa6";
+import finTradeLogo from "../../../assets/fintrade-logo.png";
 import { MdOutlinePayment, MdOutlineSecurity } from "react-icons/md";
 import { GoPeople } from "react-icons/go";
 import { TbMessageShare, TbLogout2 } from "react-icons/tb";
@@ -13,11 +14,11 @@ import { IoIosHelpCircleOutline } from "react-icons/io";
 import ThemeToggleButton from "./ThemeToggleButton";
 import { useSidebar } from "../../../context/SidebarContext";
 import Link from "next/link";
+import Image from "next/image";
 
 const SidebarItem = ({ href = "#", icon, label, isSidebarExpanded }) => {
   // Check if label is 'Stock Forecasting'
-  const updatedHref =
-    label === "Stock Forecasting" ? "http://localhost:8501" : href;
+  const updatedHref = label === "Stock Forecasting" ? href : href;
 
   return (
     <Link href={updatedHref}>
@@ -54,8 +55,8 @@ const Sidebar = () => {
     { icon: <LiaFileInvoiceDollarSolid />, label: "Invoice", link: "/invoice" },
     {
       icon: <BsGraphUpArrow />,
-      label: "Stock Forecasting",
-      link: "http://localhost:8501",
+      label: "Goal",
+      link: "/dashboard/goal",
     },
   ];
 
@@ -67,26 +68,23 @@ const Sidebar = () => {
 
   return (
     <div>
-      <div className="flex flex-col py-4 space-y-4 border-r border-[#00000029] dark:border-[#FFFFFF29] h-screen bg-white dark:bg-[#545469] shadow-lg">
+      <div className="flex  bg-gray-200  flex-col gap-10 py-4 space-y-4 border-r border-[#00000029] dark:border-[#FFFFFF29] h-screen dark:bg-[#545469] shadow-lg">
         <button
-          onClick={toggleSidebar}
-          className="text-black dark:text-white w-full flex  justify-center"
+          // onClick={toggleSidebar}
+          className="text-black dark:text-white w-full flex  justify-start"
         >
-          {isSidebarExpanded ? (
-            <div className="text-2xl">
-              <span className="text-blue-400 font-semibold">Fin</span>Trade
-            </div>
-          ) : (
-            <div className="flex flex-row space-x-1 items-end">
-              <FaTruckArrowRight className="text-3xl" />
-              <FaArrowRight className="text-xs pb-1" />
-            </div>
-          )}
+          <div className="text-2xl pl-3 pr-3 bg-white rounded-lg">
+            {/* <Link href="/" className="text-blue-400 font-semibold">
+              Fin
+            </Link>
+            Trade */}
+            <Image src={finTradeLogo} alt="" height={100} width={150} />
+          </div>
         </button>
 
-        <div className="w-full mt-8 flex flex-col">
+        <div className="w-full mt-8 flex flex-col ">
           {/* First Section */}
-          <ul className="flex flex-col  space-y-2 text-gray-600 dark:text-white border-b border-[#00000029] dark:border-[#FFFFFF29] pb-2">
+          <ul className="flex flex-col gap-2 space-y-2 text-gray-600 dark:text-white border-[#00000029] dark:border-[#FFFFFF29] pb-2">
             {firstSectionItems.map((item, index) => (
               <SidebarItem
                 href={item.link || "#"}
@@ -99,7 +97,7 @@ const Sidebar = () => {
           </ul>
 
           {/* Second Section */}
-          <ul className="flex flex-col  space-y-2 text-gray-600 dark:text-white border-b border-[#00000029] dark:border-[#FFFFFF29] pb-2 pt-2">
+          <ul className="flex flex-col gap-2   space-y-2 text-gray-600 dark:text-white  border-[#00000029] dark:border-[#FFFFFF29] pb-2 pt-2">
             {secondSectionItems.map((item, index) => (
               <SidebarItem
                 href={item.link || "#"}
@@ -112,7 +110,7 @@ const Sidebar = () => {
           </ul>
 
           {/* Third Section */}
-          <ul className="flex flex-col  space-y-2 text-gray-600 dark:text-white border-b border-[#00000029] dark:border-[#FFFFFF29] pb-2 pt-2">
+          <ul className="flex flex-col  gap-2  space-y-2 text-gray-600 dark:text-white  border-[#00000029] dark:border-[#FFFFFF29] pb-2 pt-2">
             {thirdSectionItems.map((item, index) => (
               <SidebarItem
                 href={item.link || "#"}
