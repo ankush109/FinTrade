@@ -105,7 +105,6 @@ function Page() {
             exit={{ opacity: 0, scale: 0.8 }}
             transition={{ duration: 1 }}
           >
-           
             Generating Dashboard...
           </motion.div>
         ) : (

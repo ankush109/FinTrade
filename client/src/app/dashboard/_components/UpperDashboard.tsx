@@ -1,12 +1,12 @@
-"use client"
+"use client";
 import React from "react";
 import StatCard from "./statecard";
 import { getMyfinance } from "@/api/finance";
+import RenderLineChart from "./charts/LineChart";
+import MonthlyAreaChart from "./charts/AreaChart";
 
-const Comp1: React.FC = () => {
-
-
-  const { data } = getMyfinance()
+const UpperDashboardSection: React.FC = () => {
+  const { data } = getMyfinance();
   return (
     <div className="grid grid-cols-12 gap-6 mt-6 pb-6 mx-3">
       <StatCard
@@ -15,8 +15,10 @@ const Comp1: React.FC = () => {
         change="12.27%"
         isPositive={true}
         comparisonText="Compared to last month"
+        not={false}
       />
-       <StatCard
+      <StatCard
+        not={false}
         title="Total Savings"
         value={data?.message?.totalSaving}
         change="12.27%"
@@ -32,10 +34,10 @@ const Comp1: React.FC = () => {
         }
         change="2.63%"
         isPositive={false}
+        not={false}
         comparisonText="Compared to last month"
       />
 
-      
       <StatCard
         title="Number of Loans's"
         not={true}
@@ -44,8 +46,12 @@ const Comp1: React.FC = () => {
         isPositive={true}
         comparisonText="Compared to last month"
       />
+      <div className="flex flex-row bg-white border border-gray-300 rounded-lg p-5 col-span-12 gap-6  items-center justify-center">
+        <RenderLineChart />
+        <MonthlyAreaChart />
+      </div>
     </div>
   );
 };
 
-export default Comp1;
+export default UpperDashboardSection;

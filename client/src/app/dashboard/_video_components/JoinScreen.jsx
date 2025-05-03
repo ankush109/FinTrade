@@ -60,7 +60,7 @@ export function JoinScreen({ getMeetingAndToken }) {
           ) : (
             <button
               onClick={createMeeting}
-              className="bg-green-500 hover:bg-green-600 text-white py-3 rounded-lg shadow-md font-semibold transition-colors duration-300"
+              className="bg-blue-500 hover:bg-green-600 text-white py-3 rounded-lg shadow-md font-semibold transition-colors duration-300"
             >
               Create Meeting
             </button>

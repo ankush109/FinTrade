@@ -11,7 +11,7 @@ import { createGoal, getmygoals } from "../../../api/goals/index";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"; // Import toast styles
 
-const Comp2: React.FC = () => {
+const GoalDashboardSection: React.FC = () => {
   const { refetch } = getmygoals(); // React Query hook
   const [isDialogOpen, setIsDialogOpen] = useState(false); // State to control dialog visibility
 
@@ -145,4 +145,4 @@ const Comp2: React.FC = () => {
   );
 };
 
-export default Comp2;
+export default GoalDashboardSection;

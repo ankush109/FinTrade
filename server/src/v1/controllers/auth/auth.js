@@ -66,6 +66,7 @@ const loginController = {
         res.status(400).json({
           message: "User already exists",
         });
+        return;
       }
 
       console.log(resp, "user");
@@ -82,6 +83,7 @@ const loginController = {
         message: "User created successfully",
         createduser,
       });
+      return
     } catch (err) {
       console.log(err);
       res.json(customResponse(400, err));

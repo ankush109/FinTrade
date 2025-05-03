@@ -14,6 +14,7 @@ import { GetUserQuery } from "@/api/user";
 import Loading from "../_components/Loader";
 import { DeleteIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Sidebar from "../_components/sidebar";
 
 function Discuss() {
   const q = GetUserQuery();
@@ -144,9 +145,9 @@ function Discuss() {
     });
 
   return (
-    <div className="flex justify-center">
-      <div className=" w-full p-2 m-2 bg-white shadow-md rounded-lg">
-        <div className="w-full flex justify-center items-center">
+    <div className=" justify-center">
+      <div className="p-2 m-2 bg-white">
+        <div className=" flex justify-center items-center">
           <div className="relative">
             <input
               type="text"

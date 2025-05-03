@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { CircularProgressBar } from "react-percentage-bar";
 import { getmygoals } from "@/api/goals";
 
-function Comp3() {
+function GoalTracker() {
   const { data } = getmygoals();
   const [shortammount, setshortammount] = useState(0);
   const [longammount, setlongammount] = useState(0);
@@ -78,4 +78,4 @@ function Comp3() {
   );
 }
 
-export default Comp3;
+export default GoalTracker;

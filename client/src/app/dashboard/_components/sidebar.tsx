@@ -16,11 +16,12 @@ import Link from "next/link";
 
 const SidebarItem = ({ href = "#", icon, label, isSidebarExpanded }) => {
   // Check if label is 'Stock Forecasting'
-  const updatedHref = label === "Stock Forecasting" ? "http://localhost:8501" : href;
+  const updatedHref =
+    label === "Stock Forecasting" ? "http://localhost:8501" : href;
 
   return (
     <Link href={updatedHref}>
-      <li className="flex items-center justify-center w-full px-3">
+      <li className="flex items-center justify-center  px-3">
         <div
           className={`hover:bg-[#696FFB3D] hover:cursor-pointer hover:text-[#696FFB] px-3 py-1 rounded-md flex flex-row space-x-2 ${
             isSidebarExpanded ? "justify-start w-full" : "justify-center"
@@ -34,7 +35,6 @@ const SidebarItem = ({ href = "#", icon, label, isSidebarExpanded }) => {
   );
 };
 
-
 const Sidebar = () => {
   const { isSidebarExpanded, toggleSidebar } = useSidebar();
 
@@ -46,9 +46,17 @@ const Sidebar = () => {
   ];
 
   const secondSectionItems = [
-    { icon: <RiShoppingBasketLine />, label: "Mutual Funds", link: "/dashboard/mutualfund" },
+    {
+      icon: <RiShoppingBasketLine />,
+      label: "Mutual Funds",
+      link: "/dashboard/mutualfund",
+    },
     { icon: <LiaFileInvoiceDollarSolid />, label: "Invoice", link: "/invoice" },
-    { icon: <BsGraphUpArrow />, label: "Stock Forecasting", link: "http://localhost:8501" },
+    {
+      icon: <BsGraphUpArrow />,
+      label: "Stock Forecasting",
+      link: "http://localhost:8501",
+    },
   ];
 
   const thirdSectionItems = [
@@ -58,12 +66,8 @@ const Sidebar = () => {
   ];
 
   return (
-    <aside
-      className={`fixed top-0 left-0 h-full border-r border-[#00000029] dark:border-[#1F214A] bg-white dark:bg-[#1F214A] transition-all duration-300 ${
-        isSidebarExpanded ? "w-52" : "w-16"
-      }`}
-    >
-      <div className="flex flex-col py-4 space-y-4">
+    <div>
+      <div className="flex flex-col py-4 space-y-4 border-r border-[#00000029] dark:border-[#FFFFFF29] h-screen bg-white dark:bg-[#545469] shadow-lg">
         <button
           onClick={toggleSidebar}
           className="text-black dark:text-white w-full flex  justify-center"
@@ -120,7 +124,6 @@ const Sidebar = () => {
             ))}
           </ul>
 
-  
           {!isSidebarExpanded ? (
             <div className="flex justify-center items-center fixed bottom-0 py-1 px-3">
               <ThemeToggleButton />
@@ -136,7 +139,7 @@ const Sidebar = () => {
           )}
         </div>
       </div>
-    </aside>
+    </div>
   );
 };
 
