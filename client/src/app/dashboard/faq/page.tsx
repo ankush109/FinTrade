@@ -85,7 +85,7 @@ function Discuss() {
   const renderReplyInput = (questionId) => (
     <div className="mb-4">
       <textarea
-        rows="3"
+        rows={3}
         className={`border rounded-lg p-2 w-full max-w-2xl ${
           isDarkMode
             ? "bg-zinc-800 text-white border-zinc-600"
@@ -122,7 +122,7 @@ function Discuss() {
   return (
     <div
       className={`min-h-screen p-4 ${
-        isDarkMode ? "bg-zinc-900 text-white" : "bg-white text-black"
+        isDarkMode ? "bg-zinc-900 text-white" : "bg-gray-200 text-black"
       }`}
     >
       <div className="flex justify-center mb-6">

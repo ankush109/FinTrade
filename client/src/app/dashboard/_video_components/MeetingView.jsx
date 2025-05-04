@@ -6,47 +6,63 @@ import { useMeeting } from "@videosdk.live/react-sdk";
 
 export function MeetingView(props) {
   const [joined, setJoined] = useState("");
+  const [copied, setCopied] = useState(false); // for feedback
 
   const { join, participants } = useMeeting({
     onMeetingJoined: () => {
       setJoined("JOINED");
     },
-
     onMeetingLeft: () => {
       props.onMeetingLeave();
     },
   });
 
   useEffect(() => {
-    // Start a 5-second timer after the component mounts
     const timer = setTimeout(() => {
-      setJoined("JOINING"); // Update state to show the joining status
-      join(); // Automatically join the meeting after 5 seconds
-    }, 0); // 5000 ms = 5 seconds
+      setJoined("JOINING");
+      join();
+    }, 0);
 
-    // Cleanup the timer on component unmount
     return () => clearTimeout(timer);
-  }, []); // Empty dependency array means this effect runs only once when the component mounts
+  }, []);
+
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(props.meetingId).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000); // reset after 2 sec
+    });
+  };
 
   return (
-    <div className="  min-h-screen" >
-      <div className="p-10">
-      <h3 className="text-back text-3xl font-semibold">
-  Meeting Id: {props.meetingId}
-</h3>
-
-      {joined === "JOINED" ? (
-        <div className="flex gap-10">
-          {[...participants.keys()].map((participantId) => (
-            <ParticipantView participantId={participantId} key={participantId} />
-          ))}
-       
+    <div className="max-h-screen">
+      <div className="p-5">
+        <div className="flex items-center gap-4 mb-4">
+          <h3 className="text-black text-3xl font-semibold">
+            Meeting Id: {props.meetingId}
+          </h3>
+          <button
+            onClick={copyToClipboard}
+            className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm"
+          >
+            {copied ? "Copied!" : "Copy"}
+          </button>
         </div>
-      ) : joined === "JOINING" ? (
-        <p className="text-white text-md" > Joining the meeting...</p>
-      ) : (
-        <p className="text-white text-md">Waiting to join...</p>
-      )}
+
+        {joined === "JOINED" ? (
+         <div className="flex flex-col border2 border-gray-300 p-2">
+           <div className="grid grid-cols-2 gap-2 ">
+            {[...participants.keys()].map((participantId) => (
+              <ParticipantView participantId={participantId} key={participantId} />
+            ))}
+              
+          </div>
+          <Controls />
+          </div>
+        ) : joined === "JOINING" ? (
+          <p className="text-white text-md">Joining the meeting...</p>
+        ) : (
+          <p className="text-white text-md">Waiting to join...</p>
+        )}
       </div>
     </div>
   );

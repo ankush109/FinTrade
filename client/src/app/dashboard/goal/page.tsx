@@ -12,18 +12,18 @@ function Page() {
   return (
     <div
       className={`min-h-screen ${
-        isDarkMode ? "bg-black text-white" : "bg-white text-black"
+        isDarkMode ? "bg-black text-white" : "bg-gray-200 text-black"
       }`}
     >
       <div className="p-10">
         <div
           className={`border-2 p-2 rounded-lg ${
-            isDarkMode ? "border-gray-700" : "border-gray-200"
+            isDarkMode ? "border-gray-700" : "border-gray-300"
           }`}
         >
           <div
             className={`flex justify-between p-2 rounded-lg items-center border-b-2 mb-5 ${
-              isDarkMode ? "border-gray-700" : "border-gray-200"
+              isDarkMode ? "border-gray-700" : "border-gray-300 bg-white"
             }`}
           >
             <div>
@@ -88,8 +88,8 @@ const GoalCard = ({ isDarkMode }) => {
       </div>
       <div
         className={`${
-          isDarkMode ? "bg-gray-800" : "bg-gray-200"
-        } h-12 flex items-center pl-2`}
+          isDarkMode ? "bg-gray-800" : "bg-stone-300"
+        } h-12 flex items-center pl-2 rounded-lg`}
       >
         Auto save
       </div>
