@@ -1,7 +1,7 @@
 "use client";
 
+import { getmygoals } from "@/api/query/useGetUserGoals";
 import React, { useEffect } from "react";
-import { getmygoals } from "../../../api/goals/index";
 
 function Goal() {
   const { data } = getmygoals();

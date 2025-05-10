@@ -1,39 +1,19 @@
-import axios from "axios";
+
 import { useQuery } from "@tanstack/react-query";
+import AuthAPI from "../client";
 
-const AuthAPI = () => {
-  if (typeof window !== "undefined") {
-    return axios.create({
-      baseURL: `http://localhost:4000/v1`,
-      headers: {
-        authorization: `Bearer ${localStorage.getItem("token")}`,
-        "Content-Type": "application/json",
-      },
-    });
-  } else {
-    return axios.create({
-      baseURL: `http://localhost:4000/v1`,
-      headers: {
-        authorization: `Bearer`,
-        "Content-Type": "application/json",
-      },
-    });
-  }
-};
-
-const api = AuthAPI();
 
 export const createFinance = async (finance) => {
-  const {data} = await api.post("/user/finance/create",finance)
+  const {data} = await AuthAPI().post("/user/finance/create",finance)
   return data
 };
 
 export const getFinance = async()=>{
-  const {data} = await api.get("/user/getfinance");
+  const {data} = await AuthAPI().get("/user/getfinance");
   return data
 }
 
-export const getMyfinance = () =>
+export const useGetUserFinanceQuery = () =>
   useQuery({
     queryKey: ["get-my-finance"],
     queryFn: () => getFinance(),

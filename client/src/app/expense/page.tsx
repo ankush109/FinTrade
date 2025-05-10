@@ -2,21 +2,28 @@
 
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { createFinance } from "../../api/finance/index";
+import { createFinance, useGetUserFinanceQuery } from "../../api/finance/index";
 import toast from "react-hot-toast";
-import { GetUserQuery } from "../../api/user/index";
-import { getMyfinance } from "../../api/finance/index";
+
 import Lottie from "react-lottie-player";
 import { useRouter } from "next/navigation";
 import lo2 from "../../assets/./1.json";
+import { GetUserQuery } from "@/api/query/useGetUserDetails";
+import { useCreateFinanceMutation } from "@/api/mutation/useCreateFinanceMutation";
 function Page() {
+  const {
+    mutate: createFinance,
+
+    isError: isErrorCreating,
+    error: errorCreating,
+  } = useCreateFinanceMutation();
   const [currentQuestion, setCurrentQuestion] = useState(0); // Start at the first question (index 0 now)
   const [showGreeting, setShowGreeting] = useState(true);
   const [showQuestions, setShowQuestions] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false); // Add a state for submission
 
   const user = GetUserQuery();
-  const { refetch } = getMyfinance();
+  const { refetch } = useGetUserFinanceQuery();
 
   const questions = [
     "What is your age?",
@@ -68,13 +75,19 @@ function Page() {
     console.log(financeData, "Finance Data");
 
     try {
-      const res = await createFinance(financeData);
-      if (res.success) {
-        setIsSubmitting(true); // Show the "Generating Dashboard" text
-        setTimeout(() => {
-          router.push("/dashboard"); // Navigate to the dashboard after 5 seconds
-        }, 5000);
-      }
+      createFinance(financeData, {
+        onSuccess: () => {
+          setIsSubmitting(true);
+          setTimeout(() => {
+            setIsSubmitting(false);
+            router.push("/dashboard");
+          }, 2000);
+        },
+        onError: (error) => {
+          console.error("Error creating finance data:", error);
+          toast.error("Failed to create finance data.");
+        },
+      });
       refetch();
       toast.success("Finance data submitted successfully!");
     } catch (error) {

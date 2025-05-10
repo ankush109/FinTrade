@@ -1,12 +1,12 @@
 "use client";
 import React from "react";
 import StatCard from "./statecard";
-import { getMyfinance } from "@/api/finance";
+import { useGetUserFinanceQuery } from "@/api/finance";
 import RenderLineChart from "./charts/LineChart";
 import MonthlyAreaChart from "./charts/AreaChart";
 
 const UpperDashboardSection: React.FC = () => {
-  const { data } = getMyfinance();
+  const { data } = useGetUserFinanceQuery();
   return (
     <div className="grid grid-cols-12 gap-6 mt-6 pb-6 mx-3">
       <StatCard

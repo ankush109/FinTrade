@@ -1,10 +1,11 @@
 "use client";
 import React from "react";
 import Expense from "./_components/Expense";
-import { GetUserQuery } from "../../api/user/index";
+
 import UpperDashboardSection from "./_components/UpperDashboard";
 import ChatBot from "./_components/chatbot/ChatBot";
 import ExpensePieChart from "./_components/charts/PieChart";
+import { GetUserQuery } from "@/api/query/useGetUserDetails";
 
 const App: React.FC = () => {
   const user = GetUserQuery();

@@ -7,7 +7,6 @@ import {
   getAllquestionsInfoQuery,
   postQuestion,
 } from "@/api/faq/index";
-import { GetUserQuery } from "@/api/user";
 
 import { Button } from "@/components/ui/button";
 import Loading from "../_components/Loader";
@@ -15,6 +14,7 @@ import Sidebar from "../_components/sidebar";
 import { DeleteIcon } from "lucide-react";
 import toast from "react-hot-toast";
 import { useTheme } from "@/context/ThemeContext";
+import { GetUserQuery } from "@/api/query/useGetUserDetails";
 
 function Discuss() {
   const { isDarkMode } = useTheme();

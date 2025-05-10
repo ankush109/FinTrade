@@ -1,127 +1,146 @@
-import React, { useEffect, useRef, useState } from "react";
+"use client";
+
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import Draggable from "react-draggable";
 import { BsChatDots } from "react-icons/bs";
 import { Bot, CircleUser, SendIcon } from "lucide-react";
+import { useGetUserChatsQuery } from "@/api/query/useGetUserChats";
+import { useCreateUserChatMutation } from "@/api/mutation/useCreateChatMutation";
+import toast from "react-hot-toast";
+import { GetUserQuery } from "@/api/query/useGetUserDetails";
 
-function ChatBot() {
+const ChatBot = () => {
+  const { data: chatData } = useGetUserChatsQuery();
+  const { mutate: createChat } = useCreateUserChatMutation();
+  const { data: userData } = GetUserQuery();
+
   const [message, setMessage] = useState("");
-  const [chats, setChats] = useState([
-    {
-      role: "assistant",
-      message: "Hello! How can I help you today?",
-    },
-  ]);
+  const [chats, setChats] = useState([]);
   const [isOpen, setIsOpen] = useState(true);
-  const chatEndRef = useRef(null);
-
-  const scrollToBottom = () => {
-    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
+  const [isTyping, setIsTyping] = useState(false);
+  const chatEndRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    scrollToBottom();
-  }, [chats]);
+    if (userData?.name) {
+      setChats([
+        {
+          role: "assistant",
+          message: `Hi ${userData.name}! How can I help you today?`,
+        },
+      ]);
+    }
+  }, [userData?.name]);
 
-  const createExpense = async () => {
+  useEffect(() => {
+    if (chatData && chatData.length > 0) {
+      setChats((prev) => [...prev, ...chatData]);
+    }
+  }, [chatData]);
+
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [chats, isTyping]);
+
+  const handleSendMessage = useCallback(() => {
     if (!message.trim()) return;
 
-    const res = await fetch("http://localhost:4000/v1/user/create-expense", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
+    const userMessage = { role: "user", message };
+    setChats((prev) => [...prev, userMessage]);
+    setMessage("");
+    setIsTyping(true);
+
+    createChat(message, {
+      onSuccess: (response) => {
+        setTimeout(() => {
+          setChats((prev) => [
+            ...prev,
+            {
+              role: "assistant",
+              message: response?.message ?? "Not sure I understood that.",
+            },
+          ]);
+          setIsTyping(false);
+        }, 2000);
       },
-      body: JSON.stringify({ chat: message }),
-    });
-
-    const data = await res.json();
-    if (data.success) {
-      setChats((prev) => [...prev, { role: "user", message: message }]);
-      setMessage("");
-    }
-  };
-
-  const getChats = async () => {
-    const res = await fetch("http://localhost:4000/v1/user/get-ai-chats", {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      onError: () => {
+        setIsTyping(false);
+        toast.error("Failed to send message");
       },
     });
-    const data = await res.json();
-    if (data.success) {
-      setChats(data.message);
-    }
-  };
+  }, [message, createChat]);
 
-  useEffect(() => {
-    getChats();
-  }, [message]);
+  const renderChatMessage = (chat, index) => (
+    <div
+      key={index}
+      className={`flex ${
+        chat.role === "user" ? "justify-end" : "justify-start"
+      }`}
+    >
+      <div
+        className={`${
+          chat.role === "user"
+            ? "bg-gray-200 text-gray-800"
+            : "bg-blue-100 text-blue-800"
+        } p-2 rounded-lg flex items-center gap-2 max-w-[80%]`}
+      >
+        {chat.role === "user" ? <CircleUser /> : <Bot />}
+        <span>{chat.message}</span>
+      </div>
+    </div>
+  );
 
-  return (
-    <>
-      {isOpen ? (
-        <Draggable handle=".handle">
-          <div className="fixed bottom-4 right-4 z-50 bg-white rounded-xl shadow-lg flex flex-col resize overflow-hidden w-[350px] h-[500px]">
-            <div className="handle cursor-move p-4 bg-blue-600 text-white flex justify-between items-center">
-              <h2 className="text-lg font-bold">Finance ChatBot</h2>
-              <button onClick={() => setIsOpen(false)}>✖</button>
-            </div>
+  return isOpen ? (
+    <Draggable handle=".handle">
+      <div className="fixed bottom-4 right-4 z-50 bg-white rounded-xl shadow-lg flex flex-col resize overflow-hidden w-[350px] h-[500px]">
+        <div className="handle cursor-move p-4 bg-blue-600 text-white flex justify-between items-center">
+          <h2 className="text-lg font-bold">Finance ChatBot</h2>
+          <button onClick={() => setIsOpen(false)}>✖</button>
+        </div>
 
-            <div className="flex-1 overflow-y-auto p-4 space-y-3">
-              {chats.map((chat, index) => (
-                <div
-                  key={index}
-                  className={`flex ${
-                    chat.role === "user" ? "justify-end" : "justify-start"
-                  }`}
-                >
-                  <div
-                    className={`${
-                      chat.role === "user"
-                        ? "bg-gray-200 text-gray-800"
-                        : "bg-blue-100 text-blue-800"
-                    } p-2 rounded-lg flex items-center gap-2 max-w-[80%]`}
-                  >
-                    {chat.role === "user" ? <CircleUser /> : <Bot />}
-                    <span>{chat.message}</span>
-                  </div>
-                </div>
-              ))}
-              <div ref={chatEndRef} />
-            </div>
-
-            <div className="p-4 border-t bg-white">
-              <div className="flex gap-2 items-center">
-                <input
-                  type="text"
-                  className="w-full p-2 border border-gray-300 rounded-lg"
-                  placeholder="Type your expense..."
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                />
-                <button
-                  onClick={createExpense}
-                  className="bg-blue-500 text-white p-2 rounded-lg"
-                >
-                  <SendIcon size={20} />
-                </button>
+        <div className="flex-1 overflow-y-auto p-4 space-y-3">
+          {chats.map(renderChatMessage)}
+          {isTyping && (
+            <div className="flex justify-start">
+              <div className="bg-blue-100 text-blue-800 p-2 rounded-lg flex items-center gap-2 max-w-[80%]">
+                <Bot />
+                <span className="italic animate-pulse">Typing...</span>
               </div>
             </div>
-          </div>
-        </Draggable>
-      ) : (
-        <div className="fixed bottom-4 right-4 z-50">
-          <button
-            className="w-16 h-16 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-lg"
-            onClick={() => setIsOpen(true)}
-          >
-            <BsChatDots size={30} />
-          </button>
+          )}
+          <div ref={chatEndRef} />
         </div>
-      )}
-    </>
+
+        <div className="p-4 border-t bg-white">
+          <div className="flex gap-2 items-center">
+            <input
+              type="text"
+              className="w-full p-2 border border-gray-300 rounded-lg"
+              placeholder="Type your expense..."
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && handleSendMessage()}
+            />
+            <button
+              onClick={handleSendMessage}
+              className="bg-blue-500 text-white p-2 rounded-lg"
+              disabled={isTyping}
+            >
+              <SendIcon size={20} />
+            </button>
+          </div>
+        </div>
+      </div>
+    </Draggable>
+  ) : (
+    <div className="fixed bottom-4 right-4 z-50">
+      <button
+        className="w-16 h-16 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-lg"
+        onClick={() => setIsOpen(true)}
+      >
+        <BsChatDots size={30} />
+      </button>
+    </div>
   );
-}
+};
 
 export default ChatBot;

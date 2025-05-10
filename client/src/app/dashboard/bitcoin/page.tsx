@@ -1,11 +1,11 @@
 "use client";
 import React, { useState } from "react";
-import Chart from "../../components1/Chart";
-import Price from "../../components1/Price";
-import Summary from "../../components1/Summary";
-import Statistics from "../../components1/Statistics";
-import Analysis from "../../components1/Analysis";
-import Settings from "../../components1//Settings";
+import Chart from "../../../components1/Chart";
+import Price from "../../../components1/Price";
+import Summary from "../../../components1/Summary";
+import Statistics from "../../../components1/Statistics";
+import Analysis from "../../../components1/Analysis";
+import Settings from "../../../components1//Settings";
 
 function Page() {
   const tabs = [

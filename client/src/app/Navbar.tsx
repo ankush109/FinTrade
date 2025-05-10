@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
 import React from "react";
-import { GetUserQuery } from "../api/user/index";
+
 import Link from "next/link";
+import { GetUserQuery } from "@/api/query/useGetUserDetails";
 function Navbar() {
   const user = GetUserQuery();
 
