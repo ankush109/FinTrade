@@ -8,7 +8,7 @@ import path from "path";
 
 import "./v1/config/env.config";
 
-import { authRoutes, userRoute } from "./v1/routes";
+import { authRoutes, botRoute, userRoute } from "./v1/routes";
 
 // const openai = new OpenAI({
 //   apiKey: process.env.OPENAI_API_KEY, // This is also the default, can be omitted
@@ -59,6 +59,7 @@ const apiVersion = "v1";
 // Routes
 app.use(`/${apiVersion}/auth`, authRoutes);
 app.use(`/${apiVersion}/user`, userRoute);
+ app.use(`/${apiVersion}/bot`, botRoute);
 
 // // 404 Handler
 app.use((req, res, next) => {
