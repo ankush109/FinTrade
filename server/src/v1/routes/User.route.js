@@ -28,6 +28,7 @@ router.post("/creategoals",authMiddleware,userController.createGoal)
 router.get("/getassets",authMiddleware,userController.getassets)
 router.post("/createexpense",authMiddleware,userController.createUpdateExpense)
 router.get("/getexpense",authMiddleware,userController.getExpenses)
-
+router.post("/create-expense",authMiddleware,userController.createChat)
+router.get("/get-ai-chats"  ,authMiddleware,userController.getAiChats)
 
 export default router;
