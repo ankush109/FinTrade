@@ -1,7 +1,7 @@
 import React from "react";
 import { IoIosArrowForward } from "react-icons/io";
 
-import img1 from "./../assets/details.png";
+import img1 from ".././../assets/details.png";
 import Image from "next/image";
 function Details() {
   return (

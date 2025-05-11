@@ -1,13 +1,13 @@
 // @ts-nocheck
 "use client";
 
-import Details from "./Details";
-import Details2 from "./Details2";
-import FaqSection from "./FaqSection";
+import Details from "./(Sections)/Details";
+import Details2 from "./(Sections)/Details2";
+import FaqSection from "./(Sections)/FaqSection";
 import Features from "./Features";
 import Footer from "./Footer";
 import SectionConsult from "./SectionConsult";
-import SectionHero from "./SectionHero";
+import SectionHero from "./(Sections)/SectionHero";
 import SectionProcess from "./SectionProcess";
 import SectionTrust from "./SectionTrust";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";

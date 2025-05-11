@@ -1,5 +1,5 @@
 import React from "react";
-import img2 from "../assets/de2.png";
+import img2 from "../../assets/de2.png";
 import Image from "next/image";
 function Details2() {
   return (

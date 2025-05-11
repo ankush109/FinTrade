@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import Navbar from "./Navbar";
+import Navbar from "../Navbar";
 
 function SectionHero() {
   return (
