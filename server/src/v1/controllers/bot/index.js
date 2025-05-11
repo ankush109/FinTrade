@@ -1,5 +1,9 @@
 const { PrismaClient } = require("@prisma/client");
-const { botAi, botContext } = require("../../../lib/lib");
+const {
+  botAi,
+  botContext,
+  generateFinanceBotPrompt,
+} = require("../../../lib/lib");
 const { parseGeminiResponse } = require("../../../utils/func-utils");
 const prisma = new PrismaClient();
 
@@ -43,7 +47,22 @@ const botController = {
           .status(404)
           .json({ success: false, error: "User not found" });
       }
-
+      const userId = req.user.id;
+      const finances = await prisma.finance.findFirst({
+        where: {
+          userId: userId,
+        },
+      });
+      const expensesUser = await prisma.expense.findFirst({
+        where: {
+          userId: userId,
+        },
+      });
+      const chatHistory = await prisma.chat.findMany({
+        where: {
+          userId,
+        },
+      });
       const geminiResponse = await botAi.models.generateContent({
         model: "gemini-2.0-flash-001",
         contents: [
@@ -51,17 +70,21 @@ const botController = {
             role: "user",
             parts: [
               {
-                text: `You are a helpful finance assistant. Answer the question based on the context provided.\nContext: ${botContext}\nQuestion: ${chat}`,
+                text: generateFinanceBotPrompt({
+                  botContext,
+                  finances,
+                  chatHistory,
+                  chat,
+                }),
               },
             ],
           },
         ],
         generationConfig: {
           temperature: 0.7,
-          maxOutputTokens: 100,
+          maxOutputTokens: 300,
           topP: 0.9,
           topK: 40,
-          stopSequences: ["\n"],
         },
       });
 
