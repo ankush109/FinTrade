@@ -443,7 +443,7 @@ const userController = {
           date: 'desc', // Sort expenses by date in descending order (most recent first)
         },
       });
-  
+  console.log(expenses, 'expenses');
       res.status(200).json({
         success: true,
         message: expenses,

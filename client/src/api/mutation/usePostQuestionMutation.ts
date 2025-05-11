@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import AuthAPI from "../client";
+import {AuthAPI} from "../client";
 
 const postQuestion = async (text) => {
   const { data } = await AuthAPI().post("/user/create-question", { text });

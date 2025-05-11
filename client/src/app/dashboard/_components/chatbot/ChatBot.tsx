@@ -21,6 +21,7 @@ const ChatBot = () => {
   const chatEndRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    console.log("Chat data:", chatData);
     if (userData?.name) {
       setChats([
         {
@@ -62,7 +63,8 @@ const ChatBot = () => {
           setIsTyping(false);
         }, 2000);
       },
-      onError: () => {
+      onError: (error) => {
+        console.error("Error sending message:", error);
         setIsTyping(false);
         toast.error("Failed to send message");
       },

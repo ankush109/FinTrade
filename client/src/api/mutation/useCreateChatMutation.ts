@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import AuthAPI from "../client";
+import {AuthAPI} from "../client";
 
 const createUserChat = async (chat) => {
   const { data } = await AuthAPI().post("/bot/create-expense", {

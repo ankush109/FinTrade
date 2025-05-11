@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import AuthAPI from "../client";
+import {AuthAPI} from "../client";
 
 const getUserChats = async () => {
-  const { data } = await AuthAPI().get("/user/get-ai-chats");
+  const { data } = await AuthAPI().get("/bot/get-ai-chats");
   return data;
 };
 const useGetUserChatsQuery = () =>
