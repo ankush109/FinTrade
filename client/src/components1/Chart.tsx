@@ -3,8 +3,9 @@ import { createChart, IChartApi } from "lightweight-charts";
 import { MdOpenInFull } from "react-icons/md";
 import { LuCircle } from "react-icons/lu";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
-import { useStockData } from "../hooks/useStockData";
+
 import Loader from "./Loader";
+import { useStockData } from "@/api/query/useGetStockDataQuery";
 
 const Chart: React.FC = () => {
   const chartContainerRef = useRef<HTMLDivElement>(null);

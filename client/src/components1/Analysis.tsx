@@ -1,5 +1,5 @@
 import React from "react";
-import { useStockData } from "../hooks/useStockData";
+
 import {
   Tooltip,
   ResponsiveContainer,
@@ -9,6 +9,7 @@ import {
   Cell,
 } from "recharts";
 import Loader from "./Loader";
+import { useStockData } from "@/api/query/useGetStockDataQuery";
 interface StockDataPoint {
   time: number;
   open: number;

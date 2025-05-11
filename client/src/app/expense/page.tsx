@@ -2,45 +2,84 @@
 
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { createFinance, useGetUserFinanceQuery } from "../../api/finance/index";
 import toast from "react-hot-toast";
-
-import Lottie from "react-lottie-player";
 import { useRouter } from "next/navigation";
-import lo2 from "../../assets/./1.json";
+
 import { GetUserQuery } from "@/api/query/useGetUserDetails";
 import { useCreateFinanceMutation } from "@/api/mutation/useCreateFinanceMutation";
-function Page() {
-  const {
-    mutate: createFinance,
+import { useGetUserFinanceQuery } from "@/api/query/useGetUserFinanceQuery";
 
-    isError: isErrorCreating,
-    error: errorCreating,
-  } = useCreateFinanceMutation();
-  const [currentQuestion, setCurrentQuestion] = useState(0); // Start at the first question (index 0 now)
+import Loader from "@/components1/Loader";
+
+function Page() {
+  const router = useRouter();
+  const user = GetUserQuery();
+  const { data: financeData, isLoading, refetch } = useGetUserFinanceQuery();
+
+  const { mutate: createFinance } = useCreateFinanceMutation();
+
+  const [currentQuestion, setCurrentQuestion] = useState(0);
   const [showGreeting, setShowGreeting] = useState(true);
   const [showQuestions, setShowQuestions] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false); // Add a state for submission
-
-  const user = GetUserQuery();
-  const { refetch } = useGetUserFinanceQuery();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [answers, setAnswers] = useState(Array(9).fill(""));
 
   const questions = [
-    "What is your age?",
-    "What is your profession?",
-    "What is your monthly salary?",
-    "What is your total savings?",
-    "What are your major monthly expenses? (e.g., Rent > 20,000)",
-    "What are your minor monthly expenses? (e.g., Clubbing < 3,000)",
-    "What are your monthly EMI payments?",
-    "What's your loan amount?",
-    "What's your number of loans?",
+    { question: "What is your age?", type: "number" },
+    { question: "What is your profession?", type: "string" },
+    { question: "What is your monthly salary?", type: "number" },
+    { question: "What is your total savings?", type: "number" },
+    {
+      question: "What are your major monthly expenses? (e.g., Rent > 20,000)",
+      type: "string",
+    },
+    {
+      question:
+        "What are your minor monthly expenses? (e.g., Clubbing < 3,000)",
+      type: "string",
+    },
+    { question: "What are your monthly EMI payments?", type: "number" },
+    { question: "What's your loan amount?", type: "number" },
+    { question: "What's your number of loans?", type: "number" },
   ];
 
-  const [answers, setAnswers] = useState(Array(questions.length).fill(""));
-  const router = useRouter();
+  // Redirect if finance data exists
+  useEffect(() => {
+    if (!isLoading && financeData?.message?.id) {
+      toast.error("You have already submitted your finance data.");
+      router.push("/dashboard");
+    }
+  }, [isLoading, financeData, router]);
+
+  // Greeting timeout
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowGreeting(false);
+      setShowQuestions(true);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const updatedAnswers = [...answers];
+    updatedAnswers[currentQuestion] = e.target.value;
+    setAnswers(updatedAnswers);
+  };
 
   const handleNext = () => {
+    const current = questions[currentQuestion];
+    const value = answers[currentQuestion];
+
+    if (!value) {
+      toast.error("Please enter a value.");
+      return;
+    }
+
+    if (current.type === "number" && isNaN(Number(value))) {
+      toast.error("Please enter a valid number.");
+      return;
+    }
+
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion((prev) => prev + 1);
     } else {
@@ -48,66 +87,48 @@ function Page() {
     }
   };
 
-  const handleInputChange = (e) => {
-    const updatedAnswers = [...answers];
-    updatedAnswers[currentQuestion] = e.target.value;
-    setAnswers(updatedAnswers);
-  };
-
-  const submitFinance = async () => {
-    if (answers.includes("")) {
-      console.log("Please complete all questions before submitting!");
-      return;
-    }
-
-    const financeData = {
-      age: answers[0],
+  const submitFinance = () => {
+    const payload = {
+      age: Number(answers[0]),
       profession: answers[1],
-      salary: answers[2],
-      savings: answers[3],
+      salary: Number(answers[2]),
+      savings: Number(answers[3]),
       majorexp: answers[4],
       minorexp: answers[5],
-      emi: answers[6],
-      loanammount: answers[7],
-      loans: answers[8],
+      emi: Number(answers[6]),
+      loanammount: Number(answers[7]),
+      loans: Number(answers[8]),
     };
 
-    console.log(financeData, "Finance Data");
-
-    try {
-      createFinance(financeData, {
-        onSuccess: () => {
-          setIsSubmitting(true);
-          setTimeout(() => {
-            setIsSubmitting(false);
-            router.push("/dashboard");
-          }, 2000);
-        },
-        onError: (error) => {
-          console.error("Error creating finance data:", error);
-          toast.error("Failed to create finance data.");
-        },
-      });
-      refetch();
-      toast.success("Finance data submitted successfully!");
-    } catch (error) {
-      console.error("Error submitting finance data:", error);
-      toast.error("Failed to submit finance data.");
-    }
+    createFinance(payload, {
+      onSuccess: () => {
+        setIsSubmitting(true);
+        toast.success("Finance data submitted successfully!");
+        setTimeout(() => {
+          setIsSubmitting(false);
+          router.push("/dashboard");
+        }, 2000);
+      },
+      onError: (error) => {
+        console.error("Error creating finance data:", error);
+        toast.error("Failed to create finance data.");
+      },
+    });
   };
 
-  useEffect(() => {
-    setTimeout(() => {
-      setShowGreeting(false);
-      setShowQuestions(true);
-    }, 2000);
-  }, []);
+  if (isLoading || financeData?.message?.id)
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <Loader />
+      </div>
+    );
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500">
-      {/* Background Elements */}
       <BackgroundAnimation />
+
       {showGreeting && <Greeting user={user} />}
+
       <AnimatePresence mode="wait">
         {isSubmitting ? (
           <motion.div
@@ -154,13 +175,13 @@ const BackgroundAnimation = () => (
       initial={{ opacity: 0, scale: 0.8 }}
       animate={{ opacity: 0.3, scale: 1 }}
       transition={{ duration: 2, repeat: Infinity, repeatType: "reverse" }}
-    ></motion.div>
+    />
     <motion.div
       className="absolute bottom-10 left-20 w-80 h-80 bg-indigo-300 rounded-full filter blur-2xl opacity-40 animate-pulse"
       initial={{ opacity: 0, scale: 0.8 }}
       animate={{ opacity: 0.4, scale: 1 }}
       transition={{ duration: 3, repeat: Infinity, repeatType: "reverse" }}
-    ></motion.div>
+    />
   </>
 );
 
@@ -172,9 +193,7 @@ const Greeting = ({ user }) => (
     exit={{ opacity: 0, scale: 1.2 }}
     transition={{ duration: 1, ease: "easeInOut" }}
   >
-    <div className="transform -translate-x-1/2 -translate-y-1/2">
-      {"Hello, " + user?.data?.name}
-    </div>
+    <div>Hello, {user?.data?.name}</div>
   </motion.div>
 );
 
@@ -200,7 +219,7 @@ const QuestionsSection = ({
       exit={{ opacity: 0, y: -50 }}
       transition={{ duration: 0.5, ease: "easeInOut" }}
     >
-      {questions[currentQuestion]}
+      {questions[currentQuestion].question}
     </motion.h1>
     <motion.input
       type="text"
@@ -226,7 +245,7 @@ const QuestionsSection = ({
           width: `${((currentQuestion + 1) / questions.length) * 100}%`,
         }}
         transition={{ duration: 0.5 }}
-      ></motion.div>
+      />
     </motion.div>
     <NextButton
       handleNext={handleNext}
@@ -237,8 +256,7 @@ const QuestionsSection = ({
 );
 
 const NextButton = ({ handleNext, currentQuestion, questions }) => {
-  const isDisabled = currentQuestion === questions.length;
-
+  const isDisabled = currentQuestion >= questions.length;
   return (
     <motion.button
       onClick={handleNext}
@@ -248,8 +266,8 @@ const NextButton = ({ handleNext, currentQuestion, questions }) => {
           ? "bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-300"
           : "bg-gray-400 cursor-not-allowed"
       }`}
-      whileHover={!isDisabled ? { scale: 1.1 } : ""}
-      whileTap={!isDisabled ? { scale: 0.95 } : ""}
+      whileHover={!isDisabled ? { scale: 1.1 } : {}}
+      whileTap={!isDisabled ? { scale: 0.95 } : {}}
     >
       {currentQuestion < questions.length - 1 ? "Next" : "Submit"}{" "}
       <span className="text-2xl">&#8594;</span>

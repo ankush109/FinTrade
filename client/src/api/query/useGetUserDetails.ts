@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import AuthAPI from "../client";
+import {AuthAPI} from "../client";
 
 const GetUser = async () => {
   const { data } = await AuthAPI().get("/user/user-details");

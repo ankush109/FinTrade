@@ -21,13 +21,14 @@ import Lottie from "react-lottie-player";
 import lottieJson from "../../../assets/2.json";
 import toast from "react-hot-toast";
 import StatCard from "./statecard";
-import { getmyexpense } from "@/api/query/useGetUserExpenses";
-import { useGetUserFinanceQuery } from "../../../api/finance/index";
+import { useGetUserExpenseQuery } from "@/api/query/useGetUserExpenses";
+
 import { useCreateExpenseMutation } from "@/api/mutation/useCreateExpenseMutation";
+import { useGetUserFinanceQuery } from "@/api/query/useGetUserFinanceQuery";
 
 const Expense: React.FC = () => {
   const { mutate: createExpense } = useCreateExpenseMutation();
-  const expensesQuery = getmyexpense();
+  const expensesQuery = useGetUserExpenseQuery();
   const financeQuery = useGetUserFinanceQuery();
 
   const [creating, setCreating] = useState(false);

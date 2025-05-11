@@ -20,10 +20,11 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { registerUser } from "../../api";
+
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+import { useUserRegisterMutation } from "@/api/mutation/useUserRegisterMutation";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -40,6 +41,7 @@ const formSchema = z.object({
 
 function RegisterForm() {
   const [buttonDisabled, setButtonDisabled] = useState(false);
+  const { mutate: registerUser } = useUserRegisterMutation();
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -54,10 +56,17 @@ function RegisterForm() {
   const onSubmit = async (formData: z.infer<typeof formSchema>) => {
     setButtonDisabled(true);
     try {
-      const { data } = await registerUser(formData);
-      console.log("Registration Successful:", data);
-      router.push("/login");
-      form.reset();
+      registerUser(formData, {
+        onSuccess: (data) => {
+          console.log("Registration Successful:", data);
+          router.push("/login");
+          form.reset();
+        },
+        onError: (error) => {
+          console.error("Registration Error:", error);
+          setButtonDisabled(false);
+        },
+      });
     } catch (error) {
       console.error("Registration Error:", error);
       setButtonDisabled(false);

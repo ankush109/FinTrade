@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import AuthAPI from "../client";
+import { AuthAPI } from "../client";
+
 
 const getexpense = async () => {
   const { data } = await AuthAPI().get("/user/getexpense");
@@ -10,7 +11,7 @@ const getExpenseCategories = async () => {
   const { data } = await AuthAPI().get("/user/get-expense-categories");
   return data;
 };
-export const getmyexpense = () =>
+export const useGetUserExpenseQuery = () =>
   useQuery({
     queryKey: ["get-my-expense"],
     queryFn: () => getexpense(),
@@ -19,7 +20,7 @@ export const getmyexpense = () =>
       return res;
     },
   });
-export const getmyexpensecategories = () =>
+export const useGetUserExpenseQuerycategories = () =>
   useQuery({
     queryKey: ["get-my-expense-categories"],
     queryFn: () => getExpenseCategories(),

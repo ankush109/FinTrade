@@ -1,14 +1,8 @@
-
 import { useQuery } from "@tanstack/react-query";
-import AuthAPI from "../client";
+import { AuthAPI } from "../client";
 
 
-export const createFinance = async (finance) => {
-  const {data} = await AuthAPI().post("/user/finance/create",finance)
-  return data
-};
-
-export const getFinance = async()=>{
+const getFinance = async()=>{
   const {data} = await AuthAPI().get("/user/getfinance");
   return data
 }

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const AuthAPI = () => {
+export const AuthAPI = () => {
   if (typeof window !== "undefined") {
     return axios.create({
       baseURL: `http://localhost:4000/v1`,
@@ -20,4 +20,12 @@ const AuthAPI = () => {
   }
 };
 
-export default AuthAPI;
+
+export const API = axios.create({
+  baseURL: `http://localhost:4000/v1/`,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
+

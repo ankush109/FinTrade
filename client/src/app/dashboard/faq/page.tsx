@@ -1,20 +1,17 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import {
-  answerReply,
-  deleteMyQuestion,
-  getAllquestionsInfo,
-  getAllquestionsInfoQuery,
-  postQuestion,
-} from "@/api/faq/index";
 
 import { Button } from "@/components/ui/button";
 import Loading from "../_components/Loader";
-import Sidebar from "../_components/sidebar";
+
 import { DeleteIcon } from "lucide-react";
 import toast from "react-hot-toast";
 import { useTheme } from "@/context/ThemeContext";
 import { GetUserQuery } from "@/api/query/useGetUserDetails";
+import { usePostQuestionMutation } from "@/api/mutation/usePostQuestionMutation";
+import { useAnswerReplyMutation } from "@/api/mutation/useAnswerReplyMutation";
+import { useDeleteMyQuestionMutation } from "@/api/mutation/useDeleteAnswerMutation";
+import { getAllquestionsInfoQuery } from "@/api/query/useGetQuestions";
 
 function Discuss() {
   const { isDarkMode } = useTheme();
@@ -33,7 +30,9 @@ function Discuss() {
   const [openCommentsMap, setOpenCommentsMap] = useState({});
   const [activeTab, setActiveTab] = useState("all");
   const [searchText, setSearchText] = useState("");
-
+  const { mutate: postQuestion } = usePostQuestionMutation();
+  const { mutate: replyAnswer } = useAnswerReplyMutation();
+  const { mutate: deleteMyQuestion } = useDeleteMyQuestionMutation();
   useEffect(() => {
     if (questions) setData(questions);
   }, [questions]);
@@ -49,37 +48,57 @@ function Discuss() {
   };
 
   const handleDelete = async (id) => {
-    const res = await deleteMyQuestion(id);
-    if (res.success) {
-      toast.success("Post has been deleted");
-      refetch();
-    } else {
-      toast.error(res.message);
-    }
+    deleteMyQuestion(id, {
+      onSuccess: (res) => {
+        if (res.success) {
+          toast.success("Post has been deleted");
+          refetch();
+        } else {
+          toast.error(res.message);
+        }
+      },
+    });
   };
 
   const handlePostQuestion = async (e) => {
     e.preventDefault();
     if (!newQuestion.trim()) return toast.error("Please enter a question.");
 
-    const res = await postQuestion(newQuestion);
-    if (res.success) {
-      toast.success("Posted successfully");
-      setNewQuestion("");
-      refetch();
-    }
+    postQuestion(newQuestion, {
+      onSuccess: (res) => {
+        if (res.success) {
+          toast.success("Posted successfully");
+          setNewQuestion("");
+          refetch();
+        }
+      },
+      onError: (error) => {
+        console.error("Error posting question:", error);
+        toast.error("Failed to post question");
+      },
+    });
   };
 
   const handleSubmitReply = async (questionId) => {
     if (!replyText.trim()) return toast.error("Please enter a reply.");
-    const res = await answerReply(replyText, questionId);
 
-    if (res.success) {
-      toast.success("Reply posted");
-      setReplyText("");
-      setReplyingTo(null);
-      refetch();
-    }
+    replyAnswer(
+      { text: replyText, questionId },
+      {
+        onSuccess: (res) => {
+          if (res.success) {
+            toast.success("Reply posted");
+            setReplyText("");
+            setReplyingTo(null);
+            refetch();
+          }
+        },
+        onError: (error) => {
+          console.error("Error posting reply:", error);
+          toast.error("Failed to post reply");
+        },
+      }
+    );
   };
 
   const renderReplyInput = (questionId) => (

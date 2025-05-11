@@ -16,9 +16,11 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
-import { loginUser } from "@/api";
+
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { useUserLoginMutation } from "@/api/mutation/useUserLoginMutation";
+import { log } from "console";
 
 const formSchema = z.object({
   email: z.string().email("Invalid email address").min(2, {
@@ -31,6 +33,7 @@ const formSchema = z.object({
 
 function LoginForm() {
   const [buttonDisabled, setButtonDisabled] = useState(false);
+  const { mutate: loginUser } = useUserLoginMutation();
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -43,12 +46,23 @@ function LoginForm() {
   const onSubmit = async (formData: z.infer<typeof formSchema>) => {
     setButtonDisabled(true);
     try {
-      const response = await loginUser(formData);
-      const { data } = response;
-      if (response.status === 200) {
-        localStorage.setItem("token", data.message.accessToken);
-        router.push("/expense");
-      }
+      // const response = await loginUser(formData);
+      // const { data } = response;
+      // if (response.status === 200) {
+      //   localStorage.setItem("token", data.message.accessToken);
+      //   router.push("/expense");
+      // }
+      loginUser(formData, {
+        onSuccess: (res) => {
+          localStorage.setItem("token", res.data.message.accessToken);
+          router.push("/expense");
+          setButtonDisabled(false);
+        },
+        onError: (error) => {
+          console.error("Error logging in:", error);
+          setButtonDisabled(false);
+        },
+      });
       form.reset();
     } catch (err) {
       setButtonDisabled(false);

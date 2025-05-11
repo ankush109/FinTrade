@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import AuthAPI from "../client";
+import {AuthAPI} from "../client";
 
  const createExpense = async(formdata)=>{
     

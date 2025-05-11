@@ -1,9 +1,10 @@
 "use client";
 import React from "react";
 import StatCard from "./statecard";
-import { useGetUserFinanceQuery } from "@/api/finance";
+
 import RenderLineChart from "./charts/LineChart";
 import MonthlyAreaChart from "./charts/AreaChart";
+import { useGetUserFinanceQuery } from "@/api/query/useGetUserFinanceQuery";
 
 const UpperDashboardSection: React.FC = () => {
   const { data } = useGetUserFinanceQuery();

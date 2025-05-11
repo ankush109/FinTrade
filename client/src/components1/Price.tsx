@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useStockData } from "../hooks/useStockData";
+
 import Loader from "./Loader";
+import { useStockData } from "@/api/query/useGetStockDataQuery";
 
 const Price: React.FC = () => {
   const [price, setPrice] = useState<number>(63179.71);
