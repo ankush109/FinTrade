@@ -4,7 +4,7 @@ import StatCard from "./statecard";
 
 import RenderLineChart from "./charts/LineChart";
 import MonthlyAreaChart from "./charts/AreaChart";
-import { useGetUserFinanceQuery } from "@/api/query/useGetUserFinanceQuery";
+import { useGetUserFinanceQuery } from "@/hooks/query/useGetUserFinanceQuery";
 
 const UpperDashboardSection: React.FC = () => {
   const { data } = useGetUserFinanceQuery();

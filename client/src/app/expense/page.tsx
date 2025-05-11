@@ -5,9 +5,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
-import { GetUserQuery } from "@/api/query/useGetUserDetails";
-import { useCreateFinanceMutation } from "@/api/mutation/useCreateFinanceMutation";
-import { useGetUserFinanceQuery } from "@/api/query/useGetUserFinanceQuery";
+import { GetUserQuery } from "@/hooks/query/useGetUserDetails";
+import { useCreateFinanceMutation } from "@/hooks/mutation/useCreateFinanceMutation";
+import { useGetUserFinanceQuery } from "@/hooks/query/useGetUserFinanceQuery";
 
 import Loader from "@/components1/Loader";
 

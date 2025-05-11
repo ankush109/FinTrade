@@ -21,10 +21,10 @@ import Lottie from "react-lottie-player";
 import lottieJson from "../../../assets/2.json";
 import toast from "react-hot-toast";
 import StatCard from "./statecard";
-import { useGetUserExpenseQuery } from "@/api/query/useGetUserExpenses";
+import { useGetUserExpenseQuery } from "@/hooks/query/useGetUserExpenses";
 
-import { useCreateExpenseMutation } from "@/api/mutation/useCreateExpenseMutation";
-import { useGetUserFinanceQuery } from "@/api/query/useGetUserFinanceQuery";
+import { useCreateExpenseMutation } from "@/hooks/mutation/useCreateExpenseMutation";
+import { useGetUserFinanceQuery } from "@/hooks/query/useGetUserFinanceQuery";
 
 const Expense: React.FC = () => {
   const { mutate: createExpense } = useCreateExpenseMutation();

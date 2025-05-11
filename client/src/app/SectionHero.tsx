@@ -1,47 +1,8 @@
-"use client";
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
 import Navbar from "./Navbar";
-import { Typewriter } from "react-simple-typewriter";
-import { Button } from "@/components/ui/button";
-import axios from "axios";
-import img1 from "../../images/mobile.png";
 
 function SectionHero() {
-  const [loading, setloading] = useState(false);
-  const [chatbot, setChatbot] = useState(false);
-  const [question, setQuestion] = useState("");
-  const [answer, setAnswer] = useState("");
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setloading(true);
-    console.log(question);
-    try {
-      const response = await axios.post(
-        "http://127.0.0.1:5000/predict",
-        `question=${encodeURIComponent(question)}`,
-        {
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-        }
-      );
-      if (response) {
-        setloading(false);
-        setAnswer(response.data.answer);
-      }
-
-      console.log(response);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const handleQuestionChange = (e) => {
-    setQuestion(e.target.value);
-  };
-
   return (
     <>
       <div className="  bg-gradient-to-r from-white  to-purple-200 h-screen ">

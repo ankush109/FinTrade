@@ -1,6 +1,6 @@
 "use client";
 
-import { getmygoals } from "@/api/query/useGetUserGoals";
+import { getmygoals } from "@/hooks/query/useGetUserGoals";
 import React, { useEffect } from "react";
 
 function Goal() {

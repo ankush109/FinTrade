@@ -4,10 +4,10 @@ import React, { useEffect, useRef, useState, useCallback } from "react";
 import Draggable from "react-draggable";
 import { BsChatDots } from "react-icons/bs";
 import { Bot, CircleUser, SendIcon } from "lucide-react";
-import { useGetUserChatsQuery } from "@/api/query/useGetUserChats";
-import { useCreateUserChatMutation } from "@/api/mutation/useCreateChatMutation";
+import { useGetUserChatsQuery } from "@/hooks/query/useGetUserChats";
+import { useCreateUserChatMutation } from "@/hooks/mutation/useCreateChatMutation";
 import toast from "react-hot-toast";
-import { GetUserQuery } from "@/api/query/useGetUserDetails";
+import { GetUserQuery } from "@/hooks/query/useGetUserDetails";
 
 const ChatBot = () => {
   const { data: chatData } = useGetUserChatsQuery();

@@ -3,7 +3,7 @@ import { IoIosNotifications } from "react-icons/io";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import { CiMail } from "react-icons/ci";
-import { GetUserQuery } from "@/api/query/useGetUserDetails";
+import { GetUserQuery } from "@/hooks/query/useGetUserDetails";
 
 function DashboardNav() {
   const user = GetUserQuery();

@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import {
   MeetingProvider,
 } from "@videosdk.live/react-sdk";
-import { createMeeting } from "../config/Api";
+import { createMeeting } from "../../config/Api";
 
 import { JoinScreen } from "./JoinScreen";
 import { MeetingView } from "./MeetingView";

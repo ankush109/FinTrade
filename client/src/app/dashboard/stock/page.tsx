@@ -2,8 +2,7 @@
 import { useState, useEffect } from "react";
 
 import { FaArrowUp, FaArrowDown } from "react-icons/fa";
-import Sidebar from "../_components/sidebar";
-import { useTheme } from "@/context/ThemeContext";
+import { useThemeProvider } from "@/providers/themeProvider";
 
 const STOCKS = [
   "RELIANCE.NS",
@@ -32,7 +31,7 @@ const StockTracker = () => {
   const [stockData, setStockData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [lastUpdated, setLastUpdated] = useState("");
-  const { isDarkMode } = useTheme();
+  const { isDarkMode } = useThemeProvider();
 
   useEffect(() => {
     const fetchStocks = async () => {

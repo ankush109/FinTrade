@@ -1,10 +1,7 @@
-
 import { PrismaClient } from "@prisma/client";
 import { customResponse } from "../../../utils/Response";
 
 const prisma = new PrismaClient();
-
-
 
 const userController = {
   async userDetails(req, res, next) {
@@ -14,7 +11,6 @@ const userController = {
         where: {
           id: req.user.id,
         },
-        
       });
       res.json(customResponse(200, user));
     } catch (err) {
@@ -22,128 +18,114 @@ const userController = {
       console.log(err, "err");
     }
   },
-
-  
-  async createAssets(req,res,next){
-    try{
-      const {type,name,ammount,duration} =req.body
+  async createAssets(req, res, next) {
+    try {
+      const { type, name, ammount, duration } = req.body;
       const assets = await prisma.assets.create({
-        data:{
-          userId:req.user.id,
-          name:name,
+        data: {
+          userId: req.user.id,
+          name: name,
 
-          duration:duration,
-          ammount:ammount,
-          type:type
-        }
-      })
-      console.log(assets,"assets")
+          duration: duration,
+          ammount: ammount,
+          type: type,
+        },
+      });
+      console.log(assets, "assets");
       res.status(201).json({
-        success:true,
-        message:assets
-      })
-    }catch(err){
-      console.log(err,"err in assets")
+        success: true,
+        message: assets,
+      });
+    } catch (err) {
+      console.log(err, "err in assets");
       res.status(400).json({
-        error:"data not found"
-         })
-       
+        error: "data not found",
+      });
     }
   },
-  async createLiability(req,res,next){
-    try{
-      const {type,ammount,duration} =req.body
+  async createLiability(req, res, next) {
+    try {
+      const { type, ammount, duration } = req.body;
       const liability = await prisma.liability.create({
-        data:{
-          userId:req.user.id,
-          duration:duration,
-          ammount:ammount,
-          type:type
-        }
-      })
-      console.log(liability,"liability")
+        data: {
+          userId: req.user.id,
+          duration: duration,
+          ammount: ammount,
+          type: type,
+        },
+      });
+      console.log(liability, "liability");
       res.status(201).json({
-        success:true,
-        message:liability
-      })
-    }catch(err){
+        success: true,
+        message: liability,
+      });
+    } catch (err) {
       res.status(400).json({
-        error:"data not found"
-         })
-       
+        error: "data not found",
+      });
     }
   },
-  async createGoal(req,res,next){
-    try{
-      const {name,money,type,investment} =req.body
+  async createGoal(req, res, next) {
+    try {
+      const { name, money, type, investment } = req.body;
       const goal = await prisma.goal.create({
-        data:{
-          userId:req.user.id,
-          name:name,
-          money:String(money),
-          type:type,
-          invest:investment
-        }
-      })
-      console.log(goal,"liability")
+        data: {
+          userId: req.user.id,
+          name: name,
+          money: String(money),
+          type: type,
+          invest: investment,
+        },
+      });
+      console.log(goal, "liability");
       res.status(201).json({
-        success:true,
-        message:goal
-      })
-    }catch(err){
-      console.log(err,"err in creating goals")
+        success: true,
+        message: goal,
+      });
+    } catch (err) {
+      console.log(err, "err in creating goals");
       res.status(400).json({
-        error:"data not found"
-         })
-       
+        error: "data not found",
+      });
     }
   },
-  async getGoals(req,res,next){
-    try{
-      
+  async getGoals(req, res, next) {
+    try {
       const goal = await prisma.goal.findMany({
-        where:{
-          userId:req.user.id
-        }
-      })
-      console.log(goal,"liability")
+        where: {
+          userId: req.user.id,
+        },
+      });
+      console.log(goal, "liability");
       res.status(201).json({
-        success:true,
-        message:goal
-      })
-    }catch(err){
-      console.log(err,"err")
+        success: true,
+        message: goal,
+      });
+    } catch (err) {
+      console.log(err, "err");
       res.status(400).json({
-        error:"data not found"
-         })
-       
+        error: "data not found",
+      });
     }
   },
-  async getassets(req,res,next){
-    try{
-      
+  async getassets(req, res, next) {
+    try {
       const assets = await prisma.assets.findMany({
-        where:{
-          userId:req.user.id
-        }
-      })
-      console.log(assets,"liability")
+        where: {
+          userId: req.user.id,
+        },
+      });
+      console.log(assets, "liability");
       res.status(201).json({
-        success:true,
-        message:assets
-      })
-    }catch(err){
-      console.log(err,"err")
+        success: true,
+        message: assets,
+      });
+    } catch (err) {
+      console.log(err, "err");
       res.status(400).json({
-        error:"data not found"
-         })
-       
+        error: "data not found",
+      });
     }
   },
-
-
-
-
-   
 };
 export default userController;

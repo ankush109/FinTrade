@@ -6,15 +6,15 @@ import Loading from "../_components/Loader";
 
 import { DeleteIcon } from "lucide-react";
 import toast from "react-hot-toast";
-import { useTheme } from "@/context/ThemeContext";
-import { GetUserQuery } from "@/api/query/useGetUserDetails";
-import { usePostQuestionMutation } from "@/api/mutation/usePostQuestionMutation";
-import { useAnswerReplyMutation } from "@/api/mutation/useAnswerReplyMutation";
-import { useDeleteMyQuestionMutation } from "@/api/mutation/useDeleteAnswerMutation";
-import { getAllquestionsInfoQuery } from "@/api/query/useGetQuestions";
+import { useThemeProvider } from "@/context/ThemeContext";
+import { GetUserQuery } from "@/hooks/query/useGetUserDetails";
+import { usePostQuestionMutation } from "@/hooks/mutation/usePostQuestionMutation";
+import { useAnswerReplyMutation } from "@/hooks/mutation/useAnswerReplyMutation";
+import { useDeleteMyQuestionMutation } from "@/hooks/mutation/useDeleteAnswerMutation";
+import { getAllquestionsInfoQuery } from "@/hooks/query/useGetQuestions";
 
 function Discuss() {
-  const { isDarkMode } = useTheme();
+  const { isDarkMode } = useThemeProvider();
   const q = GetUserQuery();
   const {
     data: questions,

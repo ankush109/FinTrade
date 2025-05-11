@@ -16,7 +16,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 3000, // 5 minutes
+      staleTime: 3000,
     },
   },
 });
@@ -28,9 +28,6 @@ export default function Home() {
       <Details2 />
       <Features />
       <FaqSection />
-      {/* <SectionTrust />
-      <SectionProcess />
-      <Footer /> */}
       <Footer />
     </div>
   );

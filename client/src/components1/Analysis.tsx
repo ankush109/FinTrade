@@ -9,7 +9,7 @@ import {
   Cell,
 } from "recharts";
 import Loader from "./Loader";
-import { useStockData } from "@/api/query/useGetStockDataQuery";
+import { useStockData } from "@/hooks/query/useGetStockDataQuery";
 interface StockDataPoint {
   time: number;
   open: number;

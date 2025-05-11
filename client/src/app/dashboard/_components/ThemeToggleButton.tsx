@@ -1,9 +1,9 @@
-"use client"
+"use client";
 import { FaSun, FaMoon } from "react-icons/fa";
-import { useTheme } from "../../../context/ThemeContext"
+import { useThemeProvider } from "../../../context/ThemeContext";
 
 const ThemeToggleButton = () => {
-  const { isDarkMode, toggleTheme } = useTheme();
+  const { isDarkMode, toggleTheme } = useThemeProvider();
   return (
     <div className="flex justify-center items-center w-10">
       <button

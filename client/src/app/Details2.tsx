@@ -34,8 +34,3 @@ function Details2() {
 }
 
 export default Details2;
-
-// Sell Smarter With Fast, Secure Payments
-// Make Every Transaction Count With A Payment System That's Built For Speed And Security.
-// > Instant Payment Insights
-// > Track Payments Instantly

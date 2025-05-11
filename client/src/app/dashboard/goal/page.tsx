@@ -1,13 +1,14 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { useTheme } from "@/context/ThemeContext";
+import { useThemeProvider } from "@/providers/themeProvider";
+
 import React from "react";
 import { BsAirplane } from "react-icons/bs";
 import { SlOptionsVertical } from "react-icons/sl";
 
 function Page() {
-  const { isDarkMode } = useTheme();
+  const { isDarkMode } = useThemeProvider();
 
   return (
     <div

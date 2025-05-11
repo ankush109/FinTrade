@@ -5,7 +5,7 @@ import { LuCircle } from "react-icons/lu";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 
 import Loader from "./Loader";
-import { useStockData } from "@/api/query/useGetStockDataQuery";
+import { useStockData } from "@/hooks/query/useGetStockDataQuery";
 
 const Chart: React.FC = () => {
   const chartContainerRef = useRef<HTMLDivElement>(null);

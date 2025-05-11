@@ -1,4 +1,4 @@
-import { useGetUserExpenseQuery } from "@/api/query/useGetUserExpenses";
+import { useGetUserExpenseQuery } from "@/hooks/query/useGetUserExpenses";
 import React, { useState } from "react";
 import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
 

@@ -24,7 +24,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { useUserRegisterMutation } from "@/api/mutation/useUserRegisterMutation";
+import { useUserRegisterMutation } from "@/hooks/mutation/useUserRegisterMutation";
 
 const formSchema = z.object({
   name: z.string().min(2, {

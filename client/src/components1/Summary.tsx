@@ -1,4 +1,4 @@
-import { useStockData } from "@/api/query/useGetStockDataQuery";
+import { useStockData } from "@/hooks/query/useGetStockDataQuery";
 import Loader from "./Loader";
 
 const Summary: React.FC = () => {

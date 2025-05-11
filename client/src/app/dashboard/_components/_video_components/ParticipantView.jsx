@@ -5,10 +5,10 @@ import { useParticipant } from "@videosdk.live/react-sdk";
 import { useEffect, useMemo, useRef } from "react";
 import ReactPlayer from "react-player";
 import { Controls } from "./Controls";
-import { useTheme } from "@/context/ThemeContext";
+import { useThemeProvider } from "@/context/ThemeContext";
 
 export function ParticipantView(props) {
-  const { isDarkMode } = useTheme();
+  const { isDarkMode } = useThemeProvider();
   const micRef = useRef(null);
   const {
     webcamStream,

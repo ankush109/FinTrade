@@ -5,7 +5,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import ReactQueryProvider from "./_middlewares/ReactQueryProvider";
+import ReactQueryProvider from "../providers/queryProvider";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { useEffect } from "react";
 import toast, { Toaster, useToasterStore } from "react-hot-toast";

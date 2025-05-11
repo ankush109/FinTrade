@@ -1,8 +1,10 @@
-import {Meet } from "../_video_components/Meeting"
+import { Meet } from "../_components/_video_components/Meeting";
 function page() {
   return (
-    <div><Meet/></div>
-  )
+    <div>
+      <Meet />
+    </div>
+  );
 }
 
-export default page
+export default page;

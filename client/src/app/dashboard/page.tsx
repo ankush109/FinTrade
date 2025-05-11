@@ -5,7 +5,8 @@ import Expense from "./_components/Expense";
 import UpperDashboardSection from "./_components/UpperDashboard";
 import ChatBot from "./_components/chatbot/ChatBot";
 import ExpensePieChart from "./_components/charts/PieChart";
-import { GetUserQuery } from "@/api/query/useGetUserDetails";
+import { GetUserQuery } from "@/hooks/query/useGetUserDetails";
+import Loader from "@/components1/Loader";
 
 const App: React.FC = () => {
   const user = GetUserQuery();
@@ -38,9 +39,9 @@ const App: React.FC = () => {
           <ChatBot />
         </div>
       ) : (
-        <div>
-          <h1 className="ml-20 mt-20 text-3xl">
-            Loading your Dashboard in a while ...
+        <div className="flex items-center justify-center h-screen">
+          <h1 className="text-2xl font-bold">
+            <Loader />
           </h1>
         </div>
       )}
