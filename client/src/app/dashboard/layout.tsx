@@ -21,7 +21,7 @@ export default function RootLayout({
           <ThemeProvider>
             <SidebarProvider>
               <div className="flex max-h-screen overflow-hidden bg-gray-100 dark:bg-[#1F214A]">
-                <div className="w-[20%]">
+                <div className="w-[20%] hidden lg:block">
                   <Sidebar />
                 </div>
                 <div className="w-full   overflow-auto">

@@ -3,7 +3,7 @@ import { AuthAPI } from "../client";
 
 
 const getFinance = async()=>{
-  const {data} = await AuthAPI().get("/user/getfinance");
+  const {data} = await AuthAPI().get("/finance/getfinance");
   return data
 }
 

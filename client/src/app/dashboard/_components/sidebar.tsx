@@ -68,7 +68,7 @@ const Sidebar = () => {
 
   return (
     <div>
-      <div className="flex  bg-gray-200  flex-col gap-10 py-4 space-y-4 border-r border-[#00000029] dark:border-[#FFFFFF29] h-screen dark:bg-[#545469] shadow-lg">
+      <div className="hidden lg:flex bg-gray-200  flex-col gap-10 py-4 space-y-4 border-r border-[#00000029] dark:border-[#FFFFFF29] h-screen dark:bg-[#545469] shadow-lg">
         <button
           // onClick={toggleSidebar}
           className="text-black dark:text-white w-full flex  justify-start"

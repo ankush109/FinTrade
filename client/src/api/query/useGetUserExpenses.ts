@@ -3,12 +3,12 @@ import { AuthAPI } from "../client";
 
 
 const getexpense = async () => {
-  const { data } = await AuthAPI().get("/user/getexpense");
+  const { data } = await AuthAPI().get("/finance/getexpense");
   return data;
 };
 
 const getExpenseCategories = async () => {
-  const { data } = await AuthAPI().get("/user/get-expense-categories");
+  const { data } = await AuthAPI().get("/finance/get-expenses-categories");
   return data;
 };
 export const useGetUserExpenseQuery = () =>

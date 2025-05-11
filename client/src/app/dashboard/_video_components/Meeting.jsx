@@ -15,7 +15,6 @@ export function Meet() {
 
   
 const getMeetingAndToken = async (id) => {
-    // 1. Fetch token from your backend
     const fetchedToken = await fetch("http://localhost:4000/v1/auth/create-token")
       .then((res) => res.json())
       .then((data) => {
@@ -24,7 +23,6 @@ const getMeetingAndToken = async (id) => {
       });
     setToken(fetchedToken);
     console.log(fetchedToken, "token");
-    // 2. Create meeting with this token
     const _meetingId = id == null ? await createMeeting({ token: fetchedToken }) : id;
     setMeetingId(_meetingId);
     console.log(_meetingId, "meetingId");

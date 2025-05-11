@@ -16,6 +16,7 @@ export const useCreateUserChatMutation = () => {
     onSuccess: () => {
       console.log("Task added successfully");
       queryClient.invalidateQueries({ queryKey: ["get-my-expense"] });
+      queryClient.invalidateQueries({ queryKey: ["get-my-expense-categories"] });
 
     },
     onError: (error) => {

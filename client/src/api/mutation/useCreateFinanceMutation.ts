@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import {AuthAPI} from "../client";
 
 const createFinance = async (finance) => {
-  const {data} = await AuthAPI().post("/user/finance/create",finance)
+  const {data} = await AuthAPI().post("/finance/finance/create",finance)
   return data
 };
 

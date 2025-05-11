@@ -71,8 +71,8 @@ const Expense: React.FC = () => {
   }, [financeQuery.data, totalExpense]);
 
   return (
-    <div className="p-6">
-      <div className="bg-white dark:bg-[#1F214A] border-2 p-6 rounded-lg shadow-md dark:border-[#1F214A] dark:text-white">
+    <div className="p-5">
+      <div className="bg-white dark:bg-[#1F214A] border-2 p-5 rounded-lg shadow-md dark:border-[#1F214A] dark:text-white">
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
           <DialogTrigger asChild>
             <button

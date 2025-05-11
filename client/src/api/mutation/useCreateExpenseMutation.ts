@@ -3,7 +3,7 @@ import {AuthAPI} from "../client";
 
  const createExpense = async(formdata)=>{
     
-  const {data} = await AuthAPI().post("/user/createexpense",formdata);
+  const {data} = await AuthAPI().post("/finance/createexpense",formdata);
   return data
 }
 
