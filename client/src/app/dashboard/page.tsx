@@ -6,7 +6,7 @@ import UpperDashboardSection from "./_components/UpperDashboard";
 import ChatBot from "./_components/chatbot/ChatBot";
 import ExpensePieChart from "./_components/charts/PieChart";
 import { GetUserQuery } from "@/hooks/query/useGetUserDetails";
-import Loader from "@/components1/Loader";
+import Loader from "@/app/dashboard/bitcoin/_components/Loader";
 
 const App: React.FC = () => {
   const user = GetUserQuery();

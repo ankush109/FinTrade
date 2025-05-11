@@ -23,7 +23,7 @@ export const FinanceController = {
           id: req.user.id,
         },
         data: {
-          age: age,
+          age: `${age}`,
           name: name,
         },
       });

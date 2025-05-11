@@ -18,11 +18,12 @@ model User {
   updatedAt DateTime   @updatedAt
   questions Question[]
   answers   Answer[]
-  hosted    Meeting[]  @relation("host")
-  guest     Meeting[]  @relation("guest")
-  Finance   Finance[]
 
-  Assets Assets[]
+  Finance   Finance[]
+  bio       String?
+  lastName  String?
+  firstName String?
+  Assets    Assets[]
 
   Liability Liability[]
 
@@ -120,16 +121,16 @@ model Answer {
   userId     String    @db.ObjectId
 }
 
-model Meeting {
-  id       String     @id @default(auto()) @map("_id") @db.ObjectId
-  host     User       @relation("host", fields: [hostId], references: [id])
-  guest    User       @relation("guest", fields: [guestId], references: [id])
-  hostId   String     @db.ObjectId
-  guestId  String     @db.ObjectId
-  status   String
-  notes    String?
-  duration Int?
-  type     String?
-  location String?
-  dates    DateTime[] // MongoDB supports array of DateTime
-}
+// model Meeting {
+//   id       String     @id @default(auto()) @map("_id") @db.ObjectId
+//   host     User       @relation("host", fields: [hostId], references: [id])
+//   guest    User       @relation("guest", fields: [guestId], references: [id])
+//   hostId   String     @db.ObjectId
+//   guestId  String     @db.ObjectId
+//   status   String
+//   notes    String?
+//   duration Int?
+//   type     String?
+//   location String?
+//   dates    DateTime[] // MongoDB supports array of DateTime
+// }

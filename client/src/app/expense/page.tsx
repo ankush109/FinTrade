@@ -9,7 +9,7 @@ import { GetUserQuery } from "@/hooks/query/useGetUserDetails";
 import { useCreateFinanceMutation } from "@/hooks/mutation/useCreateFinanceMutation";
 import { useGetUserFinanceQuery } from "@/hooks/query/useGetUserFinanceQuery";
 
-import Loader from "@/components1/Loader";
+import Loader from "@/app/dashboard/bitcoin/_components/Loader";
 
 function Page() {
   const router = useRouter();

@@ -30,9 +30,9 @@ async function createAndUploadPdfToS3(userId, expenses) {
 
   const s3Params = {
     Bucket: "fintrade-bucket",
-    Key: s3Key, // S3 object key
-    Body: pdfBuffer, // The PDF buffer
-    ContentType: "application/pdf", // MIME type
+    Key: s3Key,
+    Body: pdfBuffer,
+    ContentType: "application/pdf",
   };
 
   const { Location } = await s3.upload(s3Params).promise();

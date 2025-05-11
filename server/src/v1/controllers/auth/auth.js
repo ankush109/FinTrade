@@ -72,10 +72,14 @@ const loginController = {
       console.log(resp, "user");
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(resp.password, salt);
+      const names = resp.name.split(" ");
       const data = {
         ...resp,
         password: hashedPassword,
+        firstName: names[0],
+        lastName: names[1],
       };
+
       const createduser = await prisma.user.create({
         data,
       });
@@ -83,33 +87,31 @@ const loginController = {
         message: "User created successfully",
         createduser,
       });
-      return
+      return;
     } catch (err) {
       console.log(err);
       res.json(customResponse(400, err));
     }
   },
   async createVideoSdktoken(req, res, next) {
-  
+    const API_KEY = "f57c6033-f16d-4676-87be-56ba5a3b6114";
+    const SECRET =
+      "0bf7a40670dae824dc432699d62d7d0dcb7dd56ae887266870cb472a223b11e5";
 
-const API_KEY = "f57c6033-f16d-4676-87be-56ba5a3b6114"
-const SECRET =  "0bf7a40670dae824dc432699d62d7d0dcb7dd56ae887266870cb472a223b11e5"
+    const options = {
+      expiresIn: "120m",
+      algorithm: "HS256",
+    };
+    const payload = {
+      apikey: API_KEY,
+      permissions: ["allow_join", "allow_create", "allow_mod"], // `ask_join` || `allow_mod`
+    };
 
-const options = { 
- expiresIn: '120m', 
- algorithm: 'HS256' 
-};
-const payload = {
- apikey: API_KEY,
- permissions: ["allow_join", "allow_create","allow_mod"] ,// `ask_join` || `allow_mod` 
-
-};
-
-const token = jwt.sign(payload, SECRET, options);
-res.status(200).json({ 
-  message: "Token created successfully",
-  token,
- });
-  }
+    const token = jwt.sign(payload, SECRET, options);
+    res.status(200).json({
+      message: "Token created successfully",
+      token,
+    });
+  },
 };
 export default loginController;
