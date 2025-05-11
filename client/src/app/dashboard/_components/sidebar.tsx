@@ -63,7 +63,11 @@ const Sidebar = () => {
   ];
 
   const thirdSectionItems = [
-    { icon: <IoSettingsOutline />, label: "Settings", link: "/settings" },
+    {
+      icon: <IoSettingsOutline />,
+      label: "Settings",
+      link: "/dashboard/settings",
+    },
   ];
 
   return (

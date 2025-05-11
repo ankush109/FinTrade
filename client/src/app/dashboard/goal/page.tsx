@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { useThemeProvider } from "@/providers/themeProvider";
+import { ThemeProvider, useThemeProvider } from "@/context/ThemeContext";
 
 import React from "react";
 import { BsAirplane } from "react-icons/bs";
@@ -11,40 +11,42 @@ function Page() {
   const { isDarkMode } = useThemeProvider();
 
   return (
-    <div
-      className={`min-h-screen ${
-        isDarkMode ? "bg-black text-white" : "bg-gray-200 text-black"
-      }`}
-    >
-      <div className="p-10">
-        <div
-          className={`border-2 p-2 rounded-lg ${
-            isDarkMode ? "border-gray-700" : "border-gray-300"
-          }`}
-        >
+    <ThemeProvider>
+      <div
+        className={`min-h-screen ${
+          isDarkMode ? "bg-black text-white" : "bg-gray-200 text-black"
+        }`}
+      >
+        <div className="p-10">
           <div
-            className={`flex justify-between p-2 rounded-lg items-center border-b-2 mb-5 ${
-              isDarkMode ? "border-gray-700" : "border-gray-300 bg-white"
+            className={`border-2 p-2 rounded-lg ${
+              isDarkMode ? "border-gray-700" : "border-gray-300"
             }`}
           >
-            <div>
-              <h1 className="font-medium">Available Balance</h1>
-              <h1 className="font-bold">₹ 60,000</h1>
+            <div
+              className={`flex justify-between p-2 rounded-lg items-center border-b-2 mb-5 ${
+                isDarkMode ? "border-gray-700" : "border-gray-300 bg-white"
+              }`}
+            >
+              <div>
+                <h1 className="font-medium">Available Balance</h1>
+                <h1 className="font-bold">₹ 60,000</h1>
+              </div>
+              <div>
+                <Button>Set Now</Button>
+              </div>
             </div>
-            <div>
-              <Button>Set Now</Button>
+            <div className="grid grid-cols-3 gap-6">
+              {Array(8)
+                .fill(0)
+                .map((_, idx) => (
+                  <GoalCard key={idx} isDarkMode={isDarkMode} />
+                ))}
             </div>
-          </div>
-          <div className="grid grid-cols-3 gap-6">
-            {Array(8)
-              .fill(0)
-              .map((_, idx) => (
-                <GoalCard key={idx} isDarkMode={isDarkMode} />
-              ))}
           </div>
         </div>
       </div>
-    </div>
+    </ThemeProvider>
   );
 }
 

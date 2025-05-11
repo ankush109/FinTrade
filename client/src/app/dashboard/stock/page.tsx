@@ -1,8 +1,8 @@
 "use client";
+import { useThemeProvider } from "@/context/ThemeContext";
 import { useState, useEffect } from "react";
 
 import { FaArrowUp, FaArrowDown } from "react-icons/fa";
-import { useThemeProvider } from "@/providers/themeProvider";
 
 const STOCKS = [
   "RELIANCE.NS",
