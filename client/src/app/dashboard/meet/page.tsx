@@ -1,8 +1,8 @@
-import { Meet } from "../_components/_video_components/Meeting";
+import { GoogleMeeting } from "../_components/google-meet/Meeting";
 function page() {
   return (
     <div>
-      <Meet />
+      <GoogleMeeting />
     </div>
   );
 }

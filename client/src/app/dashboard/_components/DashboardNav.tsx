@@ -3,10 +3,10 @@ import { IoIosNotifications } from "react-icons/io";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import { CiMail } from "react-icons/ci";
-import { GetUserQuery } from "@/hooks/query/useGetUserDetails";
+import { useGetUserDetailsQuery } from "@/hooks/query/useGetUserDetails";
 
 function DashboardNav() {
-  const user = GetUserQuery();
+  const user = useGetUserDetailsQuery();
   return (
     <div className="flex justify-between bg-white p-3 gap-5">
       <div className="text-2xl font-semibold">

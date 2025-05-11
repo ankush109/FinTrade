@@ -1,3 +1,4 @@
+"use client";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Card,
@@ -21,8 +22,22 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Bell, User, Shield, Palette, LogOut } from "lucide-react";
+import { useGenerateUserReportMutation } from "@/hooks/mutation/useGenerateUserReportMutation";
+import toast from "react-hot-toast";
+import { useGetUserDetailsQuery } from "@/hooks/query/useGetUserDetails";
 
 export default function SettingsPage() {
+  const { data: userData } = useGetUserDetailsQuery();
+  const { mutate: generateReport } = useGenerateUserReportMutation();
+  const handleGenrateReport = async () => {
+    generateReport(null, {
+      onSuccess: (res) => {
+        if (res.url) {
+          toast.success("Report send to your logged in mail");
+        }
+      },
+    });
+  };
   return (
     <div className="container mx-auto py-10">
       <div className="space-y-6">
@@ -79,6 +94,15 @@ export default function SettingsPage() {
                       JPG, GIF or PNG. 1MB max.
                     </p>
                   </div>
+                  <div className="space-y-2">
+                    <Button size="sm" onClick={handleGenrateReport}>
+                      Send Expense Report
+                    </Button>
+                    <p className="text-xs text-muted-foreground">
+                      Generate report containing all the details of the monthly
+                      expense
+                    </p>
+                  </div>
                 </div>
                 <div className="grid gap-4 md:grid-cols-2">
                   <div className="space-y-2">
@@ -86,7 +110,7 @@ export default function SettingsPage() {
                     <Input
                       id="firstName"
                       placeholder="John"
-                      defaultValue="John"
+                      defaultValue={userData?.name}
                     />
                   </div>
                   <div className="space-y-2">
@@ -100,7 +124,7 @@ export default function SettingsPage() {
                     id="email"
                     type="email"
                     placeholder="john.doe@example.com"
-                    defaultValue="john.doe@example.com"
+                    defaultValue={userData?.email}
                   />
                 </div>
                 <div className="space-y-2">

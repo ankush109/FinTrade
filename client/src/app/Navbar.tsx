@@ -2,9 +2,9 @@ import { Button } from "@/components/ui/button";
 import React from "react";
 
 import Link from "next/link";
-import { GetUserQuery } from "@/hooks/query/useGetUserDetails";
+import { useGetUserDetailsQuery } from "@/hooks/query/useGetUserDetails";
 function Navbar() {
-  const user = GetUserQuery();
+  const user = useGetUserDetailsQuery();
 
   return (
     <div className="max-w-7xl flex justify-between items-center mx-auto px-5 py-5">

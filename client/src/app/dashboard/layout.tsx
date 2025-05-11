@@ -2,8 +2,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
-import { SidebarProvider } from "../../context/SidebarContext";
-import { ThemeProvider } from "../../context/ThemeContext";
+import { SidebarProvider } from "../../providers/SidebarContext";
+import { ThemeProvider } from "../../providers/ThemeContext";
 import Sidebar from "./_components/sidebar";
 import DashboardNav from "./_components/DashboardNav";
 import ReactQueryProvider from "@/providers/queryProvider";

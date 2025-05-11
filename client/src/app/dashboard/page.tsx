@@ -5,11 +5,11 @@ import Expense from "./_components/Expense";
 import UpperDashboardSection from "./_components/UpperDashboard";
 import ChatBot from "./_components/chatbot/ChatBot";
 import ExpensePieChart from "./_components/charts/PieChart";
-import { GetUserQuery } from "@/hooks/query/useGetUserDetails";
+import { useGetUserDetailsQuery } from "@/hooks/query/useGetUserDetails";
 import Loader from "@/app/dashboard/bitcoin/_components/Loader";
 
 const App: React.FC = () => {
-  const user = GetUserQuery();
+  const user = useGetUserDetailsQuery();
   const [chats, setChats] = React.useState([
     {
       title: "Chat 1",

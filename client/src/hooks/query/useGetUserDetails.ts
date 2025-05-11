@@ -5,7 +5,7 @@ const GetUser = async () => {
   const { data } = await AuthAPI().get("/user/user-details");
   return data;
 };
-const GetUserQuery = () =>
+const useGetUserDetailsQuery = () =>
   useQuery({
     queryKey: ["user-details"],
     queryFn: () => GetUser(),
@@ -15,4 +15,4 @@ const GetUserQuery = () =>
     },
   });
 
-export { GetUserQuery };
+export { useGetUserDetailsQuery };

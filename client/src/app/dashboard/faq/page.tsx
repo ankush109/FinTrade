@@ -6,8 +6,8 @@ import Loading from "../_components/Loader";
 
 import { DeleteIcon } from "lucide-react";
 import toast from "react-hot-toast";
-import { useThemeProvider } from "@/context/ThemeContext";
-import { GetUserQuery } from "@/hooks/query/useGetUserDetails";
+import { useThemeProvider } from "@/providers/ThemeContext";
+import { useGetUserDetailsQuery } from "@/hooks/query/useGetUserDetails";
 import { usePostQuestionMutation } from "@/hooks/mutation/usePostQuestionMutation";
 import { useAnswerReplyMutation } from "@/hooks/mutation/useAnswerReplyMutation";
 import { useDeleteMyQuestionMutation } from "@/hooks/mutation/useDeleteAnswerMutation";
@@ -15,7 +15,7 @@ import { getAllquestionsInfoQuery } from "@/hooks/query/useGetQuestions";
 
 function Discuss() {
   const { isDarkMode } = useThemeProvider();
-  const q = GetUserQuery();
+  const q = useGetUserDetailsQuery();
   const {
     data: questions,
     isLoading,

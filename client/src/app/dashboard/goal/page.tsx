@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { ThemeProvider, useThemeProvider } from "@/context/ThemeContext";
+import { ThemeProvider, useThemeProvider } from "@/providers/ThemeContext";
 
 import React from "react";
 import { BsAirplane } from "react-icons/bs";

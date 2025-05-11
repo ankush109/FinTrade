@@ -7,12 +7,12 @@ import { Bot, CircleUser, SendIcon } from "lucide-react";
 import { useGetUserChatsQuery } from "@/hooks/query/useGetUserChats";
 import { useCreateUserChatMutation } from "@/hooks/mutation/useCreateChatMutation";
 import toast from "react-hot-toast";
-import { GetUserQuery } from "@/hooks/query/useGetUserDetails";
+import { useGetUserDetailsQuery } from "@/hooks/query/useGetUserDetails";
 
 const ChatBot = () => {
   const { data: chatData } = useGetUserChatsQuery();
   const { mutate: createChat } = useCreateUserChatMutation();
-  const { data: userData } = GetUserQuery();
+  const { data: userData } = useGetUserDetailsQuery();
 
   const [message, setMessage] = useState("");
   const [chats, setChats] = useState([]);

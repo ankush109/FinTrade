@@ -14,9 +14,10 @@ import { IoIosHelpCircleOutline } from "react-icons/io";
 import { GoGoal } from "react-icons/go";
 
 import ThemeToggleButton from "./ThemeToggleButton";
-import { useSidebar } from "../../../context/SidebarContext";
+import { useSidebar } from "../../../providers/SidebarContext";
 import Link from "next/link";
 import Image from "next/image";
+import { Bitcoin } from "lucide-react";
 
 const SidebarItem = ({ href = "#", icon, label, isSidebarExpanded }) => {
   // Check if label is 'Stock Forecasting'
@@ -54,11 +55,16 @@ const Sidebar = () => {
       label: "Mutual Funds",
       link: "/dashboard/mutualfund",
     },
-    { icon: <LiaFileInvoiceDollarSolid />, label: "Invoice", link: "/invoice" },
+
     {
       icon: <GoGoal />,
       label: "Goal",
       link: "/dashboard/goal",
+    },
+    {
+      icon: <Bitcoin />,
+      label: "Bitcoin",
+      link: "/dashboard/bitcoin",
     },
   ];
 

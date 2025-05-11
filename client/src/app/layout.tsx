@@ -9,8 +9,8 @@ import ReactQueryProvider from "../providers/queryProvider";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { useEffect } from "react";
 import toast, { Toaster, useToasterStore } from "react-hot-toast";
-import { SidebarProvider } from "../context/SidebarContext";
-import { ThemeProvider } from "../context/ThemeContext";
+import { SidebarProvider } from "../providers/SidebarContext";
+import { ThemeProvider } from "../providers/ThemeContext";
 const inter = Inter({ subsets: ["latin"] });
 const MAX_TOAST_LIMIT = 1;
 export default function RootLayout({

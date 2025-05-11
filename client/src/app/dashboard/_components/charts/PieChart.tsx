@@ -45,18 +45,6 @@ const CategoryPieChart: React.FC = () => {
   if (filteredExpenses.length === 0) {
     return (
       <div className="bg-white p-10 rounded-lg shadow-md m-5">
-        <div className="mb-4">
-          <label className="font-semibold">Select Month: </label>
-          <input
-            type="month"
-            value={selectedMonth}
-            onChange={(e) => {
-              setSelectedMonth(e.target.value);
-              refetch();
-            }}
-            className="border rounded px-2 py-1"
-          />
-        </div>
         <h2 className="text-xl font-semibold">
           No expenses found for this month.
         </h2>
@@ -80,7 +68,7 @@ const CategoryPieChart: React.FC = () => {
       </div>
 
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <PieChart width={600} height={400}>
+        <PieChart width={640} height={350}>
           <Pie
             data={pieChartData}
             dataKey="value"

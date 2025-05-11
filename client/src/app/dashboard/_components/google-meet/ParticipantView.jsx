@@ -5,7 +5,7 @@ import { useParticipant } from "@videosdk.live/react-sdk";
 import { useEffect, useMemo, useRef } from "react";
 import ReactPlayer from "react-player";
 import { Controls } from "./Controls";
-import { useThemeProvider } from "@/context/ThemeContext";
+import { useThemeProvider } from "@/providers/ThemeContext";
 
 export function ParticipantView(props) {
   const { isDarkMode } = useThemeProvider();

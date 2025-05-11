@@ -9,7 +9,7 @@ import { createMeeting } from "../../config/Api";
 import { JoinScreen } from "./JoinScreen";
 import { MeetingView } from "./MeetingView";
 
-export function Meet() {
+export function GoogleMeeting() {
  const [meetingId, setMeetingId] = useState(null);
   const [token, setToken] = useState(null);
 
@@ -54,4 +54,3 @@ const getMeetingAndToken = async (id) => {
   );
 }
 
-export default Meet;

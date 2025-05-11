@@ -1,5 +1,5 @@
 "use client";
-import { useThemeProvider } from "@/context/ThemeContext";
+import { useThemeProvider } from "@/providers/ThemeContext";
 import { useState, useEffect } from "react";
 
 import { FaArrowUp, FaArrowDown } from "react-icons/fa";

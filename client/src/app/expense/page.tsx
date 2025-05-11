@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
-import { GetUserQuery } from "@/hooks/query/useGetUserDetails";
+import { useGetUserDetailsQuery } from "@/hooks/query/useGetUserDetails";
 import { useCreateFinanceMutation } from "@/hooks/mutation/useCreateFinanceMutation";
 import { useGetUserFinanceQuery } from "@/hooks/query/useGetUserFinanceQuery";
 
@@ -13,7 +13,7 @@ import Loader from "@/app/dashboard/bitcoin/_components/Loader";
 
 function Page() {
   const router = useRouter();
-  const user = GetUserQuery();
+  const user = useGetUserDetailsQuery();
   const { data: financeData, isLoading, refetch } = useGetUserFinanceQuery();
 
   const { mutate: createFinance } = useCreateFinanceMutation();
@@ -25,10 +25,10 @@ function Page() {
   const [answers, setAnswers] = useState(Array(9).fill(""));
 
   const questions = [
-    { question: "What is your age?", type: "number" },
+    { question: "What is your age?", type: "string" },
     { question: "What is your profession?", type: "string" },
-    { question: "What is your monthly salary?", type: "number" },
-    { question: "What is your total savings?", type: "number" },
+    { question: "What is your monthly salary?", type: "string" },
+    { question: "What is your total savings?", type: "string" },
     {
       question: "What are your major monthly expenses? (e.g., Rent > 20,000)",
       type: "string",
@@ -38,15 +38,14 @@ function Page() {
         "What are your minor monthly expenses? (e.g., Clubbing < 3,000)",
       type: "string",
     },
-    { question: "What are your monthly EMI payments?", type: "number" },
-    { question: "What's your loan amount?", type: "number" },
-    { question: "What's your number of loans?", type: "number" },
+    { question: "What are your monthly EMI payments?", type: "string" },
+    { question: "What's your number of loans?", type: "string" },
+    { question: "What's your total loan amount?", type: "string" },
   ];
 
-  // Redirect if finance data exists
   useEffect(() => {
     if (!isLoading && financeData?.message?.id) {
-      toast.error("You have already submitted your finance data.");
+      toast.success("Welcome Back");
       router.push("/dashboard");
     }
   }, [isLoading, financeData, router]);
@@ -89,15 +88,15 @@ function Page() {
 
   const submitFinance = () => {
     const payload = {
-      age: Number(answers[0]),
+      age: answers[0],
       profession: answers[1],
-      salary: Number(answers[2]),
-      savings: Number(answers[3]),
+      salary: answers[2],
+      savings: answers[3],
       majorexp: answers[4],
       minorexp: answers[5],
-      emi: Number(answers[6]),
-      loanammount: Number(answers[7]),
-      loans: Number(answers[8]),
+      emi: answers[6],
+      loanammount: answers[8],
+      loans: answers[7],
     };
 
     createFinance(payload, {
@@ -124,7 +123,7 @@ function Page() {
     );
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500">
+    <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-white via-purple-400 to-purple-900">
       <BackgroundAnimation />
 
       {showGreeting && <Greeting user={user} />}
@@ -263,7 +262,7 @@ const NextButton = ({ handleNext, currentQuestion, questions }) => {
       disabled={isDisabled}
       className={`mt-10 px-10 py-4 text-lg font-semibold text-white rounded-full shadow-lg flex items-center gap-2 ${
         !isDisabled
-          ? "bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-300"
+          ? "bg-[#662d91] hover:bg-[#4b1f6d] focus:ring-2 focus:ring-indigo-300"
           : "bg-gray-400 cursor-not-allowed"
       }`}
       whileHover={!isDisabled ? { scale: 1.1 } : {}}

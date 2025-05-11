@@ -1,6 +1,6 @@
 "use client";
 import { FaSun, FaMoon } from "react-icons/fa";
-import { useThemeProvider } from "../../../context/ThemeContext";
+import { useThemeProvider } from "../../../providers/ThemeContext";
 
 const ThemeToggleButton = () => {
   const { isDarkMode, toggleTheme } = useThemeProvider();

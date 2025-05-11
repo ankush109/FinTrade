@@ -33,7 +33,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/hooks/test/index.js"
-, "src/app/dashboard/_components/_video_components/JoinScreen.jsx", "src/providers/queryProvider.js"  ],
+, "src/app/dashboard/_components/google-meet/JoinScreen.jsx", "src/providers/queryProvider.js"  ],
   "exclude": [
     "node_modules"
   ]
