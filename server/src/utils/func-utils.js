@@ -1,5 +1,6 @@
 export const parseGeminiResponse = (text) => {
   try {
+    console.log(text, "gemnii text");
     const cleaned = text
       .replace(/```json\n?/, "")
       .replace(/```$/, "")

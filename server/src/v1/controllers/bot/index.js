@@ -73,6 +73,7 @@ const botController = {
                 text: generateFinanceBotPrompt({
                   botContext,
                   finances,
+                  expensesUser,
                   chatHistory,
                   chat,
                 }),
@@ -98,13 +99,13 @@ const botController = {
           .json({ success: false, error: "Failed to parse AI response" });
       }
 
-      if (parsed[0]?.normal) {
+      if (parsed[0]?.normal || parsed?.normal) {
         await prisma.chat.createMany({
           data: [
             { userId: req.user.id, message: chat, role: "user" },
             {
               userId: req.user.id,
-              message: parsed[0].answer,
+              message: parsed.answer,
               role: "assistant",
             },
           ],
@@ -112,40 +113,40 @@ const botController = {
 
         return res.status(200).json({
           success: true,
-          message: parsed[0].answer,
+          message: parsed.answer,
+        });
+      } else {
+        console.log(parsed, "not normal");
+        const expenses = parsed;
+        const summary = expenses
+          .map((item) => `${item.name} of ₹${item.price}`)
+          .join(", ");
+        const finalResponse = `Got it ${user.name}! I added ${summary}.`;
+
+        await prisma.expense.createMany({
+          data: expenses.map((item) => ({
+            name: item.name,
+            price: item.price,
+            category: item.category,
+            userId: req.user.id,
+            month: new Date().toLocaleString("default", { month: "long" }),
+            date: new Date(),
+          })),
+        });
+
+        await prisma.chat.createMany({
+          data: [
+            { userId: req.user.id, message: chat, role: "user" },
+            { userId: req.user.id, message: finalResponse, role: "assistant" },
+          ],
+        });
+
+        return res.status(200).json({
+          success: true,
+          message: finalResponse,
+          data: expenses,
         });
       }
-
-      // Handle expense data case
-      const expenses = parsed;
-      const summary = expenses
-        .map((item) => `${item.name} of ₹${item.price}`)
-        .join(", ");
-      const finalResponse = `Got it ${user.name}! I added ${summary}.`;
-
-      await prisma.expense.createMany({
-        data: expenses.map((item) => ({
-          name: item.name,
-          price: item.price,
-          category: item.category,
-          userId: req.user.id,
-          month: new Date().toLocaleString("default", { month: "long" }),
-          date: new Date(),
-        })),
-      });
-
-      await prisma.chat.createMany({
-        data: [
-          { userId: req.user.id, message: chat, role: "user" },
-          { userId: req.user.id, message: finalResponse, role: "assistant" },
-        ],
-      });
-
-      return res.status(200).json({
-        success: true,
-        message: finalResponse,
-        data: expenses,
-      });
     } catch (err) {
       console.error("Error in createChat:", err);
       res.status(500).json({
