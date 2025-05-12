@@ -4,7 +4,7 @@ import {AuthAPI} from "../client";
 const deleteMyQuestion = async (QuestionId) => {
   console.log(QuestionId);
   const { data } = await AuthAPI().delete(
-    `/user/delete-question/${QuestionId}`
+    `/questions/delete-question/${QuestionId}`
   );
   console.log(data);
   return data;

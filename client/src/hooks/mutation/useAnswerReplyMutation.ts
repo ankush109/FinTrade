@@ -7,7 +7,7 @@ type AnswerReplyInput = {
 };
 
 const answerReply = async ({ text, questionId }: AnswerReplyInput) => {
-  const { data } = await AuthAPI().post("/user/answer-question", {
+  const { data } = await AuthAPI().post("/questions/answer-question", {
     text,
     questionId,
   });

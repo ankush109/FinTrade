@@ -7,7 +7,7 @@ const getAllquestionsInfo = async (searchText) => {
   console.log(searchText);
 
   try {
-    const { data } = await AuthAPI().get(`/user/get-allquestions`);
+    const { data } = await AuthAPI().get(`/questions/get-allquestions`);
     console.log(data);
     return data.message;
   } catch (error) {
