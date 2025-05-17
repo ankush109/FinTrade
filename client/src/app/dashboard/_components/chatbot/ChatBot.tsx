@@ -22,15 +22,15 @@ const ChatBot = () => {
 
   useEffect(() => {
     console.log("Chat data:", chatData);
-    if (userData?.name) {
+    if (userData?.user?.name) {
       setChats([
         {
           role: "assistant",
-          message: `Hi ${userData.name}! How can I help you today?`,
+          message: `Hi ${userData.user.name}! How can I help you today?`,
         },
       ]);
     }
-  }, [userData?.name]);
+  }, [userData?.user.name]);
 
   useEffect(() => {
     if (chatData && chatData.length > 0) {

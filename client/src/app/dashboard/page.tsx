@@ -9,27 +9,11 @@ import { useGetUserDetailsQuery } from "@/hooks/query/useGetUserDetails";
 import Loader from "@/app/dashboard/bitcoin/_components/Loader";
 
 const App: React.FC = () => {
-  const user = useGetUserDetailsQuery();
-  const [chats, setChats] = React.useState([
-    {
-      title: "Chat 1",
-      message: "Hello! How can I help you today?",
-    },
-    {
-      title: "Chat 2",
-      message: "I have a question about my account.",
-    },
-    {
-      title: "Chat 3",
-      message: "Can you assist me with my recent transaction?",
-    },
-  ]);
-  const [loading, setLoading] = React.useState(true);
-  const [isOpen, setIsOpen] = React.useState(false);
+  const { data: userData } = useGetUserDetailsQuery();
 
   return (
     <>
-      {user?.data ? (
+      {userData ? (
         <div>
           <div className="flex-1 max-w-7xl mx-auto bg-[#696FFB0A] dark:bg-[#545469] p-4">
             <UpperDashboardSection />

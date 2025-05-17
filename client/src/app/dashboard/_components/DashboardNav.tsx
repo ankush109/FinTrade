@@ -6,14 +6,14 @@ import { CiMail } from "react-icons/ci";
 import { useGetUserDetailsQuery } from "@/hooks/query/useGetUserDetails";
 
 function DashboardNav() {
-  const user = useGetUserDetailsQuery();
+  const { data: userData } = useGetUserDetailsQuery();
   return (
     <div className="flex justify-between bg-white p-3 gap-5">
       <div className="text-2xl font-semibold">
         <h1> Dashboard</h1>
         <div className="">
           <h1 className="text-xl text-[#8e67e9] font-bold bg">
-            Hi, {user?.data?.name}
+            Hi, {userData?.user?.name}
           </h1>
         </div>
       </div>

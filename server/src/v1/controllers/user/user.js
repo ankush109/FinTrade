@@ -4,6 +4,40 @@ import { customResponse } from "../../../utils/Response";
 const prisma = new PrismaClient();
 
 const userController = {
+  async getUserMonthlySavings(userId) {
+    try {
+      const user = await prisma.user.findFirst({ where: { id: userId } });
+      if (!user) throw new Error("user not found");
+
+      const expenses = await prisma.expense.findMany({ where: { userId } });
+      const totalExpenses = expenses.reduce(
+        (acc, val) => acc + parseFloat(val.price),
+        0
+      );
+      console.log(totalExpenses, "total");
+      const goals = await prisma.goal.findMany({ where: { userId } });
+      const totalGoalsExpense = goals.reduce((acc, val) => {
+        const invest = parseFloat(val.invest);
+        if (!isNaN(invest)) {
+          return acc + invest;
+        }
+        return acc;
+      }, 0);
+      console.log(totalGoalsExpense, "totalGoalsExpense");
+      const finance = await prisma.finance.findFirst({ where: { userId } });
+
+      const emiAmount = parseFloat(finance?.emiAmmount) || 0;
+      const monthlyIncome = parseFloat(finance?.monthlyIncome) || 0;
+
+      const outflow = parseFloat(totalExpenses + totalGoalsExpense + emiAmount);
+      console.log(outflow, "outflow");
+      return { outflow, inflow: monthlyIncome };
+    } catch (err) {
+      console.error(err);
+      throw err;
+    }
+  },
+
   async userDetails(req, res, next) {
     try {
       let user;
@@ -11,8 +45,27 @@ const userController = {
         where: {
           id: req.user.id,
         },
+        select: {
+          age: true,
+          name: true,
+          email: true,
+          bio: true,
+          firstName: true,
+          lastName: true,
+          role: true,
+        },
       });
-      res.json(customResponse(200, user));
+      const { outflow, inflow } = await userController.getUserMonthlySavings(
+        req.user.id
+      );
+
+      res.json(
+        customResponse(200, {
+          user: user,
+          outflow,
+          inflow,
+        })
+      );
     } catch (err) {
       res.json(customResponse(400, err));
       console.log(err, "err");
@@ -94,6 +147,12 @@ const userController = {
       const goal = await prisma.goal.findMany({
         where: {
           userId: req.user.id,
+        },
+        select: {
+          invest: true,
+          money: true,
+          name: true,
+          type: true,
         },
       });
       console.log(goal, "liability");

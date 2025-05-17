@@ -7,9 +7,9 @@ export const getgoals = async()=>{
 }
 
 
-export const getmygoals = () =>
+export const useGetUserGoalsQuery = () =>
   useQuery({
-    queryKey: ["get-my-goal"],
+    queryKey: ["get-my-goals"],
     queryFn: () => getgoals(),
     select: (data) => {
       const res = data;

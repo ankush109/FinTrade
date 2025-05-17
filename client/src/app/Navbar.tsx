@@ -4,7 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { useGetUserDetailsQuery } from "@/hooks/query/useGetUserDetails";
 function Navbar() {
-  const user = useGetUserDetailsQuery();
+  const { data: userData } = useGetUserDetailsQuery();
 
   return (
     <div className="max-w-7xl flex justify-between items-center mx-auto px-5 py-5">
@@ -18,7 +18,7 @@ function Navbar() {
         <Link href="/consult">
           <div>Home</div>
         </Link>
-        {user?.data && (
+        {userData && (
           <Link href="/dashboard">
             <div>Dashboard</div>
           </Link>
@@ -31,9 +31,9 @@ function Navbar() {
         </Link>
       </div>
 
-      {user?.data ? (
+      {userData ? (
         <div className="flex font-semibold items-center gap-10">
-          {" Hello, " + user?.data?.name}
+          {" Hello, " + userData?.user.name}
           <Link href="/login">
             <Button
               className="bg-black"

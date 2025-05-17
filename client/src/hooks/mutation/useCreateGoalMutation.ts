@@ -3,7 +3,7 @@ import {AuthAPI} from "../client";
 
  const createAsset = async(formdata)=>{
     
-    const {data} = await AuthAPI().post("/user/createassets",formdata);
+    const {data} = await AuthAPI().post("/user/creategoals",formdata);
     return data
 }
 export const useCreateGoalMutation = () => {

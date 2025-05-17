@@ -13,7 +13,7 @@ import Loader from "@/app/dashboard/bitcoin/_components/Loader";
 
 function Page() {
   const router = useRouter();
-  const user = useGetUserDetailsQuery();
+  const { data: userData } = useGetUserDetailsQuery();
   const { data: financeData, isLoading, refetch } = useGetUserFinanceQuery();
 
   const { mutate: createFinance } = useCreateFinanceMutation();
@@ -126,7 +126,7 @@ function Page() {
     <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-white via-purple-400 to-purple-900">
       <BackgroundAnimation />
 
-      {showGreeting && <Greeting user={user} />}
+      {showGreeting && <Greeting user={userData.user} />}
 
       <AnimatePresence mode="wait">
         {isSubmitting ? (
@@ -192,7 +192,7 @@ const Greeting = ({ user }) => (
     exit={{ opacity: 0, scale: 1.2 }}
     transition={{ duration: 1, ease: "easeInOut" }}
   >
-    <div>Hello, {user?.data?.name}</div>
+    <div>Hello, {user?.name}</div>
   </motion.div>
 );
 

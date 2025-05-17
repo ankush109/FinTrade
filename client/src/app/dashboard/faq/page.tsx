@@ -15,7 +15,7 @@ import { getAllquestionsInfoQuery } from "@/hooks/query/useGetQuestions";
 
 function Discuss() {
   const { isDarkMode } = useThemeProvider();
-  const q = useGetUserDetailsQuery();
+  const { data: userData } = useGetUserDetailsQuery();
   const {
     data: questions,
     isLoading,
@@ -218,7 +218,7 @@ function Discuss() {
                     Posted on {formatDate(question.createdAt)}
                   </p>
                 </div>
-                {question.User?.id === q?.data?.id && (
+                {question.User?.id === userData?.user?.id && (
                   <Button
                     variant="ghost"
                     onClick={() => handleDelete(question.id)}

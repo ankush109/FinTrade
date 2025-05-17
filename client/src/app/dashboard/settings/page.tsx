@@ -110,7 +110,7 @@ export default function SettingsPage() {
                     <Input
                       id="firstName"
                       placeholder="John"
-                      defaultValue={userData?.name}
+                      defaultValue={userData?.user?.name}
                     />
                   </div>
                   <div className="space-y-2">
@@ -124,7 +124,7 @@ export default function SettingsPage() {
                     id="email"
                     type="email"
                     placeholder="john.doe@example.com"
-                    defaultValue={userData?.email}
+                    defaultValue={userData?.user.email}
                   />
                 </div>
                 <div className="space-y-2">
