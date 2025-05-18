@@ -25,12 +25,13 @@ import { useGetUserExpenseQuery } from "@/hooks/query/useGetUserExpenses";
 
 import { useCreateExpenseMutation } from "@/hooks/mutation/useCreateExpenseMutation";
 import { useGetUserFinanceQuery } from "@/hooks/query/useGetUserFinanceQuery";
+import { useGetUserDetailsQuery } from "@/hooks/query/useGetUserDetails";
 
 const Expense: React.FC = () => {
   const { mutate: createExpense } = useCreateExpenseMutation();
   const expensesQuery = useGetUserExpenseQuery();
   const financeQuery = useGetUserFinanceQuery();
-
+  const { data: userdata } = useGetUserDetailsQuery();
   const [creating, setCreating] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
 
@@ -72,6 +73,7 @@ const Expense: React.FC = () => {
 
   return (
     <div className="p-5">
+      <div className="bg-gray-600">{userdata?.budget?.money}</div>
       <div className="bg-white dark:bg-[#1F214A] border-2 p-5 rounded-lg shadow-md dark:border-[#1F214A] dark:text-white">
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
           <DialogTrigger asChild>

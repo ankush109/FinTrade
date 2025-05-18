@@ -58,12 +58,17 @@ const userController = {
       const { outflow, inflow } = await userController.getUserMonthlySavings(
         req.user.id
       );
-
+      const budget = await prisma.budget.findFirst({
+        where: {
+          userId: req.user.id,
+        },
+      });
       res.json(
         customResponse(200, {
           user: user,
           outflow,
           inflow,
+          budget,
         })
       );
     } catch (err) {
@@ -183,6 +188,31 @@ const userController = {
       console.log(err, "err");
       res.status(400).json({
         error: "data not found",
+      });
+    }
+  },
+  async createBudget(req, res, next) {
+    try {
+      const userId = req.user.id;
+      const { money, warnings, upperLimit, lowerLimit } = req.body;
+      const budget = await prisma.budget.create({
+        data: {
+          userId,
+          money,
+          warnings,
+          upperLimit,
+          lowerLimit,
+        },
+      });
+      console.log(budget, "buget");
+      res.status(201).json({
+        success: true,
+        message: budget,
+      });
+    } catch (err) {
+      console.log(err, "err in creating budgets");
+      res.status(400).json({
+        error: err,
       });
     }
   },

@@ -1,5 +1,5 @@
 import express from "express";
-import {  userController } from "../controllers";
+import { userController } from "../controllers";
 import authMiddleware from "../middlewares/Auth.middleware";
 
 const router = express.Router();
@@ -10,12 +10,11 @@ const router = express.Router();
 // router.get("/get-mentors", authMiddleware, meetController.getmentorsinfo);
 // router.get("/my-meetings", authMiddleware, meetController.showbookedMeetings);
 router.get("/user-details", authMiddleware, userController.userDetails);
-router.get("/getgoals",authMiddleware,userController.getGoals)
-router.post("/createassets",authMiddleware,userController.createAssets)
-router.get("/createliability",authMiddleware,userController.createLiability)
-router.post("/creategoals",authMiddleware,userController.createGoal)
-router.get("/getassets",authMiddleware,userController.getassets)
-
-
+router.get("/getgoals", authMiddleware, userController.getGoals);
+router.post("/createassets", authMiddleware, userController.createAssets);
+router.get("/createliability", authMiddleware, userController.createLiability);
+router.post("/creategoals", authMiddleware, userController.createGoal);
+router.get("/getassets", authMiddleware, userController.getassets);
+router.post("/create-budget", authMiddleware, userController.createBudget);
 
 export default router;
