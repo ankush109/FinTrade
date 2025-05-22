@@ -26,12 +26,13 @@ import { useGetUserExpenseQuery } from "@/hooks/query/useGetUserExpenses";
 import { useCreateExpenseMutation } from "@/hooks/mutation/useCreateExpenseMutation";
 import { useGetUserFinanceQuery } from "@/hooks/query/useGetUserFinanceQuery";
 import { useGetUserDetailsQuery } from "@/hooks/query/useGetUserDetails";
+import FinanceLimitModal from "./createBudget";
 
 const Expense: React.FC = () => {
   const { mutate: createExpense } = useCreateExpenseMutation();
   const expensesQuery = useGetUserExpenseQuery();
   const financeQuery = useGetUserFinanceQuery();
-  const { data: userdata } = useGetUserDetailsQuery();
+
   const [creating, setCreating] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
 
@@ -73,52 +74,56 @@ const Expense: React.FC = () => {
 
   return (
     <div className="p-5">
-      <div className="bg-gray-600">{userdata?.budget?.money}</div>
       <div className="bg-white dark:bg-[#1F214A] border-2 p-5 rounded-lg shadow-md dark:border-[#1F214A] dark:text-white">
-        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-          <DialogTrigger asChild>
-            <button
-              onClick={() => setDialogOpen(true)}
-              className="px-3 py-1 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 transition"
-            >
-              {creating ? "Creating..." : "Create a new Expense"}
-            </button>
-          </DialogTrigger>
+        <div className="flex justify-between">
+          <FinanceLimitModal
+            onSubmit={(data) => console.log("Submitted", data)}
+          />
+          <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+            <DialogTrigger asChild>
+              <button
+                onClick={() => setDialogOpen(true)}
+                className="px-2 py-1 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 transition"
+              >
+                {creating ? "Creating..." : "Create a new Expense"}
+              </button>
+            </DialogTrigger>
 
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle className="text-2xl font-bold">
-                Create Expense
-              </DialogTitle>
-              <DialogDescription>
-                Fill out the details below to create a new expense.
-              </DialogDescription>
-            </DialogHeader>
-            <form onSubmit={handleSubmit} className="space-y-4 mt-4">
-              <InputField
-                label="Expense Name"
-                name="name"
-                type="text"
-                placeholder="Enter expense name (e.g., Food)"
-              />
-              <InputField
-                label="Amount"
-                name="price"
-                type="number"
-                step="0.01"
-                placeholder="Enter the amount (e.g., 500.50)"
-              />
-              <div className="flex justify-end">
-                <button
-                  type="submit"
-                  className="px-6 py-2 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 transition"
-                >
-                  {creating ? "Creating..." : "Create Expense"}
-                </button>
-              </div>
-            </form>
-          </DialogContent>
-        </Dialog>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle className="text-2xl font-bold">
+                  Create Expense
+                </DialogTitle>
+                <DialogDescription>
+                  Fill out the details below to create a new expense.
+                </DialogDescription>
+              </DialogHeader>
+              <form onSubmit={handleSubmit} className="space-y-4 mt-4">
+                <InputField
+                  label="Expense Name"
+                  name="name"
+                  type="text"
+                  placeholder="Enter expense name (e.g., Food)"
+                />
+                <InputField
+                  label="Amount"
+                  name="price"
+                  type="number"
+                  step="0.01"
+                  placeholder="Enter the amount (e.g., 500.50)"
+                />
+                <div className="flex justify-end">
+                  <button
+                    type="submit"
+                    className="px-6 py-2 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 transition"
+                  >
+                    {creating ? "Creating..." : "Create Expense"}
+                  </button>
+                </div>
+              </form>
+            </DialogContent>
+          </Dialog>
+        </div>
 
         <div className="flex mt-6 gap-6">
           <div className="flex-shrink-0">
