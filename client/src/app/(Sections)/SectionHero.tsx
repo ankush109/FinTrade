@@ -10,7 +10,7 @@ function SectionHero() {
         <div className="grid   grid-cols-2 gap-5 p-10 items-center justify-center">
           <div className="flex  justify-center gap-10 flex-col  mb-20">
             <div className="text-6xl font-bold">
-              Invent Intelligently <br />
+              Invest Intelligently <br />
               Live Independently
             </div>
             <div className="text-gray-600 text-md">
