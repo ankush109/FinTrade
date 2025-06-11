@@ -42,16 +42,6 @@ const CategoryPieChart: React.FC = () => {
     })
   );
 
-  if (filteredExpenses.length === 0) {
-    return (
-      <div className="bg-white p-10 rounded-lg shadow-md m-5">
-        <h2 className="text-xl font-semibold">
-          No expenses found for this month.
-        </h2>
-        <p>Please select a different month.</p>
-      </div>
-    );
-  }
   return (
     <div className="bg-white p-10 rounded-lg shadow-md m-5">
       <div className="mb-4">

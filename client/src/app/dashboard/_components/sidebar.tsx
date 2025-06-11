@@ -1,6 +1,10 @@
 "use client";
 import React from "react";
-import { RiDashboardLine, RiShoppingBasketLine } from "react-icons/ri";
+import {
+  RiDashboardLine,
+  RiShoppingBasketLine,
+  RiStockFill,
+} from "react-icons/ri";
 import { FaArrowRight } from "react-icons/fa";
 import { FaTruckArrowRight } from "react-icons/fa6";
 import finTradeLogo from "../../../assets/fintrade-logo.png";
@@ -54,6 +58,11 @@ const Sidebar = () => {
       icon: <RiShoppingBasketLine />,
       label: "Mutual Funds",
       link: "/dashboard/mutualfund",
+    },
+    {
+      icon: <RiStockFill />,
+      label: "Stock Prediction",
+      link: "http://localhost:8501",
     },
 
     {

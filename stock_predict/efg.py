@@ -10,10 +10,14 @@ from datetime import timedelta
 # Page configuration
 st.set_page_config(page_title="Stock Price Prediction", layout="wide")
 
+
 # Load the pre-trained model
 @st.cache_resource
 def load_pretrained_model():
-    return load_model(r'G:\Finance\FinTrade\stock_predict\Stock Predictions Model.keras')
+    return load_model(
+        r"/Users/ankushbanerjee/Documents/personal/FinTrade/stock_predict\Stock Predictions Model.keras"
+    )
+
 
 model = load_pretrained_model()
 
@@ -37,8 +41,8 @@ if not data.empty:
     data.dropna(inplace=True)
 
     # Train-test split
-    data_train = pd.DataFrame(data['Close'][:int(len(data) * 0.80)])
-    data_test = pd.DataFrame(data['Close'][int(len(data) * 0.80):])
+    data_train = pd.DataFrame(data["Close"][: int(len(data) * 0.80)])
+    data_test = pd.DataFrame(data["Close"][int(len(data) * 0.80) :])
 
     # Scaling the data
     scaler = MinMaxScaler(feature_range=(0, 1))
@@ -49,7 +53,7 @@ if not data.empty:
     # Prepare testing data
     x_test, y_test = [], []
     for i in range(100, len(data_test_scaled)):
-        x_test.append(data_test_scaled[i - 100:i])
+        x_test.append(data_test_scaled[i - 100 : i])
         y_test.append(data_test_scaled[i, 0])
     x_test, y_test = np.array(x_test), np.array(y_test)
 
@@ -63,7 +67,7 @@ if not data.empty:
     y_test = y_test * scale_factor
 
     # Proper X-axis using dates
-    date_range = data['Date'].iloc[-len(y_test):]
+    date_range = data["Date"].iloc[-len(y_test) :]
 
     # Plot Predictions
     fig, ax = plt.subplots(figsize=(12, 6))
@@ -92,7 +96,9 @@ if not data.empty:
             x_future = np.append(x_future, [[next_pred]], axis=0)
 
         predictions = scaler.inverse_transform(np.array(predictions).reshape(-1, 1))
-        future_date = data['Date'].iloc[-1] + timedelta(days=years_to_predict * 365)
-        st.write(f"### 📅 Predicted Price on approx {future_date.date()}: ₹{predictions[-1][0]:.2f}")
+        future_date = data["Date"].iloc[-1] + timedelta(days=years_to_predict * 365)
+        st.write(
+            f"### 📅 Predicted Price on approx {future_date.date()}: ₹{predictions[-1][0]:.2f}"
+        )
 else:
     st.error("❌ No data available for the given stock ticker and date range.")
